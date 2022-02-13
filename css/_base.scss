@@ -1,0 +1,98 @@
+:root {
+    --color-primary: #8c7252;
+    --color-primary-light: #a67e17;
+    --color-primary-dark: #70593e;
+
+    --color-grey-light-1: #ece7d9;
+    --color-grey-light-2: #c4c4c4;
+
+    --color-grey-dark-1: #323232;
+
+    --color-yellow-1: #ffde67;
+    --color-red-1: #cf1010;
+
+    --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+    --shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
+
+    --line: 1px solid var(--color-grey-light-2);
+}
+
+@font-face {
+    font-family: 'chfont';
+    src: url('chinesefont/wt071.ttf') format('truetype');
+    unicode-range: U+6649, U+5B8B, U+9F4A, U+6881, U+5510, U+4EE3, U+9593, U+FF0C, U+000D, U+000A, U+9AD8, U+50E7, U+6C42, U+6CD5, U+96E2, U+9577, U+5B89, U+FF0C, U+000D, U+000A, U+53BB, U+4EBA,
+        U+6210, U+767E, U+6B78, U+7121, U+5341, U+FF0C, U+000D, U+000A, U+5F8C, U+8005, U+5B89, U+77E5, U+524D, U+8005, U+96E3, U+3002, U+000D, U+000A, U+8DEF, U+9059, U+78A7, U+5929, U+552F, U+51B7,
+        U+7D50, U+FF0C, U+000D, U+000A, U+6C99, U+6CB3, U+906E, U+65E5, U+529B, U+75B2, U+6BAB, U+FF0C, U+000D, U+000A, U+5F8C, U+8CE2, U+5982, U+672A, U+8AF3, U+65AF, U+65E8, U+FF0C, U+000D, U+000A,
+        U+5F80, U+5F80, U+5C07, U+7D93, U+5BB9, U+6613, U+770B, U+3002, U+000D, U+000A, U+5510, U+2027, U+7FA9, U+6DE8, U+5927, U+5E2B;
+}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&display=swap');
+
+$bp-largest: 1399px;
+$bp-larger: 1199px;
+$bp-large: 991px;
+$bp-medium: 767px;
+$bp-small: 575px;
+
+$border-radius: 3px;
+
+$font-size: 15px;
+$font-sub-family: 'Noto Serif TC', serif;
+
+body {
+    font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
+    font-weight: normal;
+    line-height: 1.6;
+    font-size: $font-size;
+    color: var(--color-grey-dark-1);
+    background: var(--color-grey-dark-1);
+
+    min-height: 100vh;
+}
+
+////////////////////////////////////////////////
+// CLEAR FOCUS
+.btn:focus,
+a:focus {
+    outline: none;
+    box-shadow: none;
+}
+.navbar-toggler:focus {
+    outline: none !important;
+    box-shadow: none;
+}
+
+.form-check-input:checked[type='checkbox'] {
+    background-color: var(--color-primary-dark);
+}
+
+button:focus,
+[type='button']:focus,
+.page-link:focus,
+.form-select:focus,
+.form-check-input:focus,
+.form-control:focus,
+textarea:focus,
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='datetime']:focus,
+input[type='datetime-local']:focus,
+input[type='date']:focus,
+input[type='month']:focus,
+input[type='time']:focus,
+input[type='week']:focus,
+input[type='number']:focus,
+input[type='email']:focus,
+input[type='url']:focus,
+input[type='search']:focus,
+input[type='tel']:focus,
+input[type='color']:focus,
+.uneditable- input:focus {
+    border-color: transparent;
+    box-shadow: none;
+    outline: 0 none;
+}
+////////////////////////////////////////////////
+// DEFAULT SETTING
+.w-1000 {
+    max-width: 1000px;
+}

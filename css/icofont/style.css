@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'icofont';
+  src:  url('fonts/icofont.eot?lpez97');
+  src:  url('fonts/icofont.eot?lpez97#iefix') format('embedded-opentype'),
+    url('fonts/icofont.ttf?lpez97') format('truetype'),
+    url('fonts/icofont.woff?lpez97') format('woff'),
+    url('fonts/icofont.svg?lpez97#icofont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icofont' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-mail-1:before {
+  content: "\e900";
+  color: #fff;
+}
+.icon-map-pin-svgrepo-com-1:before {
+  content: "\e901";
+  color: #fff;
+}
+.icon-telephone-1:before {
+  content: "\e902";
+  color: #fff;
+}
