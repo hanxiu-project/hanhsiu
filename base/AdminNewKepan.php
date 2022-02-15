@@ -11,27 +11,10 @@
 
     <title>新增科判類別 | 管理後台</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <?php
+include 'head.php';
+?>
 
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 </head>
 
 <body>
@@ -43,29 +26,27 @@ include 'verification.php';
 <form name="forms" method="post" action="">
     <div id="wrapper">
         <?php include 'nav.php';?>
-        <?php include 'database.php';?>
+        <?php include '../database.php';?>
         <?php
 
-        ?>
+?>
         <!--建立新經文-->
         <div class="row" style="margin-bottom: 20px; text-align: left">
             <div class="col-lg-12">
-                <label for="content"><font color="#ffffff">新增科判類別:</font></label>
+                <label for="content" style="color:#ffffff" ><b >新增科判類別:</b></label>
                 <input id="type" name="type" type="text"
                        style="width:525px; height:30px; color:#000000; ">
 
 
                 <input type="submit" class="btn btn-sm btn-warning" name="go"
                        value="新增">
-		
+
 
             </div>
-
         </div>
- <div class="col-lg-12">
-            
-			<font size="6"><strong style= "background:white" >新增科判類別</strong></font>
-		
+
+        <div class="col-lg-12">
+            <h2><b>新增科判類別</b><h1>
         </div>
         <!--Body-->
         <div id="page-wrapper">
@@ -77,91 +58,87 @@ include 'verification.php';
 
                     <?php
 
+mysqli_query($db_link, 'SET CHARACTER SET UTF-8');
 
-                    mysqli_query($db_link, 'SET CHARACTER SET UTF-8');
+$sql = "SELECT * FROM kp_types ";
+$result = mysqli_query($db_link, $sql);
+$sql_listorder = " SELECT MAX(listorder) as max FROM  `kp_types` ";
+$listresult = mysqli_query($db_link, $sql_listorder);
+$listcheck = mysqli_fetch_assoc($listresult);
+$max_listorder = $listcheck['max'];
 
-                    $sql = "SELECT * FROM kp_types ";
-                    $result = mysqli_query($db_link, $sql);
-                    $sql_listorder =" SELECT MAX(listorder) as max FROM  `kp_types` ";
-                    $listresult=mysqli_query($db_link,  $sql_listorder);
-                    $listcheck=mysqli_fetch_assoc($listresult);
-                    $max_listorder=$listcheck['max'];
+echo "<form name='form1' method='POST' action=''>";
+echo "<table border rules=rows cellspacing=0 width=100% style=font-size:20px;line-height:50px;>";
+echo "<tr align=center>";
+echo "<td><b>科判類別</b></td>";
+echo "<td></td>";
+echo "</tr>";
 
-                    echo "<form name='form1' method='POST' action=''>";
-                    echo "<table border rules=rows cellspacing=0 width=100% style=font-size:20px;line-height:50px;>";
-                    echo "<tr align=center>";
-                    echo "<td><b>科判類別</b></td>";
-                    echo "<td></td>";
-                    echo "</tr>";
+while ($row = $result->fetch_assoc()) {
+    echo "<tr align=center>";
+    echo "<td>$row[kptypename]</td>";
 
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr align=center>";
-                        echo "<td>$row[kptypename]</td>";
+    echo "<td>";
 
-                        echo "<td>";
-
-                        ?>
+    ?>
                         <input type='submit' class="btn btn-sm btn-danger " style='width:100px;height:30px;'
                                name="<?php echo "$row[kpt_id]+2"; ?>" value='刪除'
                                onclick="return confirm('是否確認刪除此類別?')"></td>
 
                         <?php
 
-                        echo "</tr>";
-                    }
-                    echo "</table>";
+    echo "</tr>";
+}
+echo "</table>";
 
-                    $sql2 = "SELECT * FROM kp_types ";
-                    $result2 = mysqli_query($db_link, $sql2);
+$sql2 = "SELECT * FROM kp_types ";
+$result2 = mysqli_query($db_link, $sql2);
 
-                    while ($row2 = $result2->fetch_assoc()) {
-                        if (isset($_POST["$row2[kpt_id]+2"])) {
-                            $file_path = "kepan/$row2[kptypename]";
-                            if (is_dir($file_path)) {//先判斷是不是資料夾
-                                if (rmdir($file_path)) {//判斷是否能刪除成功
-//                                    echo “刪除資料夾成功”;
-                                    $_SESSION["delete_t_id"] = $row2["kpt_id"];
-                                    $sql_delete = "DELETE FROM kp_types WHERE kp_types.kpt_id = $_SESSION[delete_t_id]";
-                                    mysqli_query($db_link, $sql_delete);
-                                    echo "<script>alert('成功刪除!');location.href='AdminNewKepan.php'</script>";
-                                }
-                                else
-                                {
-                                    echo "<script>alert('此類別含有科判檔案無法刪除!');location.href='AdminNewKepan.php'</script>";
-                                    //echo "此類別含有講記無法刪除！";//如果資料夾不為空，是無法刪除的
-                                }
-                            } else {
-                                echo "<script>alert('科判類別不存在!');location.href='AdminNewKepan.php'</script>";
-                                //echo "講記類別不存在！";        資料夾不存在
-                            }
+while ($row2 = $result2->fetch_assoc()) {
+    if (isset($_POST["$row2[kpt_id]+2"])) {
+        $file_path = "kepan/$row2[kptypename]";
+        if (is_dir($file_path)) { //先判斷是不是資料夾
+            if (rmdir($file_path)) { //判斷是否能刪除成功
+                //                                    echo “刪除資料夾成功”;
+                $_SESSION["delete_t_id"] = $row2["kpt_id"];
+                $sql_delete = "DELETE FROM kp_types WHERE kp_types.kpt_id = $_SESSION[delete_t_id]";
+                mysqli_query($db_link, $sql_delete);
+                echo "<script>alert('成功刪除!');location.href='AdminNewKepan.php'</script>";
+            } else {
+                echo "<script>alert('此類別含有科判檔案無法刪除!');location.href='AdminNewKepan.php'</script>";
+                //echo "此類別含有講記無法刪除！";//如果資料夾不為空，是無法刪除的
+            }
+        } else {
+            echo "<script>alert('科判類別不存在!');location.href='AdminNewKepan.php'</script>";
+            //echo "講記類別不存在！";        資料夾不存在
+        }
 
+    }
+}
 
-                        }
-                    }
+$type = $_POST["type"]; //新增講記類別
 
-                    $type = $_POST["type"];                     //新增講記類別
-
-                    if (isset($_POST["go"])) {
-                        if ($type == null) {
-                            echo "<script>alert('請輸入欲新增的類別!');location.href='AdminNewKepan.php'</script>";
-                        } else {
-                            //資料夾的建立
-                            $file_path = "./kepan/$type";
-                            if (!file_exists($file_path)) {
-                                mkdir($file_path);
-                                //echo “建立資料夾成功”;
-                                $sqltype = "INSERT INTO kp_types (kptypename,listorder) VALUES ('$type','$max_listorder'+1)";
-                                mysqli_query($db_link, $sqltype);
-                                echo "<script>alert('科判類別建立成功!');location.href='AdminNewKepan.php'</script>";
-                            } else {
+if (isset($_POST["go"])) {
+    if ($type == null) {
+        echo "<script>alert('請輸入欲新增的類別!');location.href='AdminNewKepan.php'</script>";
+    } else {
+        //資料夾的建立
+        $file_path = "./kepan/$type";
+        if (!file_exists($file_path)) {
+            mkdir($file_path);
+            //echo “建立資料夾成功”;
+            $sqltype = "INSERT INTO kp_types (kptypename,listorder) VALUES ('$type','$max_listorder'+1)";
+            mysqli_query($db_link, $sqltype);
+            echo "<script>alert('科判類別建立成功!');location.href='AdminNewKepan.php'</script>";
+        } else {
 //                            echo “資料夾已存在”;
-                                echo "<script>alert('科判類別已存在!');location.href='AdminNewKepan.php'</script>";
-                            }
-                        }
-                    }
+            echo "<script>alert('科判類別已存在!');location.href='AdminNewKepan.php'</script>";
+        }
+    }
+}
 
-                    mysqli_close($db_link);
-                    ?>
+mysqli_close($db_link);
+?>
 
 
                 </div>

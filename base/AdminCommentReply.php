@@ -12,27 +12,9 @@
 
     <title>回覆留言 | 管理後台</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <?php
+include 'head.php';
+?>
 </head>
 
 <body>
@@ -46,14 +28,15 @@ include 'verification.php';
     <!--sidebar-->
     <!-- Navigation -->
     <?php include 'nav.php';?>
-    <?php include 'database.php';?>
+    <?php include '../database.php';?>
 
     <div class="row" style="margin-bottom: 20px; text-align: left">
         <div class="col-lg-12">
-            
-			<font size="6"><strong style= "background:white" >回覆留言區</strong></font>
+            <h2><b style= "background:white">回覆留言區</b><h1>
         </div>
     </div>
+
+
 
     <!--Body-->
     <div id="page-wrapper">
@@ -64,19 +47,17 @@ include 'verification.php';
                 <meta http-equiv="content-type" content="text/html;charset=UTF-8">
 
                 <?php
-                /*資料庫連結*/
-               
-                session_start();
-               $sql="SELECT `c_id`,`members`.`m_id`,`members`.`account`,`members`.`name`,`msg_datetime`,`message`,`reply`,`rpy_datetime`,`status` FROM `comments`,`members` where `comments`.`c_id` = '$_SESSION[reply_c_id]' and  `members`.`m_id` = '$_SESSION[reply_m_id]'";
-                //$sql="SELECT `c_id`,`members`.`m_id`,`members`.`account`,`members`.`name`,`msg_datetime`,`message`,`reply`,`rpy_datetime` FROM `comments`,`members` where `comments`.`c_id` = '$_SESSION[reply_c_id]' and `comments`.`status`='0' and `members`.`m_id` = '$_SESSION[reply_m_id]'";
-                $result=mysqli_query($db_link,$sql);
-                $row=mysqli_fetch_assoc($result);
+/*資料庫連結*/
 
+session_start();
+$sql = "SELECT `c_id`,`members`.`m_id`,`members`.`account`,`members`.`name`,`msg_datetime`,`message`,`reply`,`rpy_datetime`,`status` FROM `comments`,`members` where `comments`.`c_id` = '$_SESSION[reply_c_id]' and  `members`.`m_id` = '$_SESSION[reply_m_id]'";
+//$sql="SELECT `c_id`,`members`.`m_id`,`members`.`account`,`members`.`name`,`msg_datetime`,`message`,`reply`,`rpy_datetime` FROM `comments`,`members` where `comments`.`c_id` = '$_SESSION[reply_c_id]' and `comments`.`status`='0' and `members`.`m_id` = '$_SESSION[reply_m_id]'";
+$result = mysqli_query($db_link, $sql);
+$row = mysqli_fetch_assoc($result);
 
+//$status = $row['status'];
 
-                //$status = $row['status'];
-
-                ?>
+?>
 
                 <div id="con2">
                     <div class="main">
@@ -91,26 +72,26 @@ include 'verification.php';
 
                                             <div class="form-group">
                                                 <label for="title">會員編號:</label>
-                                                <font style="width:525px; height:30px; color:#000000; background-color:transparent" ><?php echo $row['m_id']?></font>
+                                                <font style="width:525px; height:30px; color:#000000; background-color:transparent" ><?php echo $row['m_id'] ?></font>
                                             </div>
                                             <div class="form-group">
                                                 <label for="title">會員帳號:</label>
-                                                <font style="width:525px; height:30px; color:#000000; background-color:transparent" ><?php echo $row['account']?></font>
+                                                <font style="width:525px; height:30px; color:#000000; background-color:transparent" ><?php echo $row['account'] ?></font>
                                             </div>
                                             <div class="form-group">
                                                 <label for="title">會員姓名:</label>
-                                                <font style="width:525px; height:30px; color:#000000; background-color:transparent" ><?php echo $row['name']?></font>
+                                                <font style="width:525px; height:30px; color:#000000; background-color:transparent" ><?php echo $row['name'] ?></font>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="date">留言日期:</label>
-                                                <font style="width:525px; height:30px; color:#000000; background-color:transparent" ><?php echo $row['msg_datetime']?></font>
+                                                <font style="width:525px; height:30px; color:#000000; background-color:transparent" ><?php echo $row['msg_datetime'] ?></font>
                                             </div>
 
 
                                             <div class="form-group">
                                                 <label for="content">留言內容:</label>
-                                                <font style="width:525px; height:30px; color:#000000; background-color:transparent" ><?php echo $row['message']?></font>
+                                                <font style="width:525px; height:30px; color:#000000; background-color:transparent" ><?php echo $row['message'] ?></font>
                                             </div>
 
                                             <div class="form-group">
@@ -138,36 +119,28 @@ include 'verification.php';
 
                 <?php
 
+$reply = $_POST["rpy"];
 
+if (isset($_POST["reply"])) {
+    $nowdate = date("Y-m-d H:i:s", mktime(date('H'), date('i'), date('s'), date('m'), date('d'), date('Y')));
 
-                $reply = $_POST["rpy"];
+    if ($reply == null) {
+        echo "<script>alert('尚未輸入回覆內容!');location.href='AdminCommentsReply.php'</script>";
+    } else {
 
+        if ($row[status] == 1) {
+            $sql_insert_reply = "INSERT INTO `comments` (m_id,message,msg_datetime,replyman,reply,rpy_datetime,status) VALUES('$_SESSION[reply_m_id]','$row[message]','$row[msg_datetime]','$_SESSION[name]','$reply','$nowdate',1)";
+            mysqli_query($db_link, $sql_insert_reply);
+        } else {
+            $sql_update_reply = "UPDATE `comments` SET `reply` = '$reply',`replyman`='$_SESSION[name]',`rpy_datetime`= '$nowdate' ,`status`= '1' where `comments`.`c_id` = $_SESSION[reply_c_id]";
+            mysqli_query($db_link, $sql_update_reply);
+        }
 
-                if(isset($_POST["reply"]))
-                {
-                    $nowdate=date("Y-m-d H:i:s" , mktime(date('H'),date('i'),date('s'), date('m'), date('d'), date('Y')));
-
-                    if( $reply==null)
-                    {
-                        echo "<script>alert('尚未輸入回覆內容!');location.href='AdminCommentsReply.php'</script>";
-                    }
-                    else
-                    {
-
-                       if($row[status]==1){
-                            $sql_insert_reply = "INSERT INTO `comments` (m_id,message,msg_datetime,replyman,reply,rpy_datetime,status) VALUES('$_SESSION[reply_m_id]','$row[message]','$row[msg_datetime]','$_SESSION[name]','$reply','$nowdate',1)";
-                            mysqli_query($db_link, $sql_insert_reply);
-                        }
-                        else{
-                            $sql_update_reply="UPDATE `comments` SET `reply` = '$reply',`replyman`='$_SESSION[name]',`rpy_datetime`= '$nowdate' ,`status`= '1' where `comments`.`c_id` = $_SESSION[reply_c_id]";
-                            mysqli_query($db_link, $sql_update_reply);
-                        }
-
-                        echo "<script>alert('回覆成功!');location.href='AdminCommentManagefor0.php'</script>";
-                    }
-                }
-                mysqli_close($db_link);
-                ?>
+        echo "<script>alert('回覆成功!');location.href='AdminCommentManagefor0.php'</script>";
+    }
+}
+mysqli_close($db_link);
+?>
                 </form>
 
             </div>

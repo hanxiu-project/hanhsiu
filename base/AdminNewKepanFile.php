@@ -11,28 +11,10 @@
     <script src="ckeditor/ckeditor.js?ver=<?php echo time; ?>"></script>
 
     <title>新增科判檔案 | 管理後台</title>
+    <?php
+include 'head.php';
+?>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 </head>
 
 <body>
@@ -43,11 +25,10 @@ include 'verification.php';
 
     <div id="wrapper">
         <?php include 'nav.php';?>
-        <?php include 'database.php';?>
- <div class="col-lg-12">
-            
-			<font size="6"><strong style= "background:white" >新增科判檔案</strong></font>
-		
+        <?php include '../database.php';?>
+
+        <div class="col-lg-12">
+            <h2><b>新增科判檔案</b><h1>
         </div>
         <!--Body-->
         <div id="page-wrapper">
@@ -58,13 +39,12 @@ include 'verification.php';
                     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
 
                     <?php
-                    /*資料庫連結*/
-                    
-                    $sqltype="SELECT * FROM `kp_types` ";
-                    $resulttype=mysqli_query($db_link,$sqltype);
+/*資料庫連結*/
 
-                   
-                    ?>
+$sqltype = "SELECT * FROM `kp_types` ";
+$resulttype = mysqli_query($db_link, $sqltype);
+
+?>
 
 
                     <div id="con2">
@@ -82,15 +62,14 @@ include 'verification.php';
                                                     <label for="type">科判:</label>
                                                     <select id="type" name="type"  style="width:525px; height:30px; color:#000000; background-color:transparent">
                                                         <?php while ($row = $resulttype->fetch_assoc()) {
-                                                            echo "<option name='type' value=$row[kpt_id]>$row[kptypename]</option>";
+    echo "<option name='type' value=$row[kpt_id]>$row[kptypename]</option>";
 
-
-                                                        }
-                                                        $sqltypeinput="SELECT * FROM `kp_types` where `kpt_id`='$_POST[type]'";
-                                                        $resulttypeinput=mysqli_query($db_link,$sqltypeinput);
-                                                        $rowinput= mysqli_fetch_assoc($resulttypeinput);
-                                                        $_SESSION[inputtype]=$rowinput['kptypename'];
-                                                        ?>
+}
+$sqltypeinput = "SELECT * FROM `kp_types` where `kpt_id`='$_POST[type]'";
+$resulttypeinput = mysqli_query($db_link, $sqltypeinput);
+$rowinput = mysqli_fetch_assoc($resulttypeinput);
+$_SESSION['inputtype'] = $rowinput['kptypename'];
+?>
 
                                                     </select>
                                                 </div>
@@ -117,36 +96,34 @@ include 'verification.php';
 
                     <?php
 
-                    $getDate= date("Y-m-d");
-                    $kptype = $_SESSION[inputtype];
-                    $filename = $_FILES['my_file']['name'];
+$getDate = date("Y-m-d");
+$kptype = $_SESSION['inputtype'];
+$filename = $_FILES['my_file']['name'];
 
-                    # 檢查檔案是否上傳成功
-                    if ($_FILES['my_file']['error'] === UPLOAD_ERR_OK){
-                        /*echo '檔案名稱: ' . $_FILES['my_file']['name'] . '<br/>';
-                        echo '檔案類型: ' . $_FILES['my_file']['type'] . '<br/>';
-                        echo '檔案大小: ' . ($_FILES['my_file']['size'] / 1024) . ' KB<br/>';
-                        echo '暫存名稱: ' . $_FILES['my_file']['tmp_name'] . '<br/>';*/
+# 檢查檔案是否上傳成功
+if ($_FILES['my_file']['error'] === UPLOAD_ERR_OK) {
+    /*echo '檔案名稱: ' . $_FILES['my_file']['name'] . '<br/>';
+    echo '檔案類型: ' . $_FILES['my_file']['type'] . '<br/>';
+    echo '檔案大小: ' . ($_FILES['my_file']['size'] / 1024) . ' KB<br/>';
+    echo '暫存名稱: ' . $_FILES['my_file']['tmp_name'] . '<br/>';*/
 
+    # 檢查檔案是否已經存在
+    if (file_exists("./kepan/" . $kptype . "/" . $filename)) {
+        echo "<script>alert('檔案已存在！');</script>";
+    } else {
+        $file = $_FILES['my_file']['tmp_name'];
+        $dest = "./kepan/" . $kptype . "/" . $filename;
 
-                        # 檢查檔案是否已經存在
-                        if (file_exists("./kepan/".$kptype."/".$filename)){
-                            echo "<script>alert('檔案已存在！');</script>";
-                        } else {
-                            $file = $_FILES['my_file']['tmp_name'];
-                            $dest = "./kepan/".$kptype."/".$filename;
+        # 將檔案移至指定位置
+        move_uploaded_file($file, $dest);
+        //存入資料庫
 
-                            # 將檔案移至指定位置
-                            move_uploaded_file($file, $dest);
-                            //存入資料庫
-
-
-                             $sql="INSERT INTO kepans (kpt_id,kptypename,filename,date) VALUES ('$_POST[type]','$rowinput[kptypename]','$filename','$getDate')";
-                             mysqli_query($db_link, $sql);
-                             echo "<script>alert('檔案已經上傳!');location.href='AdminKepanManage.php'</script>";
-                        }
-                    }
-                    ?>
+        $sql = "INSERT INTO kepans (kpt_id,kptypename,filename,date) VALUES ('$_POST[type]','$rowinput[kptypename]','$filename','$getDate')";
+        mysqli_query($db_link, $sql);
+        echo "<script>alert('檔案已經上傳!');location.href='AdminKepanManage.php'</script>";
+    }
+}
+?>
 
                 </div>
                 <!-- /.container-fluid -->

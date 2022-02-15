@@ -19,7 +19,7 @@
 
     while ($row = $result->fetch_assoc())
     {
-        if($getDate==$row[date] || $row[date]<$getDate)
+        if($getDate==$row['date'] || $row['date']<$getDate)
         {
             $sqlii="update `posts` set keep='0'  where `p_id`='$row[p_id]'";
             mysqli_query($db_link, $sqlii);
@@ -32,7 +32,7 @@
 
     while ($rowp = $resultp->fetch_assoc())
     {
-        if($getDate>=$rowp[newday])
+        if($getDate>=$rowp['newday'])
         {
             $sqlp="update `posts` set old='1'  where `p_id`='$row[p_id]'";
             mysqli_query($db_link, $sqlp);

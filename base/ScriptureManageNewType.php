@@ -11,32 +11,9 @@
 
     <title>新增講記類別總覽 | 管理後台</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- 後台講記排序 CSS -->
-    <link href="style.css" rel="stylesheet" type="text/css">
-
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <?php 
+        include 'head.php';
+    ?>
 </head>
 
 <body>
@@ -47,7 +24,7 @@ include 'verification.php';
 <form name="forms" method="post" action="">
     <div id="wrapper">
         <?php include 'nav.php';?>
-        <?php include 'database.php';?>
+        <?php include '../database.php'; ?>
 
         <?php
         /*資料庫連結*/
@@ -63,14 +40,14 @@ include 'verification.php';
         <!--建立新經文-->
         <div class="row" style="margin-bottom: 20px; text-align: left">
             <div class="col-lg-12">
-                <label for="content"><font color="#ffffff">新增講記類別:</font></label>
+                <label for="content" style="color:#ffffff" ><b >新增講記類別:</b></label>
                 <input id="type" name="type" type="text" style="width:525px; height:30px; color:#000000; ">
                 <input type="submit" class="btn btn-sm btn-warning" name="go" value="發佈">
             </div>
         </div>
 
         <div class="col-lg-12">
-			<font size="6"><strong style= "background:white" >新增講記類別</strong></font>
+            <h2><b>新增講記類別</b><h1>
         </div>
 
         <!--Body-->
@@ -158,17 +135,9 @@ include 'verification.php';
                             }
 
                         }
-
-
                     }
-
-
                     mysqli_close($db_link);
-
-
                     ?>
-
-
                 </div>
                 <!-- /#page-wrapper -->
 
