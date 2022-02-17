@@ -23,11 +23,11 @@
 <meta name="theme-color" content="#70593e" />
 
 <!-- STYLE -->
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/tiny-slider.css" />
-<link rel="stylesheet" href="css/animate.min.css" />
-<link rel="stylesheet" href="css/icofont/style.css" />
-<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/front-end/bootstrap.min.css" />
+<link rel="stylesheet" href="css/front-end/tiny-slider.css" />
+<link rel="stylesheet" href="css/front-end/animate.min.css" />
+<link rel="stylesheet" href="css/front-end/icofont/style.css" />
+<link rel="stylesheet" href="css/front-end/main.css" />
 
 <!-- JAVASCRIPT -->
 <script src="js/w3.js"></script>
