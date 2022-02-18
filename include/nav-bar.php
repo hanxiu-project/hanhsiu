@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="logo outside" href="index.html"><img src="img/logo.png" alt="漢修學苑" /></a>
+            <a class="logo outside" href="index.php"><img src="img/logo.png" alt="漢修學苑" /></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <div class="hamburger" id="hamburger-1">
                     <span class="line"></span>
@@ -12,7 +12,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav me-auto mb-lg-0 w-100 justify-content-lg-between">
                     <li class="nav-item order-1 inside">
-                        <a class="nav-link logo" href="index.html"><img src="img/logo.png" alt="漢修學苑" /></a>
+                        <a class="nav-link logo" href="index.php"><img src="img/logo.png" alt="漢修學苑" /></a>
                     </li>
                     <li class="nav-item order-0">
                         <a class="nav-link" href="origin.html">緣起</a>
