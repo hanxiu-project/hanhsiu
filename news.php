@@ -86,7 +86,14 @@
                                 echo " <ul class='pagination justify-content-center'>";
                                /* echo "<br/><a href=?news_page=1>首頁</a> ";*/
                                 echo " <li class='page-item'>";
-                                $fp = intval($page1) - 1;
+                                if($page1==1)
+                                {
+                                    $fp=1;
+                                }else
+                                {
+                                    $fp = intval($page1) - 1;
+                                }
+                               
                                 echo "<a class='page-link' href='?news_page=$fp' aria-label='Previous'>";
                                 echo "<i class='arrow aleft'></i>";
                                 echo "</a>";
@@ -104,7 +111,13 @@
                                 }
 
                                 echo " <li class='page-item'>";
-                                $np = intval($page1) + 1;
+                                if($page1==$pages1)
+                                {
+                                    $np=$pages1;
+                                }else
+                                {
+                                    $np = intval($page1) + 1;
+                                }
                                 echo "<a class='page-link' href='?news_page=$np' aria-label='Next'>";
                                 echo "<i class='arrow aright'></i>";
                                 echo "</a>";
@@ -152,7 +165,14 @@
                                 echo " <ul class='pagination justify-content-center'>";
                                /* echo "<br/><a href=?news_page=1>首頁</a> ";*/
                                 echo " <li class='page-item'>";
-                                $fp = intval($page2) - 1;
+                               
+                                if($page2==1)
+                                {
+                                    $fp=1;
+                                }else
+                                {
+                                    $fp = intval($page2) - 1;
+                                }
                                 echo "<a class='page-link' href='?oldpage=$fp' aria-label='Previous'>";
                                 echo "<i class='arrow aleft'></i>";
                                 echo "</a>";
@@ -170,7 +190,14 @@
                                 }
 
                                 echo " <li class='page-item'>";
-                                $np = intval($page2) + 1;
+                                if($page2==$pages2)
+                                {
+                                    $np=$pages2;
+                                }else
+                                {
+                                    $np = intval($page2) + 1;
+                                }
+                               
                                 echo "<a class='page-link' href='?oldpage=$np' aria-label='Next'>";
                                 echo "<i class='arrow aright'></i>";
                                 echo "</a>";
