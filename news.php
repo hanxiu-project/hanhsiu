@@ -1,7 +1,7 @@
-<?php include_once 'database.php'; ?>
+<?php include 'database.php'; ?>
 <?php $title = '公告訊息'; ?>
-<?php include_once 'include/head.php'; ?>
-<?php include_once 'include/nav-bar.php'; ?>
+<?php include 'include/head.php'; ?>
+<?php include 'include/nav-bar.php'; ?>
 
 <body>
     <?php
@@ -51,7 +51,7 @@
                                 $resultnew = mysqli_query($db_link, $sqlnew);
 
                                 $date_nums1 = mysqli_num_rows($resultnew);                          //講記數量
-                                $per1 = 5;                                                      //10筆換頁
+                                $per1 = 10;                                                      //10筆換頁
                                 $pages1 = ceil($date_nums1 / $per1);                             //共幾頁
                                 if (!isset($_GET["news_page"])) {
                                     $page1 = 1;
@@ -67,10 +67,10 @@
 
                                 while ($row = mysqli_fetch_assoc($newresult[$start1])) {
                                     $date1 = strtotime($getDate);
-                                    $date2 = strtotime($row[date]);
+                                    $date2 = strtotime($row['date']);
                                     $days = ceil(abs($date1 - $date2) / 86400);
 
-                                    if ($days > $row[newday]) {
+                                    if ($days > $row['newday']) {
                                         $sqlii = "update `posts` set old='1'  where `p_id`='$row[p_id]'";
                                         mysqli_query($db_link, $sqlii);
                                     }
@@ -81,10 +81,10 @@
                                 }
 
                                 echo "<center>";
-                                echo '共 ' . $date_nums1 . ' 筆-在 ' . $page1 . ' 頁-共 ' . $pages1 . ' 頁';
+                               /* echo '共 ' . $date_nums1 . ' 筆-在 ' . $page1 . ' 頁-共 ' . $pages1 . ' 頁';*/
                                 echo "<nav>";
                                 echo " <ul class='pagination justify-content-center'>";
-                                echo "<br/><a href=?news_page=1>首頁</a> ";
+                               /* echo "<br/><a href=?news_page=1>首頁</a> ";*/
                                 echo " <li class='page-item'>";
                                 $fp = intval($page1) - 1;
                                 echo "<a class='page-link' href='?news_page=$fp' aria-label='Previous'>";
@@ -109,7 +109,7 @@
                                 echo "<i class='arrow aright'></i>";
                                 echo "</a>";
                                 echo "</li>";
-                                echo "<a href=?news_page=$pages1>末頁</a>";
+                               /* echo "<a href=?news_page=$pages1>末頁</a>";*/
                                 echo "</ul>";
                                 echo "</nav>";
                                 ?>
@@ -124,7 +124,7 @@
                                 $resultold = mysqli_query($db_link, $sqlold);
 
                                 $date_nums2 = mysqli_num_rows($resultold);                          //講記數量
-                                $per2 = 5;                                                      //5筆換頁
+                                $per2 = 10;                                                      //5筆換頁
                                 $pages2 = ceil($date_nums2 / $per2);                             //共幾頁
                                 if (!isset($_GET["oldpage"])) {
                                     $page2 = 1;
@@ -147,10 +147,10 @@
 
 
                                 echo "<center>";
-                                echo '共 ' . $date_nums2 . ' 筆-在 ' . $page2 . ' 頁-共 ' . $pages2 . ' 頁';
+                               /* echo '共 ' . $date_nums2 . ' 筆-在 ' . $page2 . ' 頁-共 ' . $pages2 . ' 頁';*/
                                 echo "<nav>";
                                 echo " <ul class='pagination justify-content-center'>";
-                                echo "<br/><a href=?news_page=1>首頁</a> ";
+                               /* echo "<br/><a href=?news_page=1>首頁</a> ";*/
                                 echo " <li class='page-item'>";
                                 $fp = intval($page2) - 1;
                                 echo "<a class='page-link' href='?oldpage=$fp' aria-label='Previous'>";
@@ -175,7 +175,7 @@
                                 echo "<i class='arrow aright'></i>";
                                 echo "</a>";
                                 echo "</li>";
-                                echo "<a href=?news_page=$pages1>末頁</a>";
+                               /* echo "<a href=?news_page=$pages1>末頁</a>";*/
                                 echo "</ul>";
                                 echo "</nav>";
 

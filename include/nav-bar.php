@@ -46,11 +46,11 @@
                     $authority = $rows["authority"];
                     if ($_SESSION["acc"] == null || $_SESSION["pwd"] == null) {
                         echo "<li class='nav-item order-2'>";
-                        echo "<a class=nav-link href=login.html>註冊/登入</a>";
+                        echo "<a class=nav-link href=login.php>註冊/登入</a>";
                         echo "</li>";
                     } else if ($_SESSION["acc"] != $acc  || $_SESSION["pwd"] != $pwd) {
                         echo "<li class=nav-item order-2>";
-                        echo "<a class=nav-link href=login.html>註冊/登入</a>";
+                        echo "<a class=nav-link href=login.php>註冊/登入</a>";
                         echo "</li>";
                     } else if ($authority == '1' || $authority == '2') {
                         echo "<li class='nav-item order-2'>";
@@ -64,7 +64,7 @@
                         echo "<ul class='dropdown-menu dropdown-menu-end text-center' aria-labelledby='dropdownMenuLink'>";
                         echo "<li><a class='dropdown-item' href='member.html'>會員中心</a></li>";
                         echo "<li><a class='dropdown-item' href='#'>回後台</a></li>";
-                        echo "<li><a class='dropdown-item' href='#'>登出</a></li>";
+                        echo "<li><a class='dropdown-item' href='logout.php'>登出</a></li>";
                         echo "</ul>";
                         echo "</div>";
                         echo "</li>";
@@ -79,7 +79,7 @@
                         echo "</a>";
                         echo "<ul class='dropdown-menu dropdown-menu-end text-center' aria-labelledby='dropdownMenuLink'>";
                         echo "<li><a class='dropdown-item' href='member.html'>會員中心</a></li>";
-                        echo "<li><a class='dropdown-item' href='#'>登出</a></li>";
+                        echo "<li><a class='dropdown-item'href='logout.php'>登出</a></li>";
                         echo "</ul>";
                         echo "</div>";
                         echo "</li>";
