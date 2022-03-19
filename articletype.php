@@ -44,18 +44,6 @@
                             <input type="submit" class="btn-style__1 smaller full-w" naem="searchArticle" value="搜尋" />
                         </div>
                     </form>
-
-                    <?php
-                    // if (isset($_GET['searchArticle'])) {
-                    //     //echo "<script>alert('查無資料！');location.href='articletype.php';</script>";
-                    //     if (isset($_GET['title'])) {
-                    //         echo "<script>location.href='search.php?keyword=$_GET[keyword]&search=$_GET[title]';</script>";
-                    //     } else if (isset($_GET['content'])) {
-                    //         echo "<script>location.href='search.php?keyword=$_GET[keyword]&search=$_GET[title]';</script>";
-                    //     }
-                    // }
-                    ?>
-
                 </div>
 
                 <!--  **********  判斷是否點選講記類別  **************-->

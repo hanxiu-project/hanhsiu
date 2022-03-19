@@ -1,5 +1,5 @@
 <?php include_once 'database.php'; ?>
-<?php $title = '公告訊息'; ?>
+<?php $title = '搜尋結果'; ?>
 <?php include_once 'include/head.php'; ?>
 <?php include_once 'include/nav-bar.php'; ?>
 
@@ -86,7 +86,6 @@
 
 
                         $resultshow = mysqli_query($db_link, $sqlsrc);
-
                         $countresult = mysqli_num_rows($resultshow);
                         if ($countresult == 0) {
                             echo "<script>alert('查無資料！');location.href='articletype.php';</script>";
