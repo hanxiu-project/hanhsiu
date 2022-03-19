@@ -22,28 +22,40 @@
                         <div class="tit-en">lecture</div>
                     </div>
 
-                    <form action="articletype_sr.html">
+                    <form method="GET" action="search.php">
                         <div class="close-wrap site1">
                             <button type="button" class="btn-style__arrow">
                                 <i class="arrow"></i>
                             </button>
                             <div class="mb-3">
                                 <label class="col-form-label">搜尋 / Search</label>
-                                <input type="text" class="form-control" placeholder="請輸入文字" />
+                                <input type="text" class="form-control" name="keyword" placeholder="請輸入文字" />
                             </div>
                             <div class="d-flex mb-3">
                                 <div class="form-check me-4">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked />
+                                    <input class="form-check-input" type="radio" name="search" id="flexRadioDefault1" value="title" checked />
                                     <label class="form-check-label" for="flexRadioDefault1"> 標題 </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                                    <input class="form-check-input" type="radio" name="search" id="flexRadioDefault2" value="content" />
                                     <label class="form-check-label" for="flexRadioDefault2"> 內容 </label>
                                 </div>
                             </div>
-                            <input type="submit" class="btn-style__1 smaller full-w" value="搜尋" />
+                            <input type="submit" class="btn-style__1 smaller full-w" naem="searchArticle" value="搜尋" />
                         </div>
                     </form>
+
+                    <?php
+                    // if (isset($_GET['searchArticle'])) {
+                    //     //echo "<script>alert('查無資料！');location.href='articletype.php';</script>";
+                    //     if (isset($_GET['title'])) {
+                    //         echo "<script>location.href='search.php?keyword=$_GET[keyword]&search=$_GET[title]';</script>";
+                    //     } else if (isset($_GET['content'])) {
+                    //         echo "<script>location.href='search.php?keyword=$_GET[keyword]&search=$_GET[title]';</script>";
+                    //     }
+                    // }
+                    ?>
+
                 </div>
 
                 <!--  **********  判斷是否點選講記類別  **************-->
@@ -80,7 +92,7 @@
                             $sqlatcnum = "SELECT * FROM `scripture` where  `save`='0' && `t_id` = $tid ";
 
                             $result_row = mysqli_query($db_link, $sqlatcnum);
-                            $data = mysqli_num_rows($result_row);       //抓總共幾筆
+                            $data = mysqli_num_rows($result_row);
                             $per = 10;
                             $rows = ceil($data / $per);
 

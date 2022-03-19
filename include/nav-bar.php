@@ -18,7 +18,7 @@
                         <a class="nav-link" href="origin.html">緣起</a>
                     </li>
                     <li class="nav-item order-0">
-                        <a class="nav-link" href="articletype.html">瑜論講記</a>
+                        <a class="nav-link" href="articletype.php">瑜論講記</a>
                     </li>
                     <li class="nav-item order-0">
                         <a class="nav-link" href="kepan.php">科判</a>

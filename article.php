@@ -153,7 +153,7 @@
         <div class="wave-block in-buttom"></div>
     </main>
 
-    <footer w3-include-html="include/_footer.html"></footer>
+    <footer w3-include-html="include/_footer.php"></footer>
 
     <!-- JAVASCRIPT W3 -->
     <script>
