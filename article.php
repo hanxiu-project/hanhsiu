@@ -14,66 +14,21 @@
                     </div>
 
                     <div class="article-mode__ctrl">
-                        <select class="form-select">
-                            <option value="初發論端">初發論端</option>
-                            <option value="本地分" selected>本地分</option>
-                            <option value="攝決擇分">攝決擇分</option>
-                            <option value="攝釋分">攝釋分</option>
-                            <option value="攝異門分">攝異門分</option>
-                            <option value="攝事分">攝事分</option>
-                            <option value="連結檔">連結檔</option>
+                        <select class="form-select" id="type_select" onchange="changeType(this.value)">
+                            <?php
+                            $sqlatypecnum = "SELECT * FROM `types` order by listorder";
+                            $results_row = mysqli_query($db_link, $sqlatypecnum);
+
+                            while ($row = mysqli_fetch_assoc($results_row)) {
+                                echo "<option value='$row[t_id]'>$row[typename]</option>";
+                            }
+                            ?>
                         </select>
 
-                        <select class="form-select">
-                            <option value="1" selected>01</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
-                            <option value="2">02</option>
+                        <select class="form-select" id="chapter_select" onchange="goArticle(this.value)">
                         </select>
-
-                        <button type="submit" class="btn-style__1 smaller full-w" disabled>上一卷</button>
-                        <button type="submit" class="btn-style__1 smaller full-w">下一卷</button>
+                        <button type="submit" name="previous" class="btn-style__1 smaller full-w" onclick="page('pre')">上一卷</button>
+                        <button type="submit" name="next" class="btn-style__1 smaller full-w" onclick="page('next')">下一卷</button>
                     </div>
                 </div>
 
@@ -100,7 +55,7 @@
                                     <a href="articletype.html">瑜論講記</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="articlepages.html">
+                                    <a href="articlepages.html" name="articletype-id" id="<?php echo "$rtit[1]" ?>">
                                         <?php echo "$type[1]"; ?>
                                     </a>
                                 </li>
@@ -111,7 +66,7 @@
                         <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center mb-4">
                             <h4 class="heading-style__2 mb-2 mb-md-0">
                                 <?php echo "$type[1]"; ?>
-                                <span class="tline">
+                                <span class="tline" name="article-id" id="<?php echo "$_GET[sid]" ?>">
                                     <?php echo "$type[2]"; ?>
                                 </span>
                             </h4>
@@ -165,5 +120,79 @@
     <script src="js/tiny-slider.js"></script>
     <script src="js/main.js"></script>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    var prePage = '';
+    var nextPage = '';
+    //載入後執行帶入tid撈出第二層下拉
+    window.onload = function() {
+        var currentlyTId = document.getElementsByName('articletype-id')[0].id;
+        var optionLength = document.getElementById("type_select").options.length;
+
+        for (var i = 0; i < optionLength; i++) {
+            if (document.getElementById("type_select").options[i].value == currentlyTId) {
+                document.getElementById("type_select").options[i].selected = true;
+            }
+        }
+        changeType(currentlyTId);
+    }
+
+    function changeType(index) {
+        var chapterSelect = document.getElementById("chapter_select");
+
+        $.ajax({
+            url: "deal.php",
+            method: "POST",
+            data: {
+                SelectedArticleType: index
+            },
+            success: function(res) {
+                chapterSelect.innerHTML = res;
+                keepAID();
+            }
+        });
+    }
+
+    function goArticle(sid) {
+        window.open('article.php?sid=' + sid, '_self');
+    }
+
+    //
+    function keepAID() {
+        var currentlyAId = document.getElementsByName('article-id')[0].id;
+        var optionLength = document.getElementById("chapter_select").options.length;
+
+        for (var i = 0; i < optionLength; i++) {
+            if (document.getElementById("chapter_select").options[i].value == currentlyAId) {
+                document.getElementById("chapter_select").options[i].selected = true;
+
+                if (i == 0) {
+                    prePage = document.getElementById("chapter_select").options[i].value;
+                    nextPage = document.getElementById("chapter_select").options[i + 1].value;
+                    document.getElementsByName('previous')[i].disabled = true
+                } else if (i == optionLength - 1) {
+                    prePage = document.getElementById("chapter_select").options[i - 1].value;
+                    nextPage = document.getElementById("chapter_select").options[i].value;
+                    document.getElementsByName('previous')[i].disabled = true
+                } else {
+                    prePage = document.getElementById("chapter_select").options[i - 1].value;
+                    nextPage = document.getElementById("chapter_select").options[i + 1].value;
+                }
+            }
+        }
+    }
+
+    //上一卷,下一卷
+    function page(arg) {
+        if (arg == 'pre') {
+            window.location.href = "article.php?sid=" + prePage;
+        } else if (arg == 'next') {
+            window.location.href = "article.php?sid=" + nextPage;
+        }
+
+    }
+</script>
 
 </html>

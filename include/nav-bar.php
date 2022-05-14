@@ -24,7 +24,7 @@
                         <a class="nav-link" href="kepan.php">科判</a>
                     </li>
                     <li class="nav-item order-0">
-                        <a class="nav-link" href="supplementtype.html">補充資料</a>
+                        <a class="nav-link" href="supplementtype.php">補充資料</a>
                     </li>
                     <li class="nav-item order-2">
                         <a class="nav-link" href="videotypes.html">法音流佈</a>
