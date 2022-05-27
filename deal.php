@@ -10,3 +10,13 @@ if (isset($_POST['SelectedArticleType'])) {
     }
     echo $inner;
 }
+if (isset($_POST['SelectedSupplementType'])) {
+    $SelectedId = $_POST['SelectedSupplementType'];
+    $sqlatcnum = "SELECT * FROM `supplements` where `save`='0' && `spt_id` = $SelectedId order by `sp_id`";
+    $result_row = mysqli_query($db_link, $sqlatcnum);
+    $inner = '';
+    while ($script = mysqli_fetch_assoc($result_row)) {
+        $inner = $inner . "<option value='$script[sp_id]' >$script[title]</option>";
+    }
+    echo $inner;
+}

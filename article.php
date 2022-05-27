@@ -171,11 +171,11 @@
                 if (i == 0) {
                     prePage = document.getElementById("chapter_select").options[i].value;
                     nextPage = document.getElementById("chapter_select").options[i + 1].value;
-                    document.getElementsByName('previous')[i].disabled = true
+                    document.getElementsByName('previous')[0].disabled = true
                 } else if (i == optionLength - 1) {
                     prePage = document.getElementById("chapter_select").options[i - 1].value;
                     nextPage = document.getElementById("chapter_select").options[i].value;
-                    document.getElementsByName('previous')[i].disabled = true
+                    document.getElementsByName('next')[0].disabled = true
                 } else {
                     prePage = document.getElementById("chapter_select").options[i - 1].value;
                     nextPage = document.getElementById("chapter_select").options[i + 1].value;
