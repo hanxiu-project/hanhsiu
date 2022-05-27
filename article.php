@@ -66,7 +66,7 @@
                         <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center mb-4">
                             <h4 class="heading-style__2 mb-2 mb-md-0">
                                 <?php echo "$type[1]"; ?>
-                                <span class="tline" name="article-id" id="<?php echo "$_GET[sid]" ?>">
+                                <span class="tline" name="article-id" id=<?php echo "$_GET[sid]" ?>>
                                     <?php echo "$type[2]"; ?>
                                 </span>
                             </h4>
