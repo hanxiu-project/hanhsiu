@@ -61,7 +61,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-end">
                                 <li class="breadcrumb-item">
-                                    <a href="articletype.html">瑜論講記</a>
+                                    <a href="articletype.php">瑜論講記</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     <?php echo "$rtypename[2]" ?>

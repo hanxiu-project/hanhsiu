@@ -1,5 +1,5 @@
 <?php include_once 'database.php'; ?>
-<?php $title = '瑜論講記'; ?>
+<?php $title = '補充資料'; ?>
 <?php include_once 'include/head.php'; ?>
 <?php include_once 'include/nav-bar.php'; ?>
 
@@ -9,41 +9,46 @@
             <div class="container-lg main-wrap">
                 <div class="main-wrap__left">
                     <div data-boxname="head" class="heading-style__1 mx-auto mb-5">
-                        瑜論講記
-                        <div class="tit-en">lecture</div>
+                        補充資料
+                        <div class="tit-en">supplementary</div>
                     </div>
 
                     <div class="article-mode__ctrl">
                         <select class="form-select" id="type_select" onchange="changeType(this.value)">
                             <?php
-                            $sqlatypecnum = "SELECT * FROM `types` order by listorder";
+                            $sqlatypecnum = "SELECT * FROM `spm_types` order by listorder";
                             $results_row = mysqli_query($db_link, $sqlatypecnum);
 
                             while ($row = mysqli_fetch_assoc($results_row)) {
-                                echo "<option value='$row[t_id]'>$row[typename]</option>";
+                                echo "<option value='$row[spt_id]'>$row[spmtypename]</option>";
                             }
                             ?>
                         </select>
 
-                        <select class="form-select" id="chapter_select" onchange="goArticle(this.value)">
+                        <select class="form-select" id="chapter_select" onchange="goSupplement(this.value)">
                         </select>
+
                         <button type="submit" name="previous" class="btn-style__1 smaller full-w" onclick="page('pre')">上一卷</button>
                         <button type="submit" name="next" class="btn-style__1 smaller full-w" onclick="page('next')">下一卷</button>
                     </div>
                 </div>
 
                 <?php
-                if (isset($_GET["sid"])) {
-                    $sqltit = "Select * From `scripture` where `s_id`= $_GET[sid]";
+                if (isset($_GET["spid"]))                                                            //sid為經文id(同資料庫的s_id意思)
+                {
+                    $sqltit = "Select * From `supplements` where `sp_id`= $_GET[spid]";
                     $tit = "";
                     $resultshow[$tit] = mysqli_query($db_link, $sqltit);
                     $rtit = mysqli_fetch_row($resultshow[$tit]);
-                    $sqltype = "SELECT s_id , scripture.typename , number , title , filename , date FROM `scripture` ,`types` WHERE `scripture`.`s_id`=$_GET[sid] AND `types`.`t_id`=$rtit[1]";
+
+                    $sqltype = "SELECT sp_id , supplements.spmtypename, title , filename , date FROM `supplements` ,`spm_types` WHERE `supplements`.`sp_id`=$_GET[spid] AND `spm_types`.`spt_id`=$rtit[1]";
+
                     $resulttype = mysqli_query($db_link, $sqltype);
                     $type = mysqli_fetch_row($resulttype);
-                    $sql_count = "update  scripture set clicktimes =clicktimes+1  WHERE scripture.s_id = $_GET[sid]";
+                    $sql_count = "update  supplements set clicktimes =clicktimes+1  WHERE supplements.sp_id = $_GET[spid]";
                     mysqli_query($db_link, $sql_count);
-                    $sqlcount = "SELECT * FROM scripture  WHERE scripture.s_id = $_GET[sid] ";
+
+                    $sqlcount = "SELECT * FROM supplements  WHERE supplements.sp_id = $_GET[spid] ";
                     $resultcount = mysqli_query($db_link, $sqlcount);
                     $rowcount = mysqli_fetch_assoc($resultcount);
                 ?>
@@ -52,10 +57,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-end">
                                 <li class="breadcrumb-item">
-                                    <a href="articletype.php">瑜論講記</a>
+                                    <a href="supplementtype.php">補充資料</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="articletype.php?tid=<?php echo "$rtit[1]" ?>" name="articletype-id" id="<?php echo "$rtit[1]" ?>">
+                                    <a href="supplementpages.php?sptid=<?php echo "$rtit[1]" ?>" name="supplementtype-id" id="<?php echo "$rtit[1]" ?>">
                                         <?php echo "$type[1]"; ?>
                                     </a>
                                 </li>
@@ -66,7 +71,7 @@
                         <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center mb-4">
                             <h4 class="heading-style__2 mb-2 mb-md-0">
                                 <?php echo "$type[1]"; ?>
-                                <span class="tline" name="article-id" id=<?php echo "$_GET[sid]" ?>>
+                                <span class="tline" name="supplement-id" id=<?php echo "$_GET[spid]" ?>>
                                     <?php echo "$type[2]"; ?>
                                 </span>
                             </h4>
@@ -82,14 +87,14 @@
                         <!-- 文章內文 -->
                         <article>
                             <?php
-                            $_SESSION["tid"] = "$rtit[0]";
+                            $_SESSION["sptid"] = "$rtit[0]";
 
                             $typename = $rtit[2];
-                            $filename = $rtit[5];
+                            $filename = $rtit[4];
                             $str = "";
                             //判斷是否有該檔案
-                            if (file_exists("./ScriptureFile/$typename/$filename")) {
-                                $file = fopen("./ScriptureFile/$typename/$filename", "r");
+                            if (file_exists("./supplement/$typename/$filename")) {
+                                $file = fopen("./supplement/$typename/$filename", "r");
                                 if ($file != NULL) {
                                     //當檔案未執行到最後一筆，迴圈繼續執行(fgets一次抓一行)
                                     while (!feof($file)) {
@@ -126,9 +131,9 @@
 <script type="text/javascript">
     var prePage = '';
     var nextPage = '';
-    //載入後執行帶入tid撈出第二層下拉
+    //載入後執行帶入typeid撈出第二層下拉
     window.onload = function() {
-        var currentlyTId = document.getElementsByName('articletype-id')[0].id;
+        var currentlyTId = document.getElementsByName('supplementtype-id')[0].id;
         var optionLength = document.getElementById("type_select").options.length;
 
         for (var i = 0; i < optionLength; i++) {
@@ -146,7 +151,7 @@
             url: "deal.php",
             method: "POST",
             data: {
-                SelectedArticleType: index
+                SelectedSupplementType: index
             },
             success: function(res) {
                 chapterSelect.innerHTML = res;
@@ -155,13 +160,13 @@
         });
     }
 
-    function goArticle(sid) {
-        window.open('article.php?sid=' + sid, '_self');
+    function goSupplement(spid) {
+        window.open('supplement.php?spid=' + spid, '_self');
     }
 
     //
     function keepAID() {
-        var currentlyAId = document.getElementsByName('article-id')[0].id;
+        var currentlyAId = document.getElementsByName('supplement-id')[0].id;
         var optionLength = document.getElementById("chapter_select").options.length;
 
         for (var i = 0; i < optionLength; i++) {
@@ -187,9 +192,9 @@
     //上一卷,下一卷
     function page(arg) {
         if (arg == 'pre') {
-            window.location.href = "article.php?sid=" + prePage;
+            window.location.href = "supplement.php?spid=" + prePage;
         } else if (arg == 'next') {
-            window.location.href = "article.php?sid=" + nextPage;
+            window.location.href = "supplement.php?spid=" + nextPage;
         }
 
     }
