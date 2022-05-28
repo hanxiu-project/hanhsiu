@@ -14,13 +14,13 @@
                 </div>
                 <div class="footer-wrap__link-box__link2">
                     <ul>
-                        <li><a href="origin.html">緣起</a></li>
-                        <li><a href="articletype.html">瑜論講記</a></li>
-                        <li><a href="kepan.html">科判</a></li>
-                        <li><a href="supplementtype.html">補充資料</a></li>
-                        <li><a href="videotypes.html">法音流佈</a></li>
-                        <li><a href="news.html">公告訊息</a></li>
-                        <li><a href="contact.html">聯絡我們</a></li>
+                        <li><a href="origin.php">緣起</a></li>
+                        <li><a href="articletype.php">瑜論講記</a></li>
+                        <li><a href="kepan.php">科判</a></li>
+                        <li><a href="supplementtype.php">補充資料</a></li>
+                        <li><a href="videotypes.php">法音流佈</a></li>
+                        <li><a href="news.php">公告訊息</a></li>
+                        <li><a href="contact.php">聯絡我們</a></li>
                     </ul>
                 </div>
             </div>
