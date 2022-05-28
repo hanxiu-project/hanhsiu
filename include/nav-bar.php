@@ -15,25 +15,25 @@
                         <a class="nav-link logo" id="logo" href="index.php"><img src="img/logo.png" alt="漢修學苑" /></a>
                     </li>
                     <li class="nav-item order-0">
-                        <a class="nav-link" id="origin" onclick="changeActive('origin')" href="origin.php">緣起</a>
+                        <a class="nav-link" id="origin" onclick="changeActive('origin')" href="javascript:void(0)">緣起</a>
                     </li>
                     <li class="nav-item order-0">
-                        <a class="nav-link" id="articletype" onclick="changeActive('articletype')" href="articletype.php">瑜論講記</a>
+                        <a class="nav-link" id="articletype" onclick="changeActive('articletype')" href="javascript:void(0)">瑜論講記</a>
                     </li>
                     <li class="nav-item order-0">
-                        <a class="nav-link" id="kepan" onclick="changeActive('kepan')" href="kepan.php">科判</a>
+                        <a class="nav-link" id="kepan" onclick="changeActive('kepan')" href="javascript:void(0)">科判</a>
                     </li>
                     <li class="nav-item order-0">
-                        <a class="nav-link" id="supplementtype" onclick="changeActive('supplementtype')" href="supplementtype.php">補充資料</a>
+                        <a class="nav-link" id="supplementtype" onclick="changeActive('supplementtype')" href="javascript:void(0)">補充資料</a>
                     </li>
                     <li class="nav-item order-2">
-                        <a class="nav-link" id="videotypes" onclick="changeActive('videotypes')" href="videotypes.html">法音流佈</a>
+                        <a class="nav-link" id="videotypes" onclick="changeActive('videotypes')" href="javascript:void(0)">法音流佈</a>
                     </li>
                     <li class="nav-item order-2">
-                        <a class="nav-link" id="news" onclick="changeActive('news')" href="news.php">公告訊息</a>
+                        <a class="nav-link" id="news" onclick="changeActive('news')" href="javascript:void(0)">公告訊息</a>
                     </li>
                     <li class="nav-item order-2">
-                        <a class="nav-link" id="contact" onclick="changeActive('contact')" href="contact.php">聯絡我們</a>
+                        <a class="nav-link" id="contact" onclick="changeActive('contact')" href="javascript:void(0)">聯絡我們</a>
                     </li>
                     <!--帳號判斷-->
                     <?php
@@ -55,7 +55,7 @@
                     } else if ($authority == '1' || $authority == '2') {
                         echo "<li class='nav-item order-2'>";
                         echo "<div class='dropdown'>";
-                        echo "<a class='nav-link d-flex align-items-center dropdown-toggle active' href='#' role='button' id='dropdownMenuLink' data-bs-toggle='dropdown' aria-expanded='false'>";
+                        echo "<a class='nav-link d-flex align-items-center dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-bs-toggle='dropdown' aria-expanded='false'>";
                         echo "<span class=account_text>";
                         echo "$name";
                         echo "，您好";
@@ -71,7 +71,7 @@
                     } else {
                         echo "<li class='nav-item order-2'>";
                         echo "<div class='dropdown'>";
-                        echo "<a class='nav-link d-flex align-items-center dropdown-toggle active' href='#' role='button' id='dropdownMenuLink' data-bs-toggle='dropdown' aria-expanded='false'>";
+                        echo "<a class='nav-link d-flex align-items-center dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-bs-toggle='dropdown' aria-expanded='false'>";
                         echo "<span class=account_text>";
                         echo "$name";
                         echo "，您好";
@@ -105,13 +105,13 @@
         }
     }
 
-
     function changeActive(navId) {
         localStorage.setItem('nav-checked', navId);
         var navnum = document.getElementsByClassName('nav-link').length;
 
-        for (var i = 1; i < navnum; i++) {
+        for (var i = 0; i < navnum; i++) {
             document.getElementsByClassName('nav-link')[i].setAttribute('class', 'nav-link');
         }
+        location.href = navId + '.php';
     }
 </script>
