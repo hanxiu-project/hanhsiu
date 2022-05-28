@@ -83,7 +83,7 @@
                 $_SESSION['pwd'] = $pwdhash;
                 $_SESSION["updatename"] = "$row[name]";
                 //header("location:AdminScriptureManage.php");
-                echo "<script>location.href='AdminScriptureManage.php';</script>";        //導向管理員頁面
+                echo "<script>location.href='base/AdminScriptureManage.php';</script>";        //導向管理員頁面
 
 
             }
