@@ -1,9 +1,10 @@
 <?php include 'database.php'; ?>
-<?php $title = '公告訊息'; ?>
+<?php $title = '註冊/登入'; ?>
 <?php include 'include/head.php'; ?>
 <?php include 'include/nav-bar.php'; ?>
   <!-- STYLE -->
-  
+  <head>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
     <body>
         <main>
             <section class="bg-style__3">
@@ -25,7 +26,7 @@
                                     <label for="floatingPassword">密碼 / Password</label>
                                 </div>
                                 <div class="mb-3 d-flex justify-content-center">
-                                    <div class="g-recaptcha" data-sitekey="your_site_key"></div>
+                                <div class="g-recaptcha" data-sitekey="6Lf2IyUgAAAAAHcP8VEbVsTnUXBkTiPGleznYRWx"></div>
                                 </div>
 
                                 <input type="submit" name="gologin" class="btn-style__1 full-w" value="登入" />
