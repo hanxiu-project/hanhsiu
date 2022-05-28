@@ -1,39 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>漢修學苑</title>
-        <link rel="shortcut icon" href="favicon.ico" />
-
-        <!-- FACEBOOK SEO -->
-        <meta property="og:title" content="漢修學苑" />
-        <meta property="og:url" content="https://hanhsiu.org/" />
-        <meta property="og:image" content="img/fb-open-graph-1.jpg" />
-        <meta property="og:type" content="article" />
-        <meta property="og:description" content="《瑜伽師地論》線上筆記" />
-        <meta property="og:locale" content="zh_tw" />
-
-        <!-- OTHER SETTING -->
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="theme-color" content="#70593e" />
-
-        <!-- STYLE -->
-        <link rel="stylesheet" href="css/front-end/bootstrap.min.css" />
-        <link rel="stylesheet" href="css/front-end/tiny-slider.css" />
-        <link rel="stylesheet" href="css/front-end/animate.min.css" />
-        <link rel="stylesheet" href="css/front-end/icofont/style.css" />
-        <link rel="stylesheet" href="css/front-end/main.css" />
-        <!-- JAVASCRIPT -->
-        <script src="js/w3.js"></script>
-    </head>
     <body>
         <?php include 'database.php'; ?>
-		<?php $title = '公告訊息'; ?>
+		<?php $title = '漢修學苑'; ?>
 		<?php include 'include/head.php'; ?>
 		<?php include 'include/nav-bar.php'; ?>
-
         <main>
             <div class="hero">
                 <svg class="cloud cleft animate__animated animate__fadeInLeftBig animate__slow">
@@ -93,26 +64,34 @@
                                 <div class="tit-en">news</div>
                             </div>
                         </div>
-							 <!--<ul class="news-box__list">
+							 <ul class="news-box__list">
 						<?php
-                          $sqlresultnew = "SELECT * FROM posts where save='0' && old='0' && keep='0' order by date DESC Limit $start1 , $per1";
-                                $newresult[$start1] = mysqli_query($db_link, $sqlresultnew);
-                                $newresult[$page1] = mysqli_query($db_link, $sqlresultnew);
+							# 設定時區
+							date_default_timezone_set('Asia/Taipei');
+							$getDate= date("Y-m-d");
+							 $sql = "SELECT * FROM posts where  save = '0' && old = '0' && keep = '0' && top = '0' || save = '0'  && keep = '0' && top = '1'  order by `top` DESC, `date` desc ";
+							$result = mysqli_query($db_link, $sql);
+							while ($row = $result->fetch_assoc()) {
+									$date1 = strtotime($getDate);
+									$date2 = strtotime($row[date]);
+									$days = (($date1 - $date2)/86400);
+									
+								if($getDate>=$row[newday]){
+									$sqlii="update `posts` set old='1'  where `p_id`='$row[p_id]'";
+									mysqli_query($db_link, $sqlii);
+								}
 
-                                while ($row = mysqli_fetch_assoc($newresult[$start1])) {
-                                    $date1 = strtotime($getDate);
-                                    $date2 = strtotime($row['date']);
-                                    $days = ceil(abs($date1 - $date2) / 86400);
-
-                                    if ($days > $row['newday']) {
-                                        $sqlii = "update `posts` set old='1'  where `p_id`='$row[p_id]'";
-                                        mysqli_query($db_link, $sqlii);
-                                    }
-                                    echo "<a herf ='post.php?id=$row[p_id]'>";
-                                    echo "<span class='text-style__sm'>$row[date]</span>";
-                                    echo "$row[title]";
-                                    echo "</a>";
-
+                                echo "<li>";
+							    if($row['top']=='1'){
+								    echo "<p ><i class='fas fa-thumbtack'></i>&nbsp&nbsp$row[date]</p>";
+							    }else{
+								    echo "<p  >&emsp; $row[date]</p>";
+                                    
+							    }
+                               
+                                echo "<p align='center' style='vertical-align:middle;'><a href = 'post.php?id=$row[p_id]'>$row[title]</a></p>";
+                                echo "</li>";
+                                }
                                 mysqli_close($db_link);
                             ?>
                             <!--<li>
@@ -135,7 +114,7 @@
                                 <p class="date">2021-10-26</p>
                                 <p class="tit"><a href="post.html">對外開放 之 課程總覽</a></p>
                             </li>-->
-                        </ul>
+                        
                     </div>
 
                     <div class="text-center my-5">
