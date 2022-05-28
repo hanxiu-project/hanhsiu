@@ -15,7 +15,7 @@
                         <a class="nav-link logo" href="index.php"><img src="img/logo.png" alt="漢修學苑" /></a>
                     </li>
                     <li class="nav-item order-0">
-                        <a class="nav-link" href="origin.html">緣起</a>
+                        <a class="nav-link" href="origin.php">緣起</a>
                     </li>
                     <li class="nav-item order-0">
                         <a class="nav-link" href="articletype.php">瑜論講記</a>
@@ -33,7 +33,7 @@
                         <a class="nav-link active" href="news.php">公告訊息</a>
                     </li>
                     <li class="nav-item order-2">
-                        <a class="nav-link" href="contact.html">聯絡我們</a>
+                        <a class="nav-link" href="contact.php">聯絡我們</a>
                     </li>
                     <!--帳號判斷-->
                     <?php
