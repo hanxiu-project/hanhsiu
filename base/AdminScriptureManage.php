@@ -11,9 +11,11 @@
 
     <title>講記總覽 | 管理後台</title>
 
-    <?php
-include 'head.php';
+    <?php include 'head.php';
+
 ?>
+              
+        
 
 </head>
 
@@ -26,9 +28,9 @@ include 'verification.php';
 
 <form name="forms" method="get" action="">
     <div id="wrapper">
-        <?php include 'nav.php';?>
-        <?php include '../database.php';?>
-
+    <?php include 'nav.php'; ?>
+        <?php include '../database.php'; ?>
+    
         <?php
 /*資料庫連結*/
 
@@ -228,16 +230,10 @@ mysqli_close($db_link);
             <!-- /#wrapper -->
 
             <!-- jQuery -->
-            <script src="js/jquery.js"></script>
+            
 
-            <!-- Bootstrap Core JavaScript -->
-            <script src="js/bootstrap.min.js"></script>
-
-            <!-- Morris Charts JavaScript -->
-            <script src="js/plugins/morris/raphael.min.js"></script>
-            <script src="js/plugins/morris/morris.min.js"></script>
-            <script src="js/plugins/morris/morris-data.js"></script>
-
+         
+           
 </body>
 
 </html>
