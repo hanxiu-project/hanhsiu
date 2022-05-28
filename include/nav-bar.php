@@ -12,28 +12,28 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav me-auto mb-lg-0 w-100 justify-content-lg-between">
                     <li class="nav-item order-1 inside">
-                        <a class="nav-link logo" href="index.php"><img src="img/logo.png" alt="漢修學苑" /></a>
+                        <a class="nav-link logo" id="logo" href="index.php"><img src="img/logo.png" alt="漢修學苑" /></a>
                     </li>
                     <li class="nav-item order-0">
-                        <a class="nav-link" href="origin.php">緣起</a>
+                        <a class="nav-link" id="origin" onclick="changeActive('origin')" href="origin.php">緣起</a>
                     </li>
                     <li class="nav-item order-0">
-                        <a class="nav-link" href="articletype.php">瑜論講記</a>
+                        <a class="nav-link" id="articletype" onclick="changeActive('articletype')" href="articletype.php">瑜論講記</a>
                     </li>
                     <li class="nav-item order-0">
-                        <a class="nav-link" href="kepan.php">科判</a>
+                        <a class="nav-link" id="kepan" onclick="changeActive('kepan')" href="kepan.php">科判</a>
                     </li>
                     <li class="nav-item order-0">
-                        <a class="nav-link" href="supplementtype.php">補充資料</a>
+                        <a class="nav-link" id="supplementtype" onclick="changeActive('supplementtype')" href="supplementtype.php">補充資料</a>
                     </li>
                     <li class="nav-item order-2">
-                        <a class="nav-link" href="videotypes.html">法音流佈</a>
+                        <a class="nav-link" id="videotypes" onclick="changeActive('videotypes')" href="videotypes.html">法音流佈</a>
                     </li>
                     <li class="nav-item order-2">
-                        <a class="nav-link active" href="news.php">公告訊息</a>
+                        <a class="nav-link" id="news" onclick="changeActive('news')" href="news.php">公告訊息</a>
                     </li>
                     <li class="nav-item order-2">
-                        <a class="nav-link" href="contact.php">聯絡我們</a>
+                        <a class="nav-link" id="contact" onclick="changeActive('contact')" href="contact.php">聯絡我們</a>
                     </li>
                     <!--帳號判斷-->
                     <?php
@@ -46,11 +46,11 @@
                     $authority = $rows["authority"];
                     if ($_SESSION["acc"] == null || $_SESSION["pwd"] == null) {
                         echo "<li class='nav-item order-2'>";
-                        echo "<a class=nav-link href=login.php>註冊/登入</a>";
+                        echo "<a class=nav-link id='login' onclick=changeActive('login') href=login.php>註冊/登入</a>";
                         echo "</li>";
                     } else if ($_SESSION["acc"] != $acc  || $_SESSION["pwd"] != $pwd) {
                         echo "<li class=nav-item order-2>";
-                        echo "<a class=nav-link href=login.php>註冊/登入</a>";
+                        echo "<a class=nav-link id='login' onclick=changeActive('login') href=login.php>註冊/登入</a>";
                         echo "</li>";
                     } else if ($authority == '1' || $authority == '2') {
                         echo "<li class='nav-item order-2'>";
@@ -91,3 +91,27 @@
         </div>
     </nav>
 </header>
+
+<script type="text/javascript">
+    //載入後執行帶入tid撈出第二層下拉
+    window.onload = function() {
+        var navnum = document.getElementsByClassName('nav-link').length;
+        var nav_checkedid = localStorage.getItem('nav-checked');
+
+        for (var i = 1; i < navnum; i++) {
+            if (document.getElementsByClassName('nav-link')[i].id == nav_checkedid) {
+                document.getElementsByClassName('nav-link')[i].setAttribute('class', 'nav-link active')
+            }
+        }
+    }
+
+
+    function changeActive(navId) {
+        localStorage.setItem('nav-checked', navId);
+        var navnum = document.getElementsByClassName('nav-link').length;
+
+        for (var i = 1; i < navnum; i++) {
+            document.getElementsByClassName('nav-link')[i].setAttribute('class', 'nav-link');
+        }
+    }
+</script>
