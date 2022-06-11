@@ -9,22 +9,27 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>影音排序 | 管理後台</title>
+    <title>講記總覽 | 管理後台</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <?php include 'head.php';
 
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
+?>
+              
+        
 
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
+</head>
 
-    <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<body>
 
-    <!-- 後台講記排序 CSS -->
-    <link href="style.css" rel="stylesheet" type="text/css">
+<?php
+session_start();
+include 'verification.php';
+?>
+
+<form name="forms" method="get" action="">
+    
+    <?php include 'nav.php'; ?>
+        <?php include '../database.php'; ?>
 
 
 
@@ -92,10 +97,7 @@ include 'verification.php';
 ?>
 <form name="forms" method="post" action="">
     <div id="wrapper">
-        <?php
-            include 'nav.php';
-            include 'database.php';
-        ?>
+        
        
         <div class="col-lg-12">
             <font size="6"><strong style= "background:white" >影音排序(直接拉就可以改變)</strong></font>
@@ -142,20 +144,13 @@ include 'verification.php';
                     </tbody>
                   </table>
 
-            </div>
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
         <!-- jQuery -->
 
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
-
-        <!-- Morris Charts JavaScript -->
-        <script src="js/plugins/morris/raphael.min.js"></script>
-        <script src="js/plugins/morris/morris.min.js"></script>
-        <script src="js/plugins/morris/morris-data.js"></script>
+     
 </form>
 </body>
 
