@@ -44,7 +44,7 @@
                                 $result_video_small = mysqli_query($db_link, $sql_video_small);
                                 echo    "<div class=inside-menu__link-box>";
                                 while ($script_small = mysqli_fetch_assoc($result_video_small)) {
-                                    echo    "<a href=video.php?v_sid='$script[vst_id]'>$script_small[s_typename]</a>";
+                                    echo    "<a href=video.php?v_sid='$script_small[vst_id]'>$script_small[s_typename]</a>";
                                 }
                                 echo "</div>";
                                 echo "</div>";

@@ -67,13 +67,15 @@
 
                 <?php
                 if (isset($_GET["v_bid"])) {
-                    $sql_big = "SELECT v.*, b.b_typename FROM videos v , video_bigtypes b where v.v_id = $_GET[v_bid] and v.vbt_id = b.vbt_id";
+                    $sql_big = "SELECT v.*, b.b_typename FROM videos v , video_bigtypes b where v.vbt_id = $_GET[v_bid] and v.vbt_id = b.vbt_id ORDER BY v.v_id";
+                    $sql = "SELECT * FROM `videos` where `vbt_id` = $_GET[v_bid]";
+                    $sql_page = "SELECT v.*, b.b_typename FROM videos v , video_bigtypes b where v.vbt_id = $_GET[v_bid] and v.vbt_id = b.vbt_id ORDER BY v.v_id limit $start, $per";
+                    $result_row = mysqli_query($db_link, $sql);
+                    $data = mysqli_num_rows($result_row);       //抓總共幾筆
                     $result_big = mysqli_query($db_link, $sql_big);
                     $row_big = mysqli_fetch_assoc($result_big);
                 ?>
-
                 <h4 class="heading-style__2 mb-4"><?php echo "$row_big[b_typename]"; ?></h4>
-
                 <table class="table table-style__1 mb-4">
                     <thead>
                     <tr>
@@ -84,85 +86,198 @@
                     </thead>
                     <tbody>
                     <?php
-                        $result_big_for_while = mysqli_query($db_link, $sql_big);
-                        while ($script = mysqli_fetch_assoc($result_big_for_while)) {
-                         echo "<tr>";
-                            echo "<td scope=row>";
-                            echo "<a class=link-style__1 d-block href=javascript:; data-bs-toggle=modal data-bs-target=#videoModal data-bs-video=zgaY3341eDU>$script[content]</a>";
-                            echo "</td>";
-                            echo "<td>$script[memo]</td>";
-                            echo "<td>$script[vols]</td>";
-                         echo "</tr>";
+                    if ($data == 0) {
+                        echo "<script>alert('目前尚無資料!');location.href='videotypes.php'</script>";
+                    }
+                    else {
+                        $per = 10;
+                        $pages = ceil($data / $per);     //pages
+                        $k = $pages;
+                        if (!isset($_GET["page"])) {
+                            $page = 1;
                         }
+                        else {
+                            $page = intval($_GET["page"]);
+                        }
+                        $start = ($page - 1) * $per;
+                        $resultnum = mysqli_query($db_link, $sqlatcnum);
+                        $sqlatcnum10 = "SELECT * FROM `videos` where `vbt_id` = $_GET[v_bid]  Limit $start  , $per";
+                        $resultnum10[$start] = mysqli_query($db_link, $sqlatcnum10);
+                        $resultnum10[$page] = mysqli_query($db_link, $sqlatcnum10);
+                        while ($video = mysqli_fetch_assoc($resultnum10[$start])) {
+                            echo "<tr>";
+                            echo "<td scope=row>";
+                            echo "<a class=link-style__1 d-block href=javascript:; data-bs-toggle=modal data-bs-target=#videoModal data-bs-video=zgaY3341eDU>$video[content]</a>";
+                            echo "</td>";
+                            echo "<td>$video[memo]</td>";
+                            echo "<td>$video[vols]</td>";
+                            echo "</tr>";
+                        }
+                    }
                     ?>
                     </tbody>
                 </table>
-
                 <div id="videoTable"></div>
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <?php
+                                $prepage = intval($page) - 1;
+                                if ($page == 1) {
+                                    echo "<a class='page-link ' href=?v_bid=$_GET[v_bid]&page=1 aria-label='Previous'>";
+                                    echo "<i class='arrow aleft'></i>";
+                                    echo "</a>";
+                                } else {
+                                    echo "<a class='page-link' href=?v_bid=$_GET[v_bid]&page=$prepage aria-label='Previous'>";
+                                    echo "<i class='arrow aleft'></i>";
+                                    echo "</a>";
+                                }
+                                ?>
+                            </li>
+                            <?php
+                            for ($i = 1; $i <= $pages; $i++) {
+                                if ($page - $k < $i && $i < $page + $k) {
+                                    if ($i == $page) {
+                                        echo "<li class='page-item active' id=page$i>";
+                                        echo "<a class='page-link' href=?v_bid=$_GET[v_bid]&page=$i>" . $i . "</a>";
+                                        echo "</li>";
+                                    } else {
+                                        echo "<li class='page-item' id=page$i>";
+                                        echo "<a class='page-link' href=?v_bid=$_GET[v_bid]&page=$i>" . $i . "</a>";
+                                        echo "</li>";
+                                    }
+                                }
+                            }
+                            ?>
+                            <li class="page-item">
+                                <?php
+                                $nextpage = intval($page) + 1;
+
+                                if ($page == $pages) {
+                                    echo "<a class='page-link' href=?v_bid=$_GET[v_bid]&page=$pages aria-label='Previous'>";
+                                    echo "<i class='arrow aright'></i>";
+                                    echo "</a>";
+                                } else {
+                                    echo "<a class='page-link' href=?v_bid=$_GET[v_bid]&page=$nextpage aria-label='Previous'>";
+                                    echo "<i class='arrow aright'></i>";
+                                    echo "</a>";
+                                }
+                                ?>
+                            </li>
+                        </ul>
+                    </nav>
                 <?php
                     }
                 ?>
 
+<!--==================================================================================================================================================================-->
+
                 <?php
                 if (isset($_GET["v_sid"])) {
-                    $sql_small = "SELECT v.*, b.b_typename, s.s_typename FROM videos v , video_bigtypes b , video_smalltypes s where v.v_id = $_GET[v_sid] and v.vbt_id = b.vbt_id and v.vst_id = s.vst_id";
+                    $sql_small = "SELECT v.*, b.b_typename, s.s_typename FROM videos v , video_bigtypes b , video_smalltypes s where v.vst_id = $_GET[v_sid] and v.vbt_id = b.vbt_id and v.vst_id = s.vst_id";
+                    $sql = "SELECT * FROM `videos` where `vst_id` = $_GET[v_sid]";
+                    $sql_page = "SELECT v.*, b.b_typename, s.s_typename FROM videos v , video_bigtypes b , video_smalltypes s where v.vst_id = $_GET[v_sid] and v.vbt_id = b.vbt_id and v.vst_id = s.vst_id limit $start, $per";
+                    $result_row = mysqli_query($db_link, $sql);
+                    $data = mysqli_num_rows($result_row);       //抓總共幾筆
                     $result_small = mysqli_query($db_link, $sql_small);
                     $row_small = mysqli_fetch_assoc($result_small);
-                    ?>
+                ?>
+                <h4 class="heading-style__2 mb-4"><?php echo "$row_small[b_typename]"; ?><span class="tline"><?php echo "$row_small[s_typename]"; ?></span></h4></h4>
+                <table class="table table-style__1 mb-4">
+                   <thead>
+                   <tr>
+                       <th scope="col">內容</th>
+                       <th scope="col">備註</th>
+                       <th scope="col">集數</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <?php
+                   if ($data == 0) {
+                       echo "<script>alert('目前尚無資料!');location.href='videotypes.php'</script>";
+                   }
+                   else {
+                       $per = 10;
+                       $pages = ceil($data / $per);     //pages
+                       $k = $pages;
+                       if (!isset($_GET["page"])) {
+                           $page = 1;
+                       }
+                       else {
+                           $page = intval($_GET["page"]);
+                       }
+                       $start = ($page - 1) * $per;
+                       $resultnum = mysqli_query($db_link, $sqlatcnum);
+                       $sqlatcnum10 = "SELECT * FROM `videos` where `vst_id` = $_GET[v_sid]  Limit $start  , $per";
+                       $resultnum10[$start] = mysqli_query($db_link, $sqlatcnum10);
+                       $resultnum10[$page] = mysqli_query($db_link, $sqlatcnum10);
+                       while ($video = mysqli_fetch_assoc($resultnum10[$start])) {
+                           echo "<tr>";
+                           echo "<td scope=row>";
+                           echo "<a class=link-style__1 d-block href=javascript:; data-bs-toggle=modal data-bs-target=#videoModal data-bs-video=zgaY3341eDU>$video[content]</a>";
+                           echo "</td>";
+                           echo "<td>$video[memo]</td>";
+                           echo "<td>$video[vols]</td>";
+                           echo "</tr>";
+                       }
+                   }
+                   ?>
+                   </tbody>
+                </table>
+                <div id="videoTable"></div>
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <?php
+                                $prepage = intval($page) - 1;
+                                if ($page == 1) {
+                                    echo "<a class='page-link ' href=?v_sid=$_GET[v_sid]&page=1 aria-label='Previous'>";
+                                    echo "<i class='arrow aleft'></i>";
+                                    echo "</a>";
+                                } else {
+                                    echo "<a class='page-link' href=?v_sid=$_GET[v_sid]&page=$prepage aria-label='Previous'>";
+                                    echo "<i class='arrow aleft'></i>";
+                                    echo "</a>";
+                                }
+                                ?>
+                            </li>
+                            <?php
+                            for ($i = 1; $i <= $pages; $i++) {
+                                if ($page - $k < $i && $i < $page + $k) {
+                                    if ($i == $page) {
+                                        echo "<li class='page-item active' id=page$i>";
+                                        echo "<a class='page-link' href=?v_sid=$_GET[v_sid]&page=$i>" . $i . "</a>";
+                                        echo "</li>";
+                                    } else {
+                                        echo "<li class='page-item' id=page$i>";
+                                        echo "<a class='page-link' href=?v_sid=$_GET[v_sid]&page=$i>" . $i . "</a>";
+                                        echo "</li>";
+                                    }
+                                }
+                            }
+                            ?>
+                            <li class="page-item">
+                                <?php
+                                $nextpage = intval($page) + 1;
 
-                    <h4 class="heading-style__2 mb-4"><?php echo "$row_small[b_typename]"; ?><span class="tline"><?php echo "$row_small[s_typename]"; ?></span></h4></h4>
-
-                    <table class="table table-style__1 mb-4">
-                        <thead>
-                        <tr>
-                            <th scope="col">內容</th>
-                            <th scope="col">備註</th>
-                            <th scope="col">集數</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        $result_small_for_while = mysqli_query($db_link, $sql_small);
-                        while ($script = mysqli_fetch_assoc($result_small_for_while)) {
-                            echo "<tr>";
-                            echo "<td scope=row>";
-                            echo "<a class=link-style__1 d-block href=javascript:; data-bs-toggle=modal data-bs-target=#videoModal data-bs-video=zgaY3341eDU>$script[content]</a>";
-                            echo "</td>";
-                            echo "<td>$script[memo]</td>";
-                            echo "<td>$script[vols]</td>";
-                            echo "</tr>";
-                        }
-                        ?>
-                        </tbody>
-                    </table>
-
-                    <div id="videoTable"></div>
-                    <?php
+                                if ($page == $pages) {
+                                    echo "<a class='page-link' href=?v_sid=$_GET[v_sid]&page=$pages aria-label='Previous'>";
+                                    echo "<i class='arrow aright'></i>";
+                                    echo "</a>";
+                                } else {
+                                    echo "<a class='page-link' href=?v_sid=$_GET[v_sid]&page=$nextpage aria-label='Previous'>";
+                                    echo "<i class='arrow aright'></i>";
+                                    echo "</a>";
+                                }
+                                ?>
+                            </li>
+                        </ul>
+                    </nav>
+                <?php
                 }
                 ?>
-
-                <nav>
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <i class="arrow aleft"></i>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <i class="arrow aright"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-
                 <div class="text-center my-5">
-                    <a class="btn-style__1" href="javascript:window.history.go(-1);">回上一頁</a>
+                    <a class="btn-style__1" href="kepan.php">回上一頁</a>
                 </div>
             </div>
         </div>
