@@ -29,27 +29,21 @@
                         </button>
                         <div>
                             <label class="col-form-label">聞思正法</label>
-                            <select class="form-select mb-3">
-                                <option value="瑜論-菩薩地選讀">瑜論-菩薩地選讀</option>
-                                <option value="瑜論探義">瑜論探義</option>
-                                <option value="百法明門論">百法明門論</option>
-                                <option value="八識規矩頌">八識規矩頌</option>
-                                <option value="五十陰魔">五十陰魔</option>
-                                <option value="隨緣開示">隨緣開示</option>
-                            </select>
-                            <select class="form-select">
-                                <option value="種性品">種性品</option>
-                                <option value="發心品">發心品</option>
-                                <option value="自他利品">自他利品</option>
-                                <option value="真實義品">真實義品</option>
-                                <option value="威力品">威力品</option>
-                                <option value="成熟品">成熟品</option>
-                                <option value="菩提品">菩提品</option>
-                                <option value="力種性品">力種性品</option>
-                                <option value="施品">施品</option>
-                                <option value="戒品">戒品</option>
-                                <option value="精進品">精進品</option>
-                            </select>
+                            <div class="video-mode__ctrl">
+                                <select class="form-select" id="bigtype_select"  onchange="changeBigType(this.value)">
+                                    <?php
+                                    $sql_bigtype = "SELECT * FROM `video_bigtypes` order by vbt_id";
+                                    $result = mysqli_query($db_link, $sql_bigtype);
+
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo "<option value='$row[vbt_id]'>$row[b_typename]</option>";
+                                    }
+                                    ?>
+                                </select>
+
+                                <select class="form-select" id="chapter_select"></select>
+                                <button type="submit" name="confirm" class="btn-style__1 smaller full-w" onclick="confirm()">確認</button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -75,7 +69,7 @@
                     $result_big = mysqli_query($db_link, $sql_big);
                     $row_big = mysqli_fetch_assoc($result_big);
                 ?>
-                <h4 class="heading-style__2 mb-4"><?php echo "$row_big[b_typename]"; ?></h4>
+                <h4 class="heading-style__2 mb-4" name="videotype_id" id="<?php echo "$row_big[vbt_id]" ?>"><?php echo "$row_big[b_typename]"; ?></h4>
                 <table class="table table-style__1 mb-4">
                     <thead>
                     <tr>
@@ -182,7 +176,9 @@
                     $result_small = mysqli_query($db_link, $sql_small);
                     $row_small = mysqli_fetch_assoc($result_small);
                 ?>
-                <h4 class="heading-style__2 mb-4"><?php echo "$row_small[b_typename]"; ?><span class="tline"><?php echo "$row_small[s_typename]"; ?></span></h4></h4>
+                <h4 class="heading-style__2 mb-4" name="videotype_id" id="<?php echo "$row_small[vbt_id]" ?>"><?php echo "$row_small[b_typename]"; ?>
+                    <span class="tline" name="video_smalltype_id" id="<?php echo "$row_small[vst_id]" ?>"><?php echo "$row_small[s_typename]"; ?></span>
+                </h4>
                 <table class="table table-style__1 mb-4">
                    <thead>
                    <tr>
@@ -277,7 +273,7 @@
                 }
                 ?>
                 <div class="text-center my-5">
-                    <a class="btn-style__1" href="kepan.php">回上一頁</a>
+                    <a class="btn-style__1" href="videotypes.php">回上一頁</a>
                 </div>
             </div>
         </div>
@@ -315,5 +311,69 @@
 <script src="js/tiny-slider.js"></script>
 <script src="js/main.js"></script>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript">
+    function opData() {
+        var currentlyTId = document.getElementsByName('videotype_id')[0].id;
+        var optionLength = document.getElementById("bigtype_select").options.length;
+
+        for (var i = 0; i < optionLength; i++) {
+            if (document.getElementById("bigtype_select").options[i].value == currentlyTId) {
+                document.getElementById("bigtype_select").options[i].selected = true;
+            }
+        }
+        changeBigType(currentlyTId);
+    }
+    opData();
+
+    function changeBigType(index) {
+        var chapterSelect = document.getElementById("chapter_select");
+
+        $.ajax({
+            url: "deal.php",
+            method: "POST",
+            data: {
+                SelectedVideoType: index
+            },
+            success: function(res) {
+                chapterSelect.innerHTML = res;
+                keepAID();
+            }
+        });
+    }
+
+    function keepAID() {
+        var currentlyAId = document.getElementsByName('video_smalltype_id')[0].id;
+        var optionLength = document.getElementById("chapter_select").options.length;
+
+        for (var i = 0; i < optionLength; i++) {
+            if (document.getElementById("chapter_select").options[i].value == currentlyAId) {
+                document.getElementById("chapter_select").options[i].selected = true;
+            }
+        }
+    }
+
+    function confirm() {
+        var optionLength = document.getElementById("chapter_select").options.length;
+        var currentlyTId = document.getElementsByName('videotype_id')[0].id;
+        var currentlySId = document.getElementsByName('video_smalltype_id')[0].id;
+
+        if (optionLength == 0)
+        {
+            window.open('video.php?v_bid=' + currentlyTId, '_self');
+        }
+        else
+        {
+            for (var i = 0; i < optionLength; i++) {
+                if (document.getElementById("chapter_select").options[i].value == currentlySId) {
+                    window.open('video.php?v_sid=' + currentlySId, '_self');
+                }
+            }
+        }
+    }
+</script>
 
 </html>

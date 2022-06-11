@@ -20,3 +20,14 @@ if (isset($_POST['SelectedSupplementType'])) {
     }
     echo $inner;
 }
+
+if (isset($_POST['SelectedVideoType'])) {
+    $SelectedId = $_POST['SelectedVideoType'];
+    $sqlatcnum = "SELECT s.* FROM video_smalltypes s where s.vbt_id = $SelectedId";
+    $result_row = mysqli_query($db_link, $sqlatcnum);
+    $inner = '';
+    while ($script = mysqli_fetch_assoc($result_row)) {
+        $inner = $inner . "<option value='$script[vst_id]' >$script[s_typename]</option>";
+    }
+    echo $inner;
+}
