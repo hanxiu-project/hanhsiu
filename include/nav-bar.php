@@ -109,7 +109,7 @@
         localStorage.setItem('nav-checked', navId);
         var navnum = document.getElementsByClassName('nav-link').length;
 
-        for (var i = 0; i < navnum; i++) {
+        for (var i = 1; i < navnum; i++) {
             document.getElementsByClassName('nav-link')[i].setAttribute('class', 'nav-link');
         }
         location.href = navId + '.php';
