@@ -63,7 +63,7 @@
                         echo "</a>";
                         echo "<ul class='dropdown-menu dropdown-menu-end text-center' aria-labelledby='dropdownMenuLink'>";
                         echo "<li><a class='dropdown-item' href='member.html'>會員中心</a></li>";
-                        echo "<li><a class='dropdown-item' href='#'>回後台</a></li>";
+                        echo "<li><a class='dropdown-item' href='base/AdminScriptureManage.php'>回後台</a></li>";
                         echo "<li><a class='dropdown-item' href='logout.php'>登出</a></li>";
                         echo "</ul>";
                         echo "</div>";
