@@ -132,7 +132,7 @@
     var prePage = '';
     var nextPage = '';
     //載入後執行帶入typeid撈出第二層下拉
-    window.onload = function() {
+    function opData() {
         var currentlyTId = document.getElementsByName('supplementtype-id')[0].id;
         var optionLength = document.getElementById("type_select").options.length;
 
@@ -143,6 +143,7 @@
         }
         changeType(currentlyTId);
     }
+    opData();
 
     function changeType(index) {
         var chapterSelect = document.getElementById("chapter_select");

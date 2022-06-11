@@ -32,7 +32,7 @@
                         while ($row = mysqli_fetch_assoc($results_row)) {
                             echo "<a class='supplementary-wrap__link' href='supplementpages.php?sptid=$row[spt_id]' title='$row[spmtypename]'>";
                             echo "<p class='tit'>$row[spmtypename]</p>";
-                            echo "<p class='txt'>卷數： 本地分 卷21-34，決擇分卷67的大部分加上卷68-71。</p>";
+                            echo "<p class='txt'>$row[notes]</p>";
                             echo  "</a>";
                         }
                         ?>

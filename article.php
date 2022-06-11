@@ -127,7 +127,18 @@
     var prePage = '';
     var nextPage = '';
     //載入後執行帶入tid撈出第二層下拉
-    window.onload = function() {
+    // window.onload = function() {
+    //     var currentlyTId = document.getElementsByName('articletype-id')[0].id;
+    //     var optionLength = document.getElementById("type_select").options.length;
+
+    //     for (var i = 0; i < optionLength; i++) {
+    //         if (document.getElementById("type_select").options[i].value == currentlyTId) {
+    //             document.getElementById("type_select").options[i].selected = true;
+    //         }
+    //     }
+    //     changeType(currentlyTId);
+    // }
+    function opData() {
         var currentlyTId = document.getElementsByName('articletype-id')[0].id;
         var optionLength = document.getElementById("type_select").options.length;
 
@@ -138,6 +149,7 @@
         }
         changeType(currentlyTId);
     }
+    opData();
 
     function changeType(index) {
         var chapterSelect = document.getElementById("chapter_select");
@@ -168,17 +180,22 @@
             if (document.getElementById("chapter_select").options[i].value == currentlyAId) {
                 document.getElementById("chapter_select").options[i].selected = true;
 
-                if (i == 0) {
-                    prePage = document.getElementById("chapter_select").options[i].value;
-                    nextPage = document.getElementById("chapter_select").options[i + 1].value;
+                if (optionLength == 1) {
                     document.getElementsByName('previous')[0].disabled = true
-                } else if (i == optionLength - 1) {
-                    prePage = document.getElementById("chapter_select").options[i - 1].value;
-                    nextPage = document.getElementById("chapter_select").options[i].value;
-                    document.getElementsByName('next')[0].disabled = true
+                    document.getElementsByName('next')[0].disabled = true;
                 } else {
-                    prePage = document.getElementById("chapter_select").options[i - 1].value;
-                    nextPage = document.getElementById("chapter_select").options[i + 1].value;
+                    if (i == 0) {
+                        prePage = document.getElementById("chapter_select").options[i].value;
+                        nextPage = document.getElementById("chapter_select").options[i + 1].value;
+                        document.getElementsByName('previous')[0].disabled = true
+                    } else if (i == optionLength - 1) {
+                        prePage = document.getElementById("chapter_select").options[i - 1].value;
+                        nextPage = document.getElementById("chapter_select").options[i].value;
+                        document.getElementsByName('next')[0].disabled = true
+                    } else {
+                        prePage = document.getElementById("chapter_select").options[i - 1].value;
+                        nextPage = document.getElementById("chapter_select").options[i + 1].value;
+                    }
                 }
             }
         }

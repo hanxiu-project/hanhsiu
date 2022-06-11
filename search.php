@@ -93,9 +93,10 @@
                             while ($rowt = $resultshow->fetch_assoc()) {
                                 $srctitleresult_id[] = $rowt['s_id'];
                                 $srctitleresult_number[] = $rowt['number'];
+                                $srctitleresult_type[] = $rowt['typename'];
                             }
                             for ($i = 0; $i < $countresult; $i++) {
-                                echo "<a href=article.php?sid='$srctitleresult_id[$i]' title='$srctitleresult_number[$i]'>$srctitleresult_number[$i]</a>";
+                                echo "<a href=article.php?sid='$srctitleresult_id[$i]' title='$srctitleresult_number[$i]'>$srctitleresult_type[$i] / $srctitleresult_number[$i]</a>";
                             }
                         }
                         ?>
