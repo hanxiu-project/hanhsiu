@@ -20,7 +20,7 @@
             <ul class="dropdown-menu">
                
                 <li>
-                    <a href="indexs.php"><i class="fas fa-share-square"></i> 回前台</a>
+                    <a href="../index.php"><i class="fas fa-share-square"></i> 回前台</a>
                 </li>
                
                 <li class="divider"></li>
