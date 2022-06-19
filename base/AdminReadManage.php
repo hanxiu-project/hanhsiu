@@ -34,8 +34,8 @@ include 'verification.php';
 
         <div class="row" style="margin-bottom: 20px; text-align: left">
             <div class="col-lg-12">
-                <a href="" class="btn btn-success  ">建立新讀誦類別</a>
-                <a href="" class="btn btn-success  ">建立新讀誦檔案</a>
+                <a href="AdminNewRead.php" class="btn btn-success  ">建立新讀誦類別</a>
+                <a href="AdminNewReadFile.php" class="btn btn-success  ">建立新讀誦檔案</a>
 
                 <select id="type" name="type" style="width:525px; height:30px; color:#000000; background-color:white">
                     <option>請選擇類別</option>
