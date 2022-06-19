@@ -97,7 +97,7 @@
                                     while ($video = mysqli_fetch_assoc($resultnum10[$start])) {
                                         echo "<tr>";
                                         echo "<td scope=row>";
-                                        echo "<a class=link-style__1 d-block href=javascript:; data-bs-toggle=modal data-bs-target=#videoModal data-bs-video=zgaY3341eDU>$video[content]</a>";
+                                        echo "<a class=link-style__1 d-block href=javascript:; data-bs-toggle=modal data-bs-target=#videoModal data-bs-video='$video[video_link]'>$video[content]</a>";
                                         echo "</td>";
                                         echo "<td>$video[memo]</td>";
                                         echo "<td>$video[vols]</td>";
@@ -204,7 +204,7 @@
                                     while ($video = mysqli_fetch_assoc($resultnum10[$start])) {
                                         echo "<tr>";
                                         echo "<td scope=row>";
-                                        echo "<a class=link-style__1 d-block href=javascript:; data-bs-toggle=modal data-bs-target=#videoModal data-bs-video=zgaY3341eDU>$video[content]</a>";
+                                        echo "<a class=link-style__1 d-block href=javascript:; data-bs-toggle=modal data-bs-target=#videoModal data-bs-video='$video[video_link]'>$video[content]</a>";
                                         echo "</td>";
                                         echo "<td>$video[memo]</td>";
                                         echo "<td>$video[vols]</td>";
