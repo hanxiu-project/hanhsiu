@@ -88,9 +88,9 @@ include 'verification.php';
                 {
                     $testwatchnetpos = strpos($_POST["video_link"], "watch"); //找網址內有watch?v=的位置(算w的位置在24)
                     $testnet = substr($_POST["video_link"], "$testwatchnetpos"+8); //取的watch?v=之後的網址字串(因為watch?v=所以+8)
-                    $renewnet = substr_replace($_POST["video_link"], "embed/$testnet", $testwatchnetpos); //新網址
+                    //$renewnet = substr_replace($_POST["video_link"], "embed/$testnet", $testwatchnetpos); //新網址
 
-                    $sqlnet = "SELECT * FROM `videos` WHERE `video_link` = '$renewnet'";
+                    $sqlnet = "SELECT * FROM `videos` WHERE `video_link` = '$testnet'";
                     $resultnet = mysqli_query($db_link, $sqlnet);
                     $rownet = mysqli_fetch_assoc($resultnet);
 
@@ -100,11 +100,11 @@ include 'verification.php';
                     elseif ($_POST["video_link"] == null) {
                         echo "<script>alert('請輸入影片網址!');location.href='AdminVideoEdit.php'</script>";
                     }
-                    else if ($rownet['video_link'] == $renewnet) {
+                    else if ($rownet['video_link'] == $testnet) {
                         echo "<script>alert('影片網址重複，請重新輸入！');location.href='AdminVideoEdit.php'</script>";
                     }
                     else {
-                        $sqledit = "UPDATE videos SET `content` = '$_POST[content]', `video_link` = '$renewnet', `memo` = '$_POST[memo]', `vols` = '$_POST[vols]'  WHERE videos.v_id = $_SESSION[edit_v_id] ";
+                        $sqledit = "UPDATE videos SET `content` = '$_POST[content]', `video_link` = '$testnet', `memo` = '$_POST[memo]', `vols` = '$_POST[vols]'  WHERE videos.v_id = $_SESSION[edit_v_id] ";
                         mysqli_query($db_link, $sqledit);
                         echo "<script>alert('影音修改完成!');location.href='AdminVideosManage.php'</script>";
                     }
