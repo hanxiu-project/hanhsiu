@@ -28,21 +28,18 @@
                         </button>
                         <div>
                             <label class="col-form-label">聞思正法</label>
-                            <div class="video-mode__ctrl">
-                                <select class="form-select" id="bigtype_select" onchange="changeBigType(this.value)">
-                                    <?php
-                                    $sql_bigtype = "SELECT * FROM `video_bigtypes` order by vbt_id";
-                                    $result = mysqli_query($db_link, $sql_bigtype);
+                            <select class="form-select mb-2" id="bigtype_select" onchange="changeBigType(this.value)">
+                                <?php
+                                $sql_bigtype = "SELECT * FROM `video_bigtypes` order by vbt_id";
+                                $result = mysqli_query($db_link, $sql_bigtype);
 
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        echo "<option value='$row[vbt_id]'>$row[b_typename]</option>";
-                                    }
-                                    ?>
-                                </select>
-
-                                <select class="form-select" id="chapter_select"></select>
-                                <button type="submit" name="confirm" class="btn-style__1 smaller full-w" onclick="confirm()">確認</button>
-                            </div>
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<option value='$row[vbt_id]'>$row[b_typename]</option>";
+                                }
+                                ?>
+                            </select>
+                            <select class="form-select mb-2" id="chapter_select"></select>
+                            <button type="submit" name="confirm" class="btn-style__1 smaller full-w" onclick="confirm()">確認</button>
                         </div>
                     </div>
                 </div>
