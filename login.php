@@ -35,7 +35,7 @@
                         </form>
 
                         <div class="text-end mt-3">
-                            <a class="link-style__2" href="forgetpw.html">忘記密碼</a>
+                            <a class="link-style__2" href="forgetpwd.php">忘記密碼</a>
                         </div>
 
                         <hr class="line-style__1" />
