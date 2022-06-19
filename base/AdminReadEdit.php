@@ -10,9 +10,9 @@
     <meta name="author" content="">
     <script src="../ckeditor/ckeditor.js?ver=<?php echo time(); ?>"></script>
 
-    <title>影音編輯 | 管理後台</title>
+    <title>讀誦編輯 | 管理後台</title>
     <?php
-        include 'head.php';
+    include 'head.php';
     ?>
 </head>
 
@@ -32,7 +32,7 @@ include 'verification.php';
             <div class='wrapper'>
                 <meta http-equiv="content-type" content="text/html;charset=UTF-8">
                 <?php
-                $sql="SELECT v.*, s.s_typename, b.b_typename FROM videos v left join video_smalltypes s on v.vst_id = s.vst_id left join video_bigtypes b on v.vbt_id = b.vbt_id where v.v_id = $_SESSION[edit_v_id]";
+                $sql="SELECT * FROM repeatafterme where r_id = $_SESSION[edit_r_id]";
                 $result=mysqli_query($db_link,$sql);
                 $row=mysqli_fetch_assoc($result);
                 ?>
@@ -44,14 +44,10 @@ include 'verification.php';
                                     <div class="col-lg-12">
                                         <form name="forms" method="POST" action="">
                                             <div class="form-group">
-                                                <label for="b_title">大類別:</label>
-                                                <input id="b_title" name="b_title" type="text" disabled="disabled" value="<?php echo $row['b_typename'] ?>" style="width:525px; height:30px; color:#000000; background-color:transparent" >
+                                                <label for="type">類別名稱:</label>
+                                                <input id="type" name="type" type="text" disabled="disabled" value="<?php echo $row['typename'] ?>" style="width:525px; height:30px; color:#000000; background-color:transparent" >
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="s_title">小類別:</label>
-                                                <input id="s_title" name="s_title" type="text" disabled="disabled" value="<?php echo $row['s_typename'] ?>" style="width:525px; height:30px; color:#000000; background-color:transparent" >
-                                            </div>
 
                                             <div class="form-group">
                                                 <label for="content">內容:</label>
@@ -59,8 +55,8 @@ include 'verification.php';
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="video_link">影片連結:</label>
-                                                <input id="video_link" name="video_link" type="text"  value="<?php echo $row['video_link'] ?>" style="width:525px; height:30px; color:#000000; background-color:transparent" >
+                                                <label for="link">雲端連結:</label>
+                                                <input id="link" name="link" type="text"  value="<?php echo $row['link'] ?>" style="width:525px; height:30px; color:#000000; background-color:transparent" >
                                             </div>
 
                                             <div class="form-group">
@@ -86,27 +82,16 @@ include 'verification.php';
                 <?php
                 if(isset($_POST["edit"]))
                 {
-                    $testwatchnetpos = strpos($_POST["video_link"], "watch"); //找網址內有watch?v=的位置(算w的位置在24)
-                    $testnet = substr($_POST["video_link"], "$testwatchnetpos"+8); //取的watch?v=之後的網址字串(因為watch?v=所以+8)
-                    $renewnet = substr_replace($_POST["video_link"], "embed/$testnet", $testwatchnetpos); //新網址
-
-                    $sqlnet = "SELECT * FROM `videos` WHERE `video_link` = '$renewnet'";
-                    $resultnet = mysqli_query($db_link, $sqlnet);
-                    $rownet = mysqli_fetch_assoc($resultnet);
-
                     if($_POST["content"] == null) {
-                        echo "<script>alert('請輸入影片內容!');location.href='AdminVideoEdit.php'</script>";
+                        echo "<script>alert('請輸入讀誦內容!');location.href='AdminReadEdit.php'</script>";
                     }
-                    elseif ($_POST["video_link"] == null) {
-                        echo "<script>alert('請輸入影片網址!');location.href='AdminVideoEdit.php'</script>";
-                    }
-                    else if ($rownet['video_link'] == $renewnet) {
-                        echo "<script>alert('影片網址重複，請重新輸入！');location.href='AdminVideoEdit.php'</script>";
+                    elseif ($_POST["link"] == null) {
+                        echo "<script>alert('請輸入雲端連結!');location.href='AdminReadEdit.php'</script>";
                     }
                     else {
-                        $sqledit = "UPDATE videos SET `content` = '$_POST[content]', `video_link` = '$renewnet', `memo` = '$_POST[memo]', `vols` = '$_POST[vols]'  WHERE videos.v_id = $_SESSION[edit_v_id] ";
+                        $sqledit = "UPDATE repeatafterme SET `content` = '$_POST[content]', `link` = '$_POST[link]', `memo` = '$_POST[memo]', `vols` = '$_POST[vols]'  WHERE repeatafterme.r_id = $_SESSION[edit_r_id] ";
                         mysqli_query($db_link, $sqledit);
-                        echo "<script>alert('影音修改完成!');location.href='AdminVideosManage.php'</script>";
+                        echo "<script>alert('讀誦修改完成!');location.href='AdminReadManage.php'</script>";
                     }
                 }
                 ?>

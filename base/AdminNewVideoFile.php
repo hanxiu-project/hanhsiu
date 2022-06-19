@@ -11,11 +11,9 @@
     <script src="../ckeditor/ckeditor.js?ver=<?php echo time; ?>"></script>
 
     <title>新增影音檔案 | 管理後台</title>
-
     <?php
-include 'head.php';
-?>
-
+    include 'head.php';
+    ?>
 </head>
 
 <body>
@@ -39,16 +37,13 @@ include 'verification.php';
                 <meta http-equiv="content-type" content="text/html;charset=UTF-8">
 
                 <?php
-/*資料庫連結*/
+                    /*資料庫連結*/
+                    $sql_b_type = "SELECT * FROM `video_bigtypes`";
+                    $result_b_type = mysqli_query($db_link, $sql_b_type);
 
-$sql = "SELECT * FROM posts WHERE posts.p_id = $_SESSION[edit_p_id]";
-$result = mysqli_query($db_link, $sql);
-$row = mysqli_fetch_assoc($result);
-
-$sqltype = "SELECT * FROM `videotypes`";
-$resulttype = mysqli_query($db_link, $sqltype);
-
-?>
+                    $sql_s_type = "SELECT * FROM `video_smalltypes`";
+                    $result_s_type = mysqli_query($db_link, $sql_s_type);
+                ?>
 
                 <div id="con2">
                     <div class="main">
@@ -62,30 +57,46 @@ $resulttype = mysqli_query($db_link, $sqltype);
                                         <form name="forms" method="POST" action="">
 
                                             <div class="form-group">
-                                                <label for="type">影音類別:</label>
-                                                <select id="type" name="type"  style="width:525px; height:30px; color:#000000; background-color:transparent">
+                                                <label for="b_type">影音大類別:</label>
+                                                <select id="b_type" name="b_type"  style="width:525px; height:30px; color:#000000; background-color:transparent">
                                                     <?php
-while ($row = $resulttype->fetch_assoc()) {
-    echo "<option name='type' value=$row[t_id]>$row[typename]</option>";
-}
-$sqltypeinput = "SELECT * FROM `videotypes` where `t_id`='$_POST[type]'";
-$resulttypeinput = mysqli_query($db_link, $sqltypeinput);
-$rowinput = mysqli_fetch_assoc($resulttypeinput);
-$_SESSION['inputtype'] = $rowinput['typename'];
-?>
-
+                                                        while ($row_b_type = $result_b_type->fetch_assoc()) {
+                                                            echo "<option name='type' value=$row_b_type[vbt_id]>$row_b_type[b_typename]</option>";
+                                                        }
+                                                    ?>
                                                 </select>
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="vcontent">影片描述:</label>
-                                                <input id="vcontent" name="vcontent" type="text"   style="width:525px; height:30px; color:#000000; background-color:transparent" >
+                                                <label for="s_type">影音小類別:</label>
+                                                <select id="s_type" name="s_type"  style="width:525px; height:30px; color:#000000; background-color:transparent">
+                                                    <option name="type" value="none">請選擇類別</option>
+                                                    <?php
+                                                        while ($row_s_type = $result_s_type->fetch_assoc()) {
+                                                            echo "<option name='type' value=$row_s_type[vst_id]>$row_s_type[s_typename]</option>";
+                                                        }
+                                                    ?>
+                                                </select>
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="vnet">影片網址:</label>
-                                                <input id="vnet" name="vnet" type="text"   style="width:525px; height:30px; color:#000000; background-color:transparent" >
+                                                <label for="content">影片內容:</label>
+                                                <input id="content" name="content" type="text"   style="width:525px; height:30px; color:#000000; background-color:transparent" >
+                                            </div>
 
+                                            <div class="form-group">
+                                                <label for="video_link">影片網址:</label>
+                                                <input id="video_link" name="video_link" type="text"   style="width:525px; height:30px; color:#000000; background-color:transparent" >
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="memo">備註:</label>
+                                                <input id="memo" name="memo" type="text"   style="width:525px; height:30px; color:#000000; background-color:transparent" >
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="vols">集數:</label>
+                                                <input id="vols" name="vols" type="text"   style="width:525px; height:30px; color:#000000; background-color:transparent" >
                                             </div>
 
                                             <div class="form-group">
@@ -101,32 +112,36 @@ $_SESSION['inputtype'] = $rowinput['typename'];
                 </div>
 
                 <?php
+                    if (isset($_POST["vpost"])) {
+                        $testwatchnetpos = strpos($_POST["video_link"], "watch"); //找網址內有watch?v=的位置(算w的位置在24)
+                        $testnet = substr($_POST["video_link"], "$testwatchnetpos"+8); //取的watch?v=之後的網址字串(因為watch?v=所以+8)
+                        $renewnet = substr_replace($_POST["video_link"], "embed/$testnet", $testwatchnetpos); //新網址
 
-$vcontent = $_POST["vcontent"];
-$vnet = $_POST["vnet"];
+                        $sqlnet = "SELECT * FROM `videos` WHERE `video_link` = '$renewnet'";
+                        $resultnet = mysqli_query($db_link, $sqlnet);
+                        $rownet = mysqli_fetch_assoc($resultnet);
 
-if (isset($_POST["vpost"])) {
-    $testwatchnetpos = strpos($_POST["vnet"], "watch"); //找網址內有watch?v=的位置(算w的位置在24)
-    $testnet = substr($_POST["vnet"], "$testwatchnetpos"+8); //取的watch?v=之後的網址字串(因為watch?v=所以+8)
-    $renewnet = substr_replace($_POST["vnet"], "embed/$testnet", $testwatchnetpos); //新網址
-
-    $sqlnet = "SELECT * FROM `videos` WHERE `vnet` = '$renewnet'";
-    $resultnet = mysqli_query($db_link, $sqlnet);
-    $rownet = mysqli_fetch_assoc($resultnet);
-
-    if ($vcontent == null && $vnet == null) {
-        echo "<script>alert('請輸入影片網址或影片描述!');location.href='AdminNewVideoFile.php'</script>";
-    } else if ($rownet['vnet'] == $renewnet) {
-        echo "<script>alert('請輸入影片網址重複，請重新輸入！');location.href='AdminNewVideoFile.php'</script>";
-    } else {
-        $sql = "INSERT INTO `videos` (v_id,t_id,typename,vcontent,vnet) VALUES('NULL','$_POST[type]','$rowinput[typename]','$vcontent','$renewnet')";
-        mysqli_query($db_link, $sql);
-        echo "<script>alert('影音已經上傳!');location.href='AdminVideosManage.php'</script>";
-    }
-}
-mysqli_close($db_link);
-?>
-                </form>
+                        if ($_POST["content"] == null && $_POST["video_link"] == null) {
+                            echo "<script>alert('請輸入影片網址或影片描述!');location.href='AdminNewVideoFile.php'</script>";
+                        }
+                        else if ($rownet['video_link'] == $renewnet) {
+                            echo "<script>alert('影片網址重複，請重新輸入！');location.href='AdminNewVideoFile.php'</script>";
+                        }
+                        else {
+                            if ($_POST['s_type'] == 'none') {
+                                $sql = "INSERT INTO `videos` (v_id, vbt_id, content, video_link, memo, vols) VALUES('NULL', '$_POST[b_type]', '$_POST[content]', '$renewnet', '$_POST[memo]', '$_POST[vols]')";
+                                mysqli_query($db_link, $sql);
+                                echo "<script>alert('影音已經上傳!');location.href='AdminVideosManage.php'</script>";
+                            }
+                            else {
+                                $sql = "INSERT INTO `videos` (v_id, vbt_id, vst_id, content, video_link, memo, vols) VALUES('NULL', '$_POST[b_type]', '$_POST[s_type]', '$_POST[content]', '$renewnet', '$_POST[memo]', '$_POST[vols]')";
+                                mysqli_query($db_link, $sql);
+                                echo "<script>alert('影音已經上傳!');location.href='AdminVideosManage.php'</script>";
+                            }
+                        }
+                    }
+                    mysqli_close($db_link);
+                ?>
 
             </div>
             <!-- /.container-fluid -->

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>影音總覽 | 管理後台</title>
+    <title>讀誦總覽 | 管理後台</title>
 
     <?php
     include 'head.php';
@@ -27,43 +27,32 @@ include 'verification.php';
         <?php include 'nav.php';?>
         <?php include '../database.php';?>
         <?php
-        $sqltype = "SELECT * FROM `video_bigtypes` ";
+        $sqltype = "SELECT * FROM `repeataftermetypes` ";
         $resulttype = mysqli_query($db_link, $sqltype);
-//        $sql_s_type = "SELECT * FROM `video_smalltypes` ";
-//        $result_s_type = mysqli_query($db_link, $sql_s_type);
         ?>
 
-        <!--建立新公告-->
+
         <div class="row" style="margin-bottom: 20px; text-align: left">
             <div class="col-lg-12">
-                <a href="AdminNewVideos.php" class="btn btn-success  ">建立新影音類別</a>
-                <a href="AdminNewVideoFile.php" class="btn btn-success  ">建立新影音檔案</a>
+                <a href="" class="btn btn-success  ">建立新讀誦類別</a>
+                <a href="" class="btn btn-success  ">建立新讀誦檔案</a>
 
                 <select id="type" name="type" style="width:525px; height:30px; color:#000000; background-color:white">
                     <option>請選擇類別</option>
                     <option value="all">全選</option>
                     <?php
-                        while ($rowtype = $resulttype->fetch_assoc()) {
-                            echo "<option name=typeid value=$rowtype[vbt_id]>$rowtype[b_typename]</option>";
-                        }
+                    while ($rowtype = $resulttype->fetch_assoc()) {
+                        echo "<option name=typeid value=$rowtype[t_id]>$rowtype[repeatype]</option>";
+                    }
                     ?>
                 </select>
-<!--                <select id="s_type" name="s_type" style="width:525px; height:30px; color:#000000; background-color:white">-->
-<!--                    <option>請選擇類別</option>-->
-<!--                    <option value="all">全選</option>-->
-<!--                    --><?php
-//                    while ($row_s_type = $result_s_type->fetch_assoc()) {
-//                        echo "<option name=s_typeid value=$row_s_type[s_typename]>$row_s_type[s_typename]</option>";
-//                    }
-//                    ?>
-<!--                </select>-->
-                <input type="submit" class="btn btn-sm btn-warning" name="gotype" value="查看影音類別">
+                <input type="submit" class="btn btn-sm btn-warning" name="gotype" value="查看讀誦類別">
             </div>
         </div>
 </form>
 
 <div class="col-lg-12">
-    <h2><b>影音總覽</b><h1>
+    <h2><b>讀誦總覽</b><h1>
 </div>
 <!--Body-->
 <div id="page-wrapper">
@@ -76,29 +65,27 @@ include 'verification.php';
             <?php
             /*資料庫連結*/
 
-            $sql = "SELECT v.*, s.s_typename, b.b_typename FROM videos v left join video_smalltypes s on v.vst_id  = s.vst_id left join video_bigtypes b on v.vbt_id = b.vbt_id order by v.vbt_id";
+            $sql = "SELECT * FROM repeatafterme";
             $result = mysqli_query($db_link, $sql);
             $resultfortd = mysqli_query($db_link, $sql);
             $rowfortd = $resultfortd->fetch_assoc();
             echo "<form name='form1' method='POST' action=''>";
             echo "<table border=1 width=100% style=font-size:24px;line-height:50px; >";
             echo "<tr align=center>";
-            echo "<td>大類別</td>";
-            echo "<td>小類別</td>";
+            echo "<td>類別名稱</td>";
             echo "<td>內容</td>";
-            echo "<td>影片網址</td>";
+            echo "<td>雲端連結</td>";
             echo "<td>備註</td>";
             echo "<td>集數</td>";
-            if ($rowfortd["v_id"] != null) {
+            if ($rowfortd["r_id"] != null) {
                 echo "<td></td>";
                 echo "<td></td>";
             }
             echo "</tr>";
 
             if (!($_GET["type"]) || $_GET["type"] == "all") {
-                $sqlvideo = "SELECT v.*, s.s_typename, b.b_typename FROM videos v left join video_smalltypes s on v.vst_id  = s.vst_id left join video_bigtypes b on v.vbt_id = b.vbt_id order by v.vbt_id";
+                $sqlvideo = "SELECT * FROM repeatafterme";
                 $resultv = mysqli_query($db_link, $sqlvideo);
-
                 $date_nums = mysqli_num_rows($resultv); //講記數量
                 $per = 10; //10筆換頁
                 $pages = ceil($date_nums / $per); //共幾頁
@@ -109,20 +96,19 @@ include 'verification.php';
                 }
 
                 $start = ($page - 1) * $per;
-                $sqlresult = "SELECT v.*, s.s_typename, b.b_typename FROM videos v left join video_smalltypes s on v.vst_id  = s.vst_id left join video_bigtypes b on v.vbt_id = b.vbt_id order by v.vbt_id Limit $start , $per";
+                $sqlresult = "SELECT * FROM repeatafterme Limit $start , $per";
                 $videoresult[$start] = mysqli_query($db_link, $sqlresult);
                 $videoresult[$page] = mysqli_query($db_link, $sqlresult);
                 while ($row = mysqli_fetch_assoc($videoresult[$start])) {
                     echo "<tr align=center>";
-                    echo "<td>$row[b_typename]</td>";
-                    echo "<td>$row[s_typename]</td>";
+                    echo "<td>$row[typename]</td>";
                     echo "<td>$row[content]</td>";
-                    echo "<td>$row[video_link]</td>";
+                    echo "<td>$row[link]</td>";
                     echo "<td>$row[memo]</td>";
                     echo "<td>$row[vols]</td>";
-                    echo "<td><input type='submit' class='btn btn-sm btn-primary' style='width:100px;height:30px;' name='$row[v_id]+1' value='編輯'></td>";
+                    echo "<td><input type='submit' class='btn btn-sm btn-primary' style='width:100px;height:30px;' name='$row[r_id]+1' value='編輯'></td>";
                     ?>
-                    <td><input type='submit' class="btn btn-sm btn-danger " style='width:100px;height:30px;' name="<?php echo "$row[v_id]+2"; ?>" value='刪除' onclick="return confirm('是否確認刪除這部影片?')"></td>
+                    <td><input type='submit' class="btn btn-sm btn-danger " style='width:100px;height:30px;' name="<?php echo "$row[r_id]+2"; ?>" value='刪除' onclick="return confirm('是否確認刪除這部影片?')"></td>
                     <?php
                     echo "</tr>";
                 }
@@ -141,7 +127,7 @@ include 'verification.php';
                 echo "</center>";
             }
             elseif (isset($_GET["type"])) {
-                $sqltype = "SELECT v.*, s.s_typename, b.b_typename FROM videos v left join video_smalltypes s on v.vst_id = s.vst_id left join video_bigtypes b on v.vbt_id = b.vbt_id where v.vbt_id = '$_GET[type]'";
+                $sqltype = "SELECT * FROM repeatafterme where t_id = '$_GET[type]'";
                 $resulttype = mysqli_query($db_link, $sqltype);
                 $date_nums = mysqli_num_rows($resulttype); //講記數量
                 $per = 10; //10筆換頁
@@ -153,19 +139,18 @@ include 'verification.php';
                 }
 
                 $start = ($page - 1) * $per;
-                $sqlresultvdo = "SELECT v.*, s.s_typename, b.b_typename FROM videos v left join video_smalltypes s on v.vst_id = s.vst_id left join video_bigtypes b on v.vbt_id = b.vbt_id where v.vbt_id = '$_GET[type]' Limit $start , $per";
+                $sqlresultvdo = "SELECT * FROM repeatafterme where t_id = '$_GET[type]' Limit $start , $per";
                 $vdoresult['src'] = mysqli_query($db_link, $sqlresultvdo);
                 while ($row = mysqli_fetch_assoc($vdoresult['src'])) {
                     echo "<tr align=center>";
-                    echo "<td>$row[b_typename]</td>";
-                    echo "<td>$row[s_typename]</td>";
+                    echo "<td>$row[typename]</td>";
                     echo "<td>$row[content]</td>";
-                    echo "<td>$row[video_link]</td>";
+                    echo "<td>$row[link]</td>";
                     echo "<td>$row[memo]</td>";
                     echo "<td>$row[vols]</td>";
-                    echo "<td><input type='submit' class='btn btn-sm btn-primary' style='width:100px;height:30px;' name='$row[v_id]+1' value='編輯'></td>";
+                    echo "<td><input type='submit' class='btn btn-sm btn-primary' style='width:100px;height:30px;' name='$row[r_id]+1' value='編輯'></td>";
                     ?>
-                    <td><input type='submit' class="btn btn-sm btn-danger " style='width:100px;height:30px;' name="<?php echo "$row[v_id]+2"; ?>" value='刪除' onclick="return confirm('是否確認刪除這部影片?')"></td>
+                    <td><input type='submit' class="btn btn-sm btn-danger " style='width:100px;height:30px;' name="<?php echo "$row[r_id]+2"; ?>" value='刪除' onclick="return confirm('是否確認刪除這部影片?')"></td>
                     <?php
                     echo "</tr>";
                 }
@@ -183,20 +168,20 @@ include 'verification.php';
                 echo " 頁 <a href=?type=$_GET[type]&page=$pages>末頁</a>";
                 echo "</center>";
             }
-            $sql2 = "SELECT * FROM videos";
+            $sql2 = "SELECT * FROM repeatafterme";
             $result2 = mysqli_query($db_link, $sql2);
             while ($row2 = $result2->fetch_assoc()) {
-                if (isset($_POST["$row2[v_id]+1"])) {
-                    $_SESSION["edit_v_id"] = $row2["v_id"];
+                if (isset($_POST["$row2[r_id]+1"])) {
+                    $_SESSION["edit_r_id"] = $row2["r_id"];
                     echo "<script langauge = 'javascript' type='text/javascript'>";
-                    echo "window.location.href = 'AdminVideoEdit.php'";
+                    echo "window.location.href = 'AdminReadEdit.php'";
                     echo "</script>";
                 }
-                if (isset($_POST["$row2[v_id]+2"])) {
-                    $_SESSION["delete_v_id"] = $row2["v_id"];
-                    $sql_delete = "DELETE FROM videos WHERE videos.v_id = $_SESSION[delete_v_id]";
+                if (isset($_POST["$row2[r_id]+2"])) {
+                    $_SESSION["delete_r_id"] = $row2["r_id"];
+                    $sql_delete = "DELETE FROM repeatafterme WHERE repeatafterme.r_id = $_SESSION[delete_r_id]";
                     mysqli_query($db_link, $sql_delete);
-                    echo "<script>alert('成功刪除!');location.href='AdminVideosManage.php'</script>";
+                    echo "<script>alert('成功刪除!');location.href='AdminReadManage.php'</script>";
                 }
             }
             mysqli_close($db_link);
