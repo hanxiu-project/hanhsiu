@@ -133,9 +133,27 @@
                     <li>
                         <a href="AdminNewVideoFile.php"><i class="fas fa-video"></i> 新增影音網址</a>
                     </li>
+<!--                    <li>-->
+<!--                        <a href="AdminVideoTypeSort.php"><i class="fas fa-video"></i> 影音類別排序</a>-->
+<!--                    </li>-->
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="AdminReadManage.php" class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-video"></i> 筆錄讀誦管理<b class="caret"></b></a>
+                <ul class="dropdown-menu">
                     <li>
-                        <a href="AdminVideoTypeSort.php"><i class="fas fa-video"></i> 影音類別排序</a>
+                        <a href="AdminReadManage.php"><i class="fas fa-video"></i> 讀誦總覽</a>
                     </li>
+                    <li>
+                        <a href="AdminNewRead.php"><i class="fas fa-video"></i> 新增讀誦類別</a>
+                    </li>
+
+                    <li>
+                        <a href="AdminNewReadFile.php"><i class="fas fa-video"></i> 新增讀誦檔案</a>
+                    </li>
+                    <!--                    <li>-->
+                    <!--                        <a href="AdminVideoTypeSort.php"><i class="fas fa-video"></i> 影音類別排序</a>-->
+                    <!--                    </li>-->
                 </ul>
             </li>
             <li class="dropdown">
