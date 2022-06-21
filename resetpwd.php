@@ -71,9 +71,9 @@
                 echo "<script>alert('確認密碼不符，請重新輸入');</script>";
             }
             else if ($email == $_POST[email] && $_POST[password] == $_POST[re_password]) {
-                $passowrd_hash = password_hash($_POST[password], PASSWORD_DEFAULT);	
+                $password_hash = password_hash($_POST[password], PASSWORD_DEFAULT);
 
-                $sqlup_pwd="UPDATE `members` SET `password` = '$passowrd_hash' WHERE `members`.`email` = '$_POST[email]'";
+                $sqlup_pwd="UPDATE `members` SET `password` = '$password_hash' WHERE `members`.`email` = '$_POST[email]'";
                 mysqli_query($db_link,$sqlup_pwd);
                 echo "<script>alert('修改完成，請重新登入');location.href='login.php'</script>";
 
