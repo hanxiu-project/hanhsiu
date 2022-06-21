@@ -65,7 +65,7 @@
 
             $sqlup_pwd="UPDATE `members` SET `password` = '$password_hash' WHERE `members`.`account` = '$row[account]'";
             mysqli_query($db_link,$sqlup_pwd);
-            echo "<script>alert('修改完成，請重新登入');location.href='member.php'</script>";
+            echo "<script>alert('修改完成，請重新登入');location.href='logout.php'</script>";
         }
     }
 ?>
