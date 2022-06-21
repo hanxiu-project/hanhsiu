@@ -50,9 +50,6 @@
             </div>
         </section>
         <?php
-        /*$_SESSION['acc'] = $_POST["account"];                            //session存帳號密碼
-    $_SESSION['pwd'] = $_POST["password"];*/
-
         $sql_login = "SELECT * FROM `members` WHERE `account` = '$_POST[account]'";
         $result = mysqli_query($db_link, $sql_login);
         $row = mysqli_fetch_assoc($result);                        //查詢資料庫
