@@ -117,15 +117,8 @@ include 'verification.php';
                         $testnet = substr($_POST["video_link"], "$testwatchnetpos"+8); //取的watch?v=之後的網址字串(因為watch?v=所以+8)
                         //$renewnet = substr_replace($_POST["video_link"], "embed/$testnet", $testwatchnetpos); //新網址
 
-                        $sqlnet = "SELECT * FROM `videos` WHERE `video_link` = '$testnet'";
-                        $resultnet = mysqli_query($db_link, $sqlnet);
-                        $rownet = mysqli_fetch_assoc($resultnet);
-
                         if ($_POST["content"] == null && $_POST["video_link"] == null) {
                             echo "<script>alert('請輸入影片網址或影片描述!');location.href='AdminNewVideoFile.php'</script>";
-                        }
-                        else if ($rownet['video_link'] == $testnet) {
-                            echo "<script>alert('影片網址重複，請重新輸入！');location.href='AdminNewVideoFile.php'</script>";
                         }
                         else {
                             if ($_POST['s_type'] == 'none') {
