@@ -104,58 +104,54 @@
                         </div>
 
                         <hr class="line-style__2" />
-
                         <div class="msg-list">
-                            <?
-                        while($allmsg=mysqli_fetch_assoc($result_allmsg))
-                            {
-                                $c_id=$allmsg['c_id'];
-                                $m_id2=$allmsg['m_id'];
-                                $msg=$allmsg['message'];
-                                $time=$allmsg['msg_datetime'];
-                                $status=$allmsg['status'];
-                                $reply=$allmsg['reply'];
-                                ?>
-
+                            <?php
+                            while($allmsg=mysqli_fetch_assoc($result_allmsg))
+                                {
+                                    $c_id=$allmsg['c_id'];
+                                    $m_id2=$allmsg['m_id'];
+                                    $msg=$allmsg['message'];
+                                    $time=$allmsg['msg_datetime'];
+                                    $status=$allmsg['status'];
+                                    $reply=$allmsg['reply'];
+                            ?>
                                 <div class="msg-wrap">
                                 <div class="text-end">
-                                    <button type="button" class="msg-wrap__btn" data-bs-toggle="modal" data-bs-target="#confirmModal"></button>
+                                    <button type="button" id="<?php echo $allmsg['c_id'];?>" onclick="comments_delete(this.id)" name="open_button" class="msg-wrap__btn" data-bs-toggle="modal" data-bs-target="#confirmModal" data-id="<?php echo $allmsg['c_id'];?>"></button>
                                 </div>
                                 <a class="msg-wrap__link" href="javascript:;" data-bs-toggle="modal" data-bs-target="#msgModal">
                                     <div class="msg-wrap__msg">
-                                        <div class="truncate" data-bs-msgtime=" <?php echo $time; ?>">
+                                        <div class="truncate" data-bs-msgtime=" <?php echo $allmsg['msg_datetime']; ?>">
                                             <p>
-                                            <?php echo $msg; ?>
+                                            <?php echo $allmsg['message']; ?>
                                             </p>
                                         </div>
                                     </div>
                                     <?php
-                                    if($status=='1')
-                                    {
-                                        ?>
+                                    if($status=='1') {
+                                    ?>
                                         <div class="msg-wrap__reply">
-                                        <div class="truncate" data-bs-msgtime="<?php echo $time; ?>">
-                                            <p class="text-center"><?php echo $reply; ?></p>
+                                            <div class="truncate" data-bs-msgtime="<?php echo $allmsg['msg_datetime']; ?>">
+                                                <p class="text-center"><?php echo $allmsg['reply']; ?></p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <?php
-                                    }else
-                                    {
-                                        ?>
-                                        <div class="msg-wrap__reply">
-                                        <div class="truncate" data-bs-msgtime="<?php echo $time; ?>">
-                                            <p class="text-center">尚無回覆內容</p>
-                                        </div>
-                                    </div>
                                     <?php
                                     }
-                                     ?>
-                                  
-                                    <p class="msg-wrap__time text-end p-2"><?php echo $time; ?></p>
+                                    else {
+                                    ?>
+                                        <div class="msg-wrap__reply">
+                                            <div class="truncate" data-bs-msgtime="<?php echo $allmsg['msg_datetime']; ?>">
+                                                <p class="text-center">尚無回覆內容</p>
+                                            </div>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                    <p class="msg-wrap__time text-end p-2"><?php echo $allmsg['msg_datetime']; ?></p>
                                 </a>
                             </div>
 
-                                <?php
+                            <?php
                             }
                             ?>
                            
@@ -190,9 +186,20 @@
                         </div>
                         <p class="text-center">確定要刪除此留言嗎？</p>
                     </div>
+                    <form action="" method="post" name="delete">
                     <div class="modal-footer justify-content-center">
                         <button type="button" class="btn-style__2 darker mx-2" data-bs-dismiss="modal" aria-label="Close">取消</button>
-                        <button type="submit" name="del" class="btn-style__2 mx-2" data-bs-dismiss="modal" aria-label="Close">確定</button>
+                        <button type="submit" id="confirm_button" data-id="" name="confirm_button" class="btn-style__2 mx-2 confirm-delete" data-bs-dismiss="modal" aria-label="Close">確定</button>
+                        <input type="hidden" id="delete_value" name="delete_value" value="" class="deleted-value" >
+                    </form>
+
+                    <?php
+                        if (isset($_POST["confirm_button"])) {
+                            $sql_delete= "DELETE FROM comments WHERE c_id = '$_POST[delete_value]'";
+                            mysqli_query($db_link, $sql_delete);
+                            echo "<script>alert('成功刪除!');location.href='member.php'</script>";
+                        }
+                    ?>
                      
                     </div>
                 </div>
@@ -201,10 +208,30 @@
 
     <footer w3-include-html="include/_footer.php"></footer>
 
+    <script type="text/javascript">
+            // var open_button = document.getElementById("open_button");
+            // open_button[0].addEventListener("click", function (){
+            //     console.log("123")
+            //     var id = open_button.getAttribute("data-id");
+            //     var confirm_button = document.getElementById("confirm_button");
+            //     var delete_value = document.getElementById("delete_value");
+            //     confirm_button.setAttribute("data-id", id);
+            //     delete_value.setAttribute("value", id);
+            // });
+
+            function comments_delete(id){
+                var confirm_button = document.getElementById("confirm_button");
+                var delete_value = document.getElementById("delete_value");
+                confirm_button.setAttribute("data-id", id);
+                delete_value.setAttribute("value", id);
+            }
+    </script>
+
     <!-- JAVASCRIPT W3 -->
     <script>
         w3.includeHTML();
     </script>
+
 
     <!-- JAVASCRIPT -->
     <script src="js/bootstrap.bundle.min.js"></script>
