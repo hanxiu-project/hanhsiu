@@ -167,7 +167,7 @@
             /*$sqlii = "INSERT INTO `members` (account,password,name,gender,email,address,telephone,authority) VALUES('$_POST[account]','$_POST[password]','$_POST[name]','$_POST[sex]','$_POST[email]','$_POST[address]','$_POST[telephone]','0')";
                   mysqli_query($db_link, $sqlii);*/
 
-            $passowrd_hash = password_hash($p, PASSWORD_BCRYPT);
+            $passowrd_hash = password_hash($p, PASSWORD_DEFAULT);
 
             $vkey = md5(time() . $u);
             $sql_insert = "INSERT INTO `members` (account,password,name,gender,email,address,telephone,authority,vkey) VALUES ('$_POST[inputAccount]','$passowrd_hash','$_POST[inputName]','$_POST[sex]','$_POST[inputEmail]','$_POST[inputAddress]','$_POST[inputPhone]','0','$vkey')";
