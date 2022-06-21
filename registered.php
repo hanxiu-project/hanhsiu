@@ -19,15 +19,15 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputPassword" class="col-sm-5 col-lg-3 col-form-label">新密碼 / NewPassword</label>
+                            <label for="inputPassword" class="col-sm-5 col-lg-3 col-form-label">密碼 / NewPassword</label>
                             <div class="col-sm-7 col-lg-9">
-                                <input type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="請輸入新密碼" />
+                                <input type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="請輸入密碼" />
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputPasswordAgain" class="col-sm-5 col-lg-3 col-form-label">確認新密碼 / Confirm</label>
+                            <label for="inputPasswordAgain" class="col-sm-5 col-lg-3 col-form-label">確認密碼 / Confirm</label>
                             <div class="col-sm-7 col-lg-9">
-                                <input type="password" class="form-control" name="inputPasswordAgain" id="inputPasswordAgain" placeholder="請再次輸入新密碼" />
+                                <input type="password" class="form-control" name="inputPasswordAgain" id="inputPasswordAgain" placeholder="請再次輸入密碼" />
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -167,7 +167,7 @@
             /*$sqlii = "INSERT INTO `members` (account,password,name,gender,email,address,telephone,authority) VALUES('$_POST[account]','$_POST[password]','$_POST[name]','$_POST[sex]','$_POST[email]','$_POST[address]','$_POST[telephone]','0')";
                   mysqli_query($db_link, $sqlii);*/
 
-            $passowrd_hash = password_hash($p, PASSWORD_DEFAULT);
+            $passowrd_hash = password_hash($p, PASSWORD_BCRYPT);
 
             $vkey = md5(time() . $u);
             $sql_insert = "INSERT INTO `members` (account,password,name,gender,email,address,telephone,authority,vkey) VALUES ('$_POST[inputAccount]','$passowrd_hash','$_POST[inputName]','$_POST[sex]','$_POST[inputEmail]','$_POST[inputAddress]','$_POST[inputPhone]','0','$vkey')";

@@ -169,7 +169,7 @@ include 'verification.php';
                                 }
                             }
                         }
-                        $sql4 = "SELECT * FROM video_smalltypes WHERE s_typename = '$_POST[s_type]'";
+                        $sql4 = "SELECT * FROM video_smalltypes where s_typename ='$_POST[s_type]'";
                         $result4 = mysqli_query($db_link, $sql4);
                         $row4 = mysqli_num_rows($result4);
                         

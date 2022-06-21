@@ -25,7 +25,7 @@
                
                 <li class="divider"></li>
                 <li>
-                    <a href="logout.php"><i class="fa fa-fw fa-power-off"></i>登出</a>
+                    <a href="../logout.php"><i class="fa fa-fw fa-power-off"></i>登出</a>
                 </li>
             </ul>
         </li>
@@ -47,13 +47,13 @@
 				<ul class="dropdown-menu">
 					<li>
 				<a href="AdminSloganEdit.php"><i class="fas fa-file"></i> 首頁標語編輯</a>
-				</li>
+				<!--</li>
 					<li>
 				<a href="AdminErrorSloganEdit.php"><i class="fas fa-file"></i> 留言區標語編輯</a>
 				</li>
 					<li>
 				<a href="AdminfootSloganEdit.php"><i class="fas fa-file"></i> 底部標語編輯</a>
-				</li>
+				</li>-->
 				</ul>
 				</li>
             <li class="dropdown">
@@ -74,9 +74,9 @@
                     <li>
                         <a href="AdminScripturesTypeSort.php"><i class="fas fa-file"></i> 講記類別排序</a>
                     </li>
-                    <li>
+                    <!--<li>
                         <a href="AdminShowScriptureManage.php"><i class="fas fa-cogs"></i>編輯講記是否顯示</a>
-                    </li>
+                    </li>-->
                 </ul>
             </li>
             <li class="dropdown">
@@ -221,7 +221,7 @@
                 </ul>
             </li>
 
-            <li class="dropdown">
+           <!-- <li class="dropdown">
                 <a href="AdminImageManage.php" class="dropdown-toggle" data-toggle="dropdown"><i class="far fa-image"></i> 幻燈片管理<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>
@@ -234,7 +234,7 @@
                         <a href="AdminImageSort.php"><i class="far fa-image"></i> 照片排序</a>
                     </li>
                 </ul>
-            </li>
+            </li>-->
             <li class="dropdown">
                 <a href="MemberManagefor1.php" class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-users"></i> 會員管理<b class="caret"></b></a>
                 <ul class="dropdown-menu">

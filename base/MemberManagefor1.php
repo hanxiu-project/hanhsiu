@@ -146,7 +146,7 @@ while ($row2 = $result2->fetch_assoc()) {
         $_SESSION["delete_m_id"] = $row2["m_id"];
         $sql_delete = "DELETE FROM members WHERE members.m_id = $_SESSION[delete_m_id]";
         mysqli_query($db_link, $sql_delete);
-        echo "<script>alert('成功刪除!');location.href='MemberManage.php'</script>";
+        echo "<script>alert('成功刪除!');location.href='MemberManagefor1.php'</script>";
     }
     if (isset($_POST["$row2[m_id]+3"])) {
         $_SESSION["assign_m_id"] = $row2["m_id"];

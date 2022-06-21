@@ -208,7 +208,7 @@ while ($row2 = $result2->fetch_assoc()) {
         $filename = $row2["filename"]; //刪除檔案
         $typename = $row2["typename"]; //類別名稱
 
-        unlink("./ScriptureFile/" . $typename . "/" . $filename);
+        unlink("../ScriptureFile/" . $typename . "/" . $filename);
         echo "<script>alert('成功刪除!');location.href='AdminScriptureManage.php'</script>";
     }
     if (isset($_POST["$row2[s_id]+1"])) {

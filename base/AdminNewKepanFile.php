@@ -108,11 +108,11 @@ if ($_FILES['my_file']['error'] === UPLOAD_ERR_OK) {
     echo '暫存名稱: ' . $_FILES['my_file']['tmp_name'] . '<br/>';*/
 
     # 檢查檔案是否已經存在
-    if (file_exists("./kepan/" . $kptype . "/" . $filename)) {
+    if (file_exists("../kepan/" . $kptype . "/" . $filename)) {
         echo "<script>alert('檔案已存在！');</script>";
     } else {
         $file = $_FILES['my_file']['tmp_name'];
-        $dest = "./kepan/" . $kptype . "/" . $filename;
+        $dest = "../kepan/" . $kptype . "/" . $filename;
 
         # 將檔案移至指定位置
         move_uploaded_file($file, $dest);

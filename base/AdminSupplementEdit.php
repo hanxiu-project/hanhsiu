@@ -58,8 +58,8 @@ $typename = $row["spmtypename"]; //原本的
 $str = "";
 
 //判斷是否有該檔案
-if (file_exists("./supplement/$typename/$oldfilename")) {
-    $filee = fopen("./supplement/$typename/$oldfilename", "r");
+if (file_exists("../supplement/$typename/$oldfilename")) {
+    $filee = fopen("../supplement/$typename/$oldfilename", "r");
     if ($filee != null)
     //當檔案未執行到最後一筆，迴圈繼續執行(fgets一次抓一行)
     {
@@ -187,10 +187,10 @@ if (isset($_POST["edit"])) //發佈
                     echo "<script>alert('補充資料標題重複，請重新輸入！');location.href='AdminSupplementEdit.php'</script>";
                 } elseif ($typename != $inputtype) //類別有改過的話，原本的 != 現在選的
                 {
-                    unlink("./supplement/" . $typename . "/" . $filename);
+                    unlink("../supplement/" . $typename . "/" . $filename);
 
                     //寫入檔案
-                    $myfile = fopen("./supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
+                    $myfile = fopen("../supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
                     $txt = $content;
                     fwrite($myfile, $txt);
                     fclose($myfile);
@@ -200,9 +200,9 @@ if (isset($_POST["edit"])) //發佈
                     echo "<script>alert('補充資料發佈完成!');location.href='AdminSupplementManage.php'</script>";
                 } else //檔名沒重複且類別沒改
                 {
-                    unlink("./supplement/" . $typename . "/" . $oldfilename);
+                    unlink("../supplement/" . $typename . "/" . $oldfilename);
 
-                    $myfile = fopen("./supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
+                    $myfile = fopen("../supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
                     $txt = $content;
                     fwrite($myfile, $txt);
                     fclose($myfile);
@@ -215,7 +215,7 @@ if (isset($_POST["edit"])) //發佈
         } else if ($typename != $inputtype) //類別有改過的話(原本的 != 現在選的)  單改類別
         {
 
-            unlink("./supplement/" . $typename . "/" . $oldfilename);
+            unlink("../supplement/" . $typename . "/" . $oldfilename);
 
             //寫入檔案
             $myfile = fopen("./supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
@@ -230,7 +230,7 @@ if (isset($_POST["edit"])) //發佈
         } else //檔名相同             沒改類別沒改檔名
         {
 
-            $myfile = fopen("./supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
+            $myfile = fopen("../supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
             $txt = $content;
             fwrite($myfile, $txt);
             fclose($myfile);
@@ -245,7 +245,7 @@ if (isset($_POST["edit"])) //發佈
 }
 if (isset($_POST["save"])) {
     //寫入檔案
-    $myfile = fopen("./supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
+    $myfile = fopen("../supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
     $txt = $content;
     fwrite($myfile, $txt);
     fclose($myfile);
@@ -261,10 +261,10 @@ if (isset($_POST["save"])) {
                     echo "<script>alert('補充資料標題重複，請重新輸入！');location.href='AdminSupplementEdit.php'</script>";
                 } else if ($typename != $inputtype) //類別有改過的話(原本的 != 現在選的)
                 {
-                    unlink("./supplement/" . $typename . "/" . $filename);
+                    unlink("../supplement/" . $typename . "/" . $filename);
 
                     //寫入檔案
-                    $myfile = fopen("./supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
+                    $myfile = fopen("../supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
                     $txt = $content;
                     fwrite($myfile, $txt);
                     fclose($myfile);
@@ -273,9 +273,9 @@ if (isset($_POST["save"])) {
                     mysqli_query($db_link, $sql_update_newupdate);
                     echo "<script>alert('補充資料暫存完成!');location.href='AdminSupplementSave.php'</script>";
                 } else {
-                    unlink("./supplement/" . $typename . "/" . $oldfilename);
+                    unlink("../supplement/" . $typename . "/" . $oldfilename);
 
-                    $myfile = fopen("./supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
+                    $myfile = fopen("../supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
                     $txt = $content;
                     fwrite($myfile, $txt);
                     fclose($myfile);
@@ -287,10 +287,10 @@ if (isset($_POST["save"])) {
             }
         } else if ($typename != $inputtype) //類別有改過的話(原本的 != 現在選的)
         {
-            unlink("./supplement/" . $typename . "/" . $filename);
+            unlink("../supplement/" . $typename . "/" . $filename);
 
             //寫入檔案
-            $myfile = fopen("./supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
+            $myfile = fopen("../supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
             $txt = $content;
             fwrite($myfile, $txt);
             fclose($myfile);
@@ -301,7 +301,7 @@ if (isset($_POST["save"])) {
         } else //檔名相同
         {
 
-            $myfile = fopen("./supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
+            $myfile = fopen("../supplement/$inputtype/$filename", "w+") or die("Unable to open file!");
             $txt = $content;
             fwrite($myfile, $txt);
             fclose($myfile);

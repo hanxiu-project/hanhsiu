@@ -56,8 +56,8 @@ $typename = $row["typename"]; //原本的
 $str = "";
 
 //判斷是否有該檔案
-if (file_exists("./ScriptureFile/$typename/$oldfilename")) {
-    $filee = fopen("./ScriptureFile/$typename/$oldfilename", "r");
+if (file_exists("../ScriptureFile/$typename/$oldfilename")) {
+    $filee = fopen("../ScriptureFile/$typename/$oldfilename", "r");
     if ($filee != null)
     //當檔案未執行到最後一筆，迴圈繼續執行(fgets一次抓一行)
     {
@@ -187,10 +187,10 @@ if (isset($_POST["edit"])) //發佈
                     echo "<script>alert('講記卷號重複，請重新輸入！');location.href='AdminScriptureEdit.php'</script>";
                 } elseif ($typename != $inputtype) //類別有改過的話，原本的 != 現在選的
                 {
-                    unlink("./ScriptureFile/" . $typename . "/" . $filename);
+                    unlink("../ScriptureFile/" . $typename . "/" . $filename);
 
                     //寫入檔案
-                    $myfile = fopen("./ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
+                    $myfile = fopen("../ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
                     $txt = $content;
                     fwrite($myfile, $txt);
                     fclose($myfile);
@@ -200,9 +200,9 @@ if (isset($_POST["edit"])) //發佈
                     echo "<script>alert('經文發佈完成!');location.href='AdminScriptureManage.php'</script>";
                 } else //檔名沒重複且類別沒改
                 {
-                    unlink("./ScriptureFile/" . $typename . "/" . $oldfilename);
+                    unlink("../ScriptureFile/" . $typename . "/" . $oldfilename);
 
-                    $myfile = fopen("./ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
+                    $myfile = fopen("../ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
                     $txt = $content;
                     fwrite($myfile, $txt);
                     fclose($myfile);
@@ -214,10 +214,10 @@ if (isset($_POST["edit"])) //發佈
             }
         } else if ($typename != $inputtype) //類別有改過的話(原本的 != 現在選的)  單改類別
         {
-            unlink("./ScriptureFile/" . $typename . "/" . $oldfilename);
+            unlink("../ScriptureFile/" . $typename . "/" . $oldfilename);
 
             //寫入檔案
-            $myfile = fopen("./ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
+            $myfile = fopen("../ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
             $txt = $content;
             fwrite($myfile, $txt);
             fclose($myfile);
@@ -227,7 +227,7 @@ if (isset($_POST["edit"])) //發佈
             echo "<script>alert('經文發佈完成!');location.href='AdminScriptureManage.php'</script>";
         } else //檔名相同             沒改類別沒改檔名
         {
-            $myfile = fopen("./ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
+            $myfile = fopen("../ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
             $txt = $content;
             fwrite($myfile, $txt);
             fclose($myfile);
@@ -243,7 +243,7 @@ if (isset($_POST["edit"])) //發佈
 
 if (isset($_POST["save"])) {
     //寫入檔案
-    $myfile = fopen("./ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
+    $myfile = fopen("../ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
     $txt = $content;
     fwrite($myfile, $txt);
     fclose($myfile);
@@ -259,10 +259,10 @@ if (isset($_POST["save"])) {
                     echo "<script>alert('講記卷號重複，請重新輸入！');location.href='AdminScriptureEdit.php'</script>";
                 } else if ($typename != $inputtype) //類別有改過的話(原本的 != 現在選的)
                 {
-                    unlink("./ScriptureFile/" . $typename . "/" . $filename);
+                    unlink("../ScriptureFile/" . $typename . "/" . $filename);
 
                     //寫入檔案
-                    $myfile = fopen("./ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
+                    $myfile = fopen("../ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
                     $txt = $content;
                     fwrite($myfile, $txt);
                     fclose($myfile);
@@ -271,9 +271,9 @@ if (isset($_POST["save"])) {
                     mysqli_query($db_link, $sql_update_newupdate);
                     echo "<script>alert('經文暫存完成!');location.href='AdminScriptureSave.php'</script>";
                 } else {
-                    unlink("./ScriptureFile/" . $typename . "/" . $oldfilename);
+                    unlink("../ScriptureFile/" . $typename . "/" . $oldfilename);
 
-                    $myfile = fopen("./ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
+                    $myfile = fopen("../ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
                     $txt = $content;
                     fwrite($myfile, $txt);
                     fclose($myfile);
@@ -285,10 +285,10 @@ if (isset($_POST["save"])) {
             }
         } else if ($typename != $inputtype) //類別有改過的話(原本的 != 現在選的)
         {
-            unlink("./ScriptureFile/" . $typename . "/" . $filename);
+            unlink("../ScriptureFile/" . $typename . "/" . $filename);
 
             //寫入檔案
-            $myfile = fopen("./ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
+            $myfile = fopen("../ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
             $txt = $content;
             fwrite($myfile, $txt);
             fclose($myfile);
@@ -299,7 +299,7 @@ if (isset($_POST["save"])) {
         } else //檔名相同
         {
 
-            $myfile = fopen("./ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
+            $myfile = fopen("../ScriptureFile/$inputtype/$filename", "w+") or die("Unable to open file!");
             $txt = $content;
             fwrite($myfile, $txt);
             fclose($myfile);
