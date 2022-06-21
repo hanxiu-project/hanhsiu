@@ -44,7 +44,7 @@ include 'verification.php';
                 <label for="s_type" style="color:#ffffff" ><b >影音小類別:</b></label>
                 <input id="s_type" name="s_type" type="text" style="width:300px; height:30px; color:#000000; ">
                 <select id="select_s_type" name="select_s_type" style="width:525px; height:30px; color:#000000; background-color:white">
-                    <option>請選擇類別</option>
+                    <option value=0>請選擇類別</option>
                     <?php
                         while ($row_btype = $result_btype->fetch_assoc()) {
                             echo "<option name=typeid value=$row_btype[vbt_id]>$row_btype[b_typename]</option>";
@@ -169,10 +169,20 @@ include 'verification.php';
                                 }
                             }
                         }
-
+                        $sql4 = "SELECT * FROM video_smalltypes WHERE s_typename = '$_POST[s_type]'";
+                        $result4 = mysqli_query($db_link, $sql4);
+                        $row4 = mysqli_num_rows($result4);
+                        
                         if (isset($_POST["s_go"])) {
                             if ($_POST["s_type"] == null) {
                                 echo "<script>alert('請輸入欲新增的影音小類別!');location.href='AdminNewVideos.php'</script>";
+                            }else if ($_POST["select_s_type"] == 0)
+                            {
+                                echo "<script>alert('請選擇欲新增的影音小類別之所屬大類別!');location.href='AdminNewVideos.php'</script>";
+                            }
+                            else if ($row4 != 0)
+                            {
+                                echo "<script>alert('該小類別已存在!');location.href='AdminNewVideos.php'</script>";
                             }
                             else {
                                 $sql_stype = "INSERT INTO video_smalltypes (vbt_id,s_typename) VALUES ('$_POST[select_s_type]', '$_POST[s_type]')";
