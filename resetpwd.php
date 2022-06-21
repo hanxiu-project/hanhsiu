@@ -4,36 +4,15 @@
 <?php $title = '重設密碼'; ?>
 <?php include 'include/head.php'; ?>
 <?php include 'include/nav-bar.php'; ?>
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>漢修學苑</title>
-    <link rel="shortcut icon" href="favicon.ico" />
 
-    <!-- FACEBOOK SEO -->
-    <meta property="og:title" content="漢修學苑" />
-    <meta property="og:url" content="https://hanhsiu.org/" />
-    <meta property="og:image" content="img/fb-open-graph-1.jpg" />
-    <meta property="og:type" content="article" />
-    <meta property="og:description" content="《瑜伽師地論》線上筆記" />
-    <meta property="og:locale" content="zh_tw" />
-
-    <!-- OTHER SETTING -->
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="theme-color" content="#70593e" />
-
-    <!-- STYLE -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/tiny-slider.css" />
-    <link rel="stylesheet" href="css/animate.min.css" />
-    <link rel="stylesheet" href="css/icofont/style.css" />
-    <link rel="stylesheet" href="css/main.css" />
-
-    <!-- JAVASCRIPT -->
-    <script src="js/w3.js"></script>
-</head>
 <body>
+    <?php
+    //$sqlold = "SELECT * FROM posts where old = '1' order by date DESC";
+    //$resultold= mysqli_query($db_link,$sqlold);
+    # 設定時區
+    date_default_timezone_set('Asia/Taipei');
+    $getDate = date("Y-m-d");
+    ?>
 <main>
     <?php
 
@@ -46,7 +25,7 @@
             <div class="w-1000 mx-auto">
                 <h4 class="heading-style__2 mt-4">重新設定密碼</h4>
 
-                <form class="mt-4" action="login.html">
+                <form class="mt-4" action="" name="login01" method="post">
                     <div class="mb-3 row">
                         <label for="inputEmail" class="col-sm-5 col-lg-3 col-form-label">電子信箱 / E-mail</label>
                         <div class="col-sm-7 col-lg-9">
@@ -80,7 +59,6 @@
         $result = mysqli_query($db_link, $sql_email);
         $row = mysqli_fetch_assoc($result);						//查詢資料庫
         $resultnum=mysqli_num_rows($result);
-        $acc = $row["account"];  										//查詢到的帳號
         $pwd = $row["password"];										//查詢到的密碼
         $email = $row["email"];
 
@@ -93,7 +71,9 @@
                 echo "<script>alert('確認密碼不符，請重新輸入');</script>";
             }
             else if ($email == $_POST[email] && $_POST[password] == $_POST[re_password]) {
-                $sqlup_pwd="UPDATE `members` SET `password` = '$_POST[password]' WHERE `members`.`email` = '$_POST[email]'";
+                $passowrd_hash = password_hash($_POST[password], PASSWORD_DEFAULT);	
+
+                $sqlup_pwd="UPDATE `members` SET `password` = '$passowrd_hash' WHERE `members`.`email` = '$_POST[email]'";
                 mysqli_query($db_link,$sqlup_pwd);
                 echo "<script>alert('修改完成，請重新登入');location.href='login.php'</script>";
 
@@ -106,7 +86,7 @@
     ?>
 </main>
 
-<footer w3-include-html="include/_footer.html"></footer>
+<footer w3-include-html="include/_footer.php"></footer>
 
 <!-- JAVASCRIPT W3 -->
 <script>
