@@ -108,12 +108,6 @@
                             <?php
                             while($allmsg=mysqli_fetch_assoc($result_allmsg))
                                 {
-                                    $c_id=$allmsg['c_id'];
-                                    $m_id2=$allmsg['m_id'];
-                                    $msg=$allmsg['message'];
-                                    $time=$allmsg['msg_datetime'];
-                                    $status=$allmsg['status'];
-                                    $reply=$allmsg['reply'];
                             ?>
                                 <div class="msg-wrap">
                                 <div class="text-end">
@@ -128,7 +122,7 @@
                                         </div>
                                     </div>
                                     <?php
-                                    if($status=='1') {
+                                    if($allmsg['status']=='1') {
                                     ?>
                                         <div class="msg-wrap__reply">
                                             <div class="truncate" data-bs-msgtime="<?php echo $allmsg['msg_datetime']; ?>">
@@ -209,16 +203,6 @@
     <footer w3-include-html="include/_footer.php"></footer>
 
     <script type="text/javascript">
-            // var open_button = document.getElementById("open_button");
-            // open_button[0].addEventListener("click", function (){
-            //     console.log("123")
-            //     var id = open_button.getAttribute("data-id");
-            //     var confirm_button = document.getElementById("confirm_button");
-            //     var delete_value = document.getElementById("delete_value");
-            //     confirm_button.setAttribute("data-id", id);
-            //     delete_value.setAttribute("value", id);
-            // });
-
             function comments_delete(id){
                 var confirm_button = document.getElementById("confirm_button");
                 var delete_value = document.getElementById("delete_value");
