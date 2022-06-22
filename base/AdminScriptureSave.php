@@ -90,7 +90,7 @@ echo "<td></td>";
 echo "</tr>";
 
 if (!($_GET["type"]) || $_GET["type"] == "all") {
-    $sql_tid = "SELECT * FROM scripture  where save='1' order by t_id";
+    $sql_tid = "SELECT s.*, t.* FROM scripture s, types t WHERE save = '1' and s.t_id = t.t_id order by t.listorder";
     $resultpage = mysqli_query($db_link, $sql_tid);
     $date_nums = mysqli_num_rows($resultpage); //講記數量
     $per = 10; //10筆換頁
@@ -103,7 +103,7 @@ if (!($_GET["type"]) || $_GET["type"] == "all") {
 
     $start = ($page - 1) * $per;
 
-    $sqlresult = "SELECT * FROM scripture  where save='1' order by t_id Limit $start , $per";
+    $sqlresult = "SELECT s.*, t.* FROM scripture s, types t WHERE save = '1' and s.t_id = t.t_id order by t.listorder Limit $start , $per";
     $scriptureresult[$start] = mysqli_query($db_link, $sqlresult);
     $scriptureresult[$page] = mysqli_query($db_link, $sqlresult);
 

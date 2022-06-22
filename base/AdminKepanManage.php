@@ -84,7 +84,7 @@ echo "<td></td>";
 echo "</tr>";
 
 if (!($_GET["type"]) || $_GET["type"] == "all") {
-    $sql_kptid = "SELECT * FROM kepans order by listorder ";
+    $sql_kptid = "SELECT k.*,t.* FROM kepans k, kp_types t where k.kpt_id=t.kpt_id order by t.listorder";
     $resultpage = mysqli_query($db_link, $sql_kptid);
 
     $date_nums = mysqli_num_rows($resultpage); //講記數量
@@ -98,7 +98,7 @@ if (!($_GET["type"]) || $_GET["type"] == "all") {
 
     $start = ($page - 1) * $per;
 
-    $sqlresult = "SELECT * FROM kepans order by kpt_id Limit $start , $per";
+    $sqlresult = "SELECT k.*,t.* FROM kepans k, kp_types t where k.kpt_id=t.kpt_id order by t.listorder Limit $start , $per";
     $scriptureresult[$start] = mysqli_query($db_link, $sqlresult);
     $scriptureresult[$page] = mysqli_query($db_link, $sqlresult);
 
