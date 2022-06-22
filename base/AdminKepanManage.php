@@ -29,7 +29,7 @@ include 'verification.php';
         <?php
 /*資料庫連結*/
 
-$sqltype = "SELECT * FROM kp_types ";
+$sqltype = "SELECT * FROM kp_types order by listorder ";
 $resulttype = mysqli_query($db_link, $sqltype);
 
 ?>
@@ -84,7 +84,7 @@ echo "<td></td>";
 echo "</tr>";
 
 if (!($_GET["type"]) || $_GET["type"] == "all") {
-    $sql_kptid = "SELECT * FROM kepans order by kpt_id";
+    $sql_kptid = "SELECT * FROM kepans order by listorder ";
     $resultpage = mysqli_query($db_link, $sql_kptid);
 
     $date_nums = mysqli_num_rows($resultpage); //講記數量

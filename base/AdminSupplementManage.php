@@ -30,7 +30,7 @@ include 'verification.php';
         <?php
 /*資料庫連結*/
 
-$sqltype = "SELECT * FROM spm_types ";
+$sqltype = "SELECT * FROM spm_types order by listorder";
 $resulttype = mysqli_query($db_link, $sqltype);
 
 ?>
@@ -197,7 +197,7 @@ while ($row2 = $result2->fetch_assoc()) {
         mysqli_query($db_link, $sql_delete);
         $filename = $row2["filename"]; //刪除檔案
         $type = $row2["spmtypename"]; //刪除檔案
-        unlink("./supplement/" . $type . "/" . $filename);
+        unlink("../supplement/" . $type . "/" . $filename);
         echo "<script>alert('成功刪除!');location.href='AdminSupplementManage.php'</script>";
     }
     if (isset($_POST["$row2[sp_id]+1"])) {

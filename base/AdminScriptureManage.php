@@ -34,7 +34,7 @@ include 'verification.php';
         <?php
 /*資料庫連結*/
 
-$sqltype = "SELECT * FROM types ";
+$sqltype = "SELECT * FROM types order by listorder";
 $resulttype = mysqli_query($db_link, $sqltype);
 
 ?>
