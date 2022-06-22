@@ -46,14 +46,20 @@
 				<a href="AdminSloganEdit.php" class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-file"></i>標語管理<b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li>
-				<a href="AdminSloganEdit.php"><i class="fas fa-file"></i> 首頁標語編輯</a>
-				<!--</li>
+				        <a href="AdminSloganEdit.php"><i class="fas fa-file"></i> 首頁標語編輯</a>
+                    </li>
+                    <li>
+				        <a href="AdminVideoSloganEdit.php"><i class="fas fa-file"></i> 聞思正法標語編輯</a>
+                    </li>
+                    <li>
+				        <a href="AdminReadSloganEdit.php"><i class="fas fa-file"></i> 筆錄讀誦標語編輯</a>
+                    </li>
+					<!-- <li>
+                        <a href="AdminErrorSloganEdit.php"><i class="fas fa-file"></i> 留言區標語編輯</a>
+                    </li>
 					<li>
-				<a href="AdminErrorSloganEdit.php"><i class="fas fa-file"></i> 留言區標語編輯</a>
-				</li>
-					<li>
-				<a href="AdminfootSloganEdit.php"><i class="fas fa-file"></i> 底部標語編輯</a>
-				</li>-->
+				        <a href="AdminfootSloganEdit.php"><i class="fas fa-file"></i> 底部標語編輯</a>
+				    </li> -->
 				</ul>
 				</li>
             <li class="dropdown">

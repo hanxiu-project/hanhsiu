@@ -14,6 +14,16 @@
         </svg>
     </div>
 
+    <?php
+        $sql_video_slogan = "SELECT * FROM `slogan` WHERE `sloganid` = 4";
+        $result_video_slogan = mysqli_query($db_link, $sql_video_slogan);
+        $row_video_slogan = $result_video_slogan->fetch_assoc(); 
+
+        $sql_read_slogan = "SELECT * FROM `slogan` WHERE `sloganid` = 5 ";
+        $result_read_slogan = mysqli_query($db_link, $sql_read_slogan);
+        $row_read_slogan = $result_read_slogan->fetch_assoc();
+    ?>
+
     <section>
         <div class="container main-wrap">
             <div class="main-wrap__left">
@@ -22,12 +32,11 @@
                     <div class="tit-en">videos</div>
                 </div>
             </div>
-
             <div class="main-wrap__right">
 
                 <div class="mb-4">
                     <h4 class="heading-style__2">聞思正法</h4>
-                    <p>聞思正法說明文字聞思正法說明文字聞思正法說明文字</p>
+                    <p><?php echo "$row_video_slogan[slogantext]"; ?></p>
                 </div>
                 <div class="inside-menu mb-5">
                         <?php
@@ -55,7 +64,7 @@
 
                 <div class="mb-4">
                     <h4 class="heading-style__2">瑜論筆錄讀誦</h4>
-                    <p>瑜論筆錄讀誦說明文字瑜論筆錄讀誦說明文字瑜論筆錄讀誦說明文字</p>
+                    <p><?php echo "$row_read_slogan[slogantext]"; ?></p>
                 </div>
                 <div class="inside-menu mb-5">
                     <?php
