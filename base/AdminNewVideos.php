@@ -69,10 +69,16 @@ include 'verification.php';
 
                         $sql = "SELECT * FROM video_bigtypes ";
                         $result = mysqli_query($db_link, $sql);
-//                        $sql_listorder = " SELECT MAX(listorder) as max FROM  `videotypes` ";
-//                        $listresult = mysqli_query($db_link, $sql_listorder);
-//                        $listcheck = mysqli_fetch_assoc($listresult);
-//                        $max_listorder = $listcheck['max'];
+                        $sql_big_listorder = "SELECT MAX(listorder) as max FROM  `video_bigtypes` ";
+                        $list_big_result = mysqli_query($db_link, $sql_big_listorder);
+                        $list_big_check = mysqli_fetch_assoc($list_big_result);
+                        $max_big_listorder = $list_big_check['max'];
+
+                        $sql_small_listorder = "SELECT MAX(listorder) as max FROM  `video_smalltypes` ";
+                        $list_small_result = mysqli_query($db_link, $sql_small_listorder);
+                        $list_small_check = mysqli_fetch_assoc($list_small_result);
+                        $max_small_listorder = $list_small_check['max'];
+
                         echo "<form name='form1' method='POST' action=''>";
                         echo "<table  border rules=rows cellspacing=0 width=100% style=font-size:20px;line-height:50px;>";
                         echo "<tr align=center>";
@@ -97,15 +103,23 @@ include 'verification.php';
                         $result2 = mysqli_query($db_link, $sql2);
                         while ($row2 = $result2->fetch_assoc()) {
                             if (isset($_POST["$row2[vbt_id]+2"])) {
-                                $sql_vbt_id = "SELECT * FROM `videos` WHERE `videos`.`vbt_id` = '$row2[vbt_id]'";
+                                $sql_vbt_id = "SELECT * FROM `videos` WHERE `videos`.`vbt_id` = '$row2[vbt_id]'";    //確認該大類別底下是否有影音資料
                                 $result_vbt_id = mysqli_query($db_link, $sql_vbt_id);
-                                if (mysqli_num_rows($result_vbt_id) == 0) {
-                                    $_SESSION["delete_vbt_id"] = $row2["vbt_id"];
-                                    $sql_vbt_delete = "DELETE FROM video_bigtypes WHERE video_bigtypes.vbt_id = $_SESSION[delete_vbt_id]";
-                                    mysqli_query($db_link, $sql_vbt_delete);
-                                    echo "<script>alert('成功刪除影音大類別!');location.href='AdminNewVideos.php'</script>";
+
+                                $sql_check_if_smalltypes_have_data = "SELECT * FROM `video_smalltypes` WHERE `video_smalltypes`.`vbt_id` = '$row2[vbt_id]'";  //確認該大類別底下是否有小類別
+                                $result_check_if_smalltypes_have_data = mysqli_query($db_link, $sql_check_if_smalltypes_have_data); 
+
+                                if (mysqli_num_rows($result_check_if_smalltypes_have_data) == 0) {
+                                    if (mysqli_num_rows($result_vbt_id) == 0) {
+                                        $_SESSION["delete_vbt_id"] = $row2["vbt_id"];
+                                        $sql_vbt_delete = "DELETE FROM video_bigtypes WHERE video_bigtypes.vbt_id = $_SESSION[delete_vbt_id]";
+                                        mysqli_query($db_link, $sql_vbt_delete);
+                                        echo "<script>alert('成功刪除影音大類別2!');location.href='AdminNewVideos.php'</script>";
+                                    } else {
+                                        echo "<script>alert('影音大類別內含有影音連結，無法刪除!');location.href='AdminNewVideos.php'</script>";
+                                    }
                                 } else {
-                                    echo "<script>alert('影音大類別內含有影音連結無法刪除!');location.href='AdminNewVideos.php'</script>";
+                                    echo "<script>alert('影音大類別內含有小類別，無法刪除!');location.href='AdminNewVideos.php'</script>";
                                 }
                             }
                         }
@@ -115,7 +129,7 @@ include 'verification.php';
                                 echo "<script>alert('請輸入欲新增的影音大類別!');location.href='AdminNewVideos.php'</script>";
                             }
                             else {
-                                $sqltype = "INSERT INTO video_bigtypes (b_typename) VALUES ('$_POST[b_type]')";
+                                $sqltype = "INSERT INTO video_bigtypes (b_typename, listorder) VALUES ('$_POST[b_type]', '$max_big_listorder'+1)";
                                 mysqli_query($db_link, $sqltype);
                                 echo "<script>alert('影音大類別建立成功!');location.href='AdminNewVideos.php'</script>";
                             }
@@ -143,7 +157,7 @@ include 'verification.php';
                             echo "<td>";
                     ?>
                         <input type='submit' class="btn btn-sm btn-danger " style='width:100px;height:30px;'
-                               name="<?php echo "$row_s[vst_id]+2"; ?>" value='刪除'
+                               name="<?php echo "$row_s[vst_id]+3"; ?>" value='刪除'
                                onclick="return confirm('是否確認刪除此類別?')"></td>
                     <?php
                         echo "</tr>";
@@ -155,7 +169,7 @@ include 'verification.php';
                         $sql3 = "SELECT * FROM video_smalltypes ";
                         $result3 = mysqli_query($db_link, $sql3);
                         while ($row3 = $result3->fetch_assoc()) {
-                            if (isset($_POST["$row3[vst_id]+2"])) {
+                            if (isset($_POST["$row3[vst_id]+3"])) {
                                 $sql_vst_id = "SELECT * FROM `videos` WHERE `videos`.`vst_id` = '$row3[vst_id]'";
                                 $result_vst_id = mysqli_query($db_link, $sql_vst_id);
                                 if (mysqli_num_rows($result_vst_id) == 0) {
@@ -185,7 +199,7 @@ include 'verification.php';
                                 echo "<script>alert('該小類別已存在!');location.href='AdminNewVideos.php'</script>";
                             }
                             else {
-                                $sql_stype = "INSERT INTO video_smalltypes (vbt_id,s_typename) VALUES ('$_POST[select_s_type]', '$_POST[s_type]')";
+                                $sql_stype = "INSERT INTO video_smalltypes (vbt_id, s_typename, listorder) VALUES ('$_POST[select_s_type]', '$_POST[s_type]', '$max_small_listorder'+1)";
                                 mysqli_query($db_link, $sql_stype);
                                 echo "<script>alert('影音小類別建立成功!');location.href='AdminNewVideos.php'</script>";
                             }

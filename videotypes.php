@@ -40,7 +40,7 @@
                 </div>
                 <div class="inside-menu mb-5">
                         <?php
-                        $sql_video = "SELECT b.*, s.vst_id FROM video_bigtypes b left join video_smalltypes s on s.vbt_id = b.vbt_id GROUP BY vbt_id ORDER BY vbt_id";
+                        $sql_video = "SELECT b.*, s.vst_id FROM video_bigtypes b left join video_smalltypes s on s.vbt_id = b.vbt_id GROUP BY vbt_id ORDER BY listorder";
                         $result_video = mysqli_query($db_link, $sql_video);
                         while ($script = mysqli_fetch_assoc($result_video)) {
                             if ($script[vst_id] == null){
