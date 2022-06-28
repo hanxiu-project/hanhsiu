@@ -31,7 +31,7 @@
                             <div class="read-mode__ctrl">
                                 <select class="form-select" id="type_select" onchange="changeType(this.value)">
                                     <?php
-                                    $sql_select = "SELECT * FROM `repeataftermetypes` order by t_id";
+                                    $sql_select = "SELECT * FROM `repeatafterme_bigtypes` order by t_id";
                                     $result_select = mysqli_query($db_link, $sql_select);
 
                                     while ($row_select = mysqli_fetch_assoc($result_select)) {
@@ -92,7 +92,7 @@
                             while ($read = mysqli_fetch_assoc($resultnum10[$start])) {
                                 echo "<tr>
                                 <td scope='row'>
-                                    <a class='link-style__1 d-block' href=$read[link] target='_blank'>$read[content]</a>
+                                    <a class=link-style__1 d-block href=javascript:; data-bs-toggle=modal data-bs-target=#videoModal data-bs-video='$read[link]'>$read[content]</a>
                                 </td>
                                 <td>$read[memo]</td>
                                 <td>共 $read[vols] 集</td>
@@ -196,7 +196,7 @@
                             while ($read = mysqli_fetch_assoc($resultnum10[$start])) {
                                 echo "<tr>
                                 <td scope='row'>
-                                    <a class='link-style__1 d-block' href=$read[link] target='_blank'>$read[content]</a>
+                                    <a class=link-style__1 d-block href=javascript:; data-bs-toggle=modal data-bs-target=#videoModal data-bs-video='$read[link]'>$read[content]</a>
                                 </td>
                                 <td>$read[memo]</td>
                                 <td>共 $read[vols] 集</td>
@@ -270,6 +270,23 @@
 </main>
 
 <footer w3-include-html="include/_footer.php"></footer>
+
+<!-- Modal -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-style__1">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="videoModalLabel"></h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="videobox">
+                    <iframe src="" frameborder="0" allowfullscreen="true"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- JAVASCRIPT W3 -->
 <script>
