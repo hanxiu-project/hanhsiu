@@ -62,16 +62,31 @@
                         ?>
                 </div>
 
+
                 <div class="mb-4">
                     <h4 class="heading-style__2">瑜論筆錄讀誦</h4>
                     <p><?php echo "$row_read_slogan[slogantext]"; ?></p>
                 </div>
                 <div class="inside-menu mb-5">
                     <?php
-                        $sql = "SELECT * FROM `repeataftermetypes`";
-                        $result = mysqli_query($db_link, $sql);
-                        while ($script = mysqli_fetch_assoc($result)) {
-                        echo "<a class=inside-menu__link href=read.php?tid='$script[t_id]'>$script[repeatype]</a>";
+                    $sql_read = "SELECT b.*, s.st_id FROM repeatafterme_bigtypes b left join repeatafterme_smalltypes s on s.t_id = b.t_id GROUP BY t_id ORDER BY listorder";
+                    $result_read = mysqli_query($db_link, $sql_read);
+                    while ($script = mysqli_fetch_assoc($result_read)) {
+                        if ($script[st_id] == null){
+                            echo "<a class=inside-menu__link href=read.php?tid='$script[t_id]'>$script[repeatype]</a>";
+                        }
+                        else{
+                            echo "<div class=inside-menu__wrap>";
+                            echo    "<a class=inside-menu__link href=javascript:;>$script[repeatype]</a>" ;
+                            $sql_read_small = "SELECT * FROM repeatafterme_smalltypes WHERE t_id = $script[t_id] ORDER BY listorder";
+                            $result_read_small = mysqli_query($db_link, $sql_read_small);
+                            echo    "<div class=inside-menu__link-box>";
+                            while ($script_small = mysqli_fetch_assoc($result_read_small)) {
+                                echo    "<a href=read.php?stid='$script_small[st_id]'>$script_small[s_typename]</a>";
+                            }
+                            echo "</div>";
+                            echo "</div>";
+                        }
                     }
                     ?>
                 </div>

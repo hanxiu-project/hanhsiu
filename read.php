@@ -48,7 +48,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-end">
                         <li class="breadcrumb-item">
-                            <a href="videotypes.html">法音流佈</a>
+                            <a href="videotypes.php">法音流佈</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">瑜論筆錄讀誦</li>
                     </ol>
@@ -58,11 +58,11 @@
                     if (isset($_GET["tid"])) {
                         $sql_type = "Select * From `repeatafterme` where `t_id`= $_GET[tid]";
                         $result_type = mysqli_query($db_link, $sql_type);
-                        $r_type = mysqli_fetch_row($result_type);
+                        $r_type = mysqli_fetch_assoc($result_type);
                         $data = mysqli_num_rows($result_type);
                 ?>
 
-                <h4 class="heading-style__2 mb-4" name="type_id" id=<?php echo "$_GET[tid]" ?>><?php echo $r_type[2] ?></h4>
+                <h4 class="heading-style__2 mb-4" name="type_id" id=<?php echo "$_GET[tid]" ?>><?php echo "$r_type[typename]" ?></h4>
                 <table class="table table-style__1 mb-4">
                     <thead>
                     <tr>
@@ -156,6 +156,109 @@
                     }
                 ?>
 
+<!--                =============================================================================================================================================================-->
+
+                <?php
+                if (isset($_GET["stid"])) {
+                    $sql_type = "Select * From `repeatafterme` where `st_id`= $_GET[stid]";
+                    $result_type = mysqli_query($db_link, $sql_type);
+                    $r_type = mysqli_fetch_assoc($result_type);
+                    $data = mysqli_num_rows($result_type);
+                    ?>
+
+                    <h4 class="heading-style__2 mb-4" name="type_id" id=<?php echo "$_GET[stid]" ?>><?php echo "$r_type[s_typename]" ?></h4>
+                    <table class="table table-style__1 mb-4">
+                        <thead>
+                        <tr>
+                            <th scope="col">內容</th>
+                            <th scope="col">備註</th>
+                            <th scope="col">集數</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        if ($data == 0) {
+                            echo "<script>alert('目前尚無資料!');location.href='videotypes.php'</script>";
+                        }
+                        else {
+                            $per = 10;
+                            $pages = ceil($data / $per);     //pages
+                            $k = $pages;
+                            if (!isset($_GET["page"])) {
+                                $page = 1;
+                            } else {
+                                $page = intval($_GET["page"]);
+                            }
+                            $start = ($page - 1) * $per;
+                            $sqlatcnum10 = "SELECT * FROM `repeatafterme` where `st_id` = $_GET[stid]  Limit $start  , $per";
+                            $resultnum10[$start] = mysqli_query($db_link, $sqlatcnum10);
+                            $resultnum10[$page] = mysqli_query($db_link, $sqlatcnum10);
+                            while ($read = mysqli_fetch_assoc($resultnum10[$start])) {
+                                echo "<tr>
+                                <td scope='row'>
+                                    <a class='link-style__1 d-block' href=$read[link] target='_blank'>$read[content]</a>
+                                </td>
+                                <td>$read[memo]</td>
+                                <td>共 $read[vols] 集</td>
+                              </tr>
+                            ";
+                            }
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                    <div id="videoTable"></div>
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <?php
+                                $prepage = intval($page) - 1;
+                                if ($page == 1) {
+                                    echo "<a class='page-link ' href=?stid=$_GET[stid]&page=1 aria-label='Previous'>";
+                                    echo "<i class='arrow aleft'></i>";
+                                    echo "</a>";
+                                } else {
+                                    echo "<a class='page-link' href=?stid=$_GET[stid]&page=$prepage aria-label='Previous'>";
+                                    echo "<i class='arrow aleft'></i>";
+                                    echo "</a>";
+                                }
+                                ?>
+                            </li>
+                            <?php
+                            for ($i = 1; $i <= $pages; $i++) {
+                                if ($page - $k < $i && $i < $page + $k) {
+                                    if ($i == $page) {
+                                        echo "<li class='page-item active' id=page$i>";
+                                        echo "<a class='page-link' href=?stid=$_GET[stid]&page=$i>" . $i . "</a>";
+                                        echo "</li>";
+                                    } else {
+                                        echo "<li class='page-item' id=page$i>";
+                                        echo "<a class='page-link' href=?stid=$_GET[stid]&page=$i>" . $i . "</a>";
+                                        echo "</li>";
+                                    }
+                                }
+                            }
+                            ?>
+                            <li class="page-item">
+                                <?php
+                                $nextpage = intval($page) + 1;
+
+                                if ($page == $pages) {
+                                    echo "<a class='page-link' href=?stid=$_GET[stid]&page=$pages aria-label='Previous'>";
+                                    echo "<i class='arrow aright'></i>";
+                                    echo "</a>";
+                                } else {
+                                    echo "<a class='page-link' href=?stid=$_GET[stid]&page=$nextpage aria-label='Previous'>";
+                                    echo "<i class='arrow aright'></i>";
+                                    echo "</a>";
+                                }
+                                ?>
+                            </li>
+                        </ul>
+                    </nav>
+                    <?php
+                }
+                ?>
                 <div class="text-center my-5">
                     <a class="btn-style__1" href="videotypes.php">回上一頁</a>
                 </div>
