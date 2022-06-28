@@ -75,7 +75,7 @@ include 'verification.php';
             echo "<td>大類別</td>";
             echo "<td>小類別</td>";
             echo "<td>內容</td>";
-            echo "<td>雲端連結</td>";
+            echo "<td>影音連結</td>";
             echo "<td>備註</td>";
             echo "<td>集數</td>";
             if ($rowfortd["r_id"] != null) {
