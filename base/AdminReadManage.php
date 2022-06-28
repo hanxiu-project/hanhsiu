@@ -27,7 +27,7 @@ include 'verification.php';
         <?php include 'nav.php';?>
         <?php include '../database.php';?>
         <?php
-        $sqltype = "SELECT * FROM `repeataftermetypes` ";
+        $sqltype = "SELECT * FROM `repeatafterme_bigtypes` ORDER BY listorder";
         $resulttype = mysqli_query($db_link, $sqltype);
         ?>
 
@@ -72,7 +72,8 @@ include 'verification.php';
             echo "<form name='form1' method='POST' action=''>";
             echo "<table border=1 width=100% style=font-size:24px;line-height:50px; >";
             echo "<tr align=center>";
-            echo "<td>類別名稱</td>";
+            echo "<td>大類別</td>";
+            echo "<td>小類別</td>";
             echo "<td>內容</td>";
             echo "<td>雲端連結</td>";
             echo "<td>備註</td>";
@@ -102,6 +103,7 @@ include 'verification.php';
                 while ($row = mysqli_fetch_assoc($videoresult[$start])) {
                     echo "<tr align=center>";
                     echo "<td>$row[typename]</td>";
+                    echo "<td>$row[s_typename]</td>";
                     echo "<td>$row[content]</td>";
                     echo "<td>$row[link]</td>";
                     echo "<td>$row[memo]</td>";
@@ -144,6 +146,7 @@ include 'verification.php';
                 while ($row = mysqli_fetch_assoc($vdoresult['src'])) {
                     echo "<tr align=center>";
                     echo "<td>$row[typename]</td>";
+                    echo "<td>$row[s_typename]</td>";
                     echo "<td>$row[content]</td>";
                     echo "<td>$row[link]</td>";
                     echo "<td>$row[memo]</td>";

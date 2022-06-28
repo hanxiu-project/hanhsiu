@@ -27,7 +27,7 @@ include 'verification.php';
         <?php include 'nav.php';?>
         <?php include '../database.php';?>
         <?php
-        $sqltype = "SELECT * FROM `video_bigtypes` ";
+        $sqltype = "SELECT * FROM `video_bigtypes` ORDER BY listorder";
         $resulttype = mysqli_query($db_link, $sqltype);
 //        $sql_s_type = "SELECT * FROM `video_smalltypes` ";
 //        $result_s_type = mysqli_query($db_link, $sql_s_type);
