@@ -160,9 +160,12 @@
                     <li>
                         <a href="AdminNewReadFile.php"><i class="fas fa-video"></i> 新增讀誦檔案</a>
                     </li>
-                    <!-- <li>
-                        <a href="AdminVideoTypeSort.php"><i class="fas fa-video"></i> 影音類別排序</a>
-                    </li> -->
+                    <li>
+                        <a href="AdminReadBigTypeSort.php"><i class="fas fa-video"></i>讀誦大類別排序</a>
+                    </li>
+                    <li>
+                        <a href="AdminReadSmallTypeSort.php"><i class="fas fa-video"></i>讀誦小類別排序</a>
+                    </li>
                 </ul>
             </li>
             <li class="dropdown">
