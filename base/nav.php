@@ -142,6 +142,9 @@
                     <li>
                         <a href="AdminVideoBigTypeSort.php"><i class="fas fa-video"></i> 影音大類別排序</a>
                     </li>
+                    <li>
+                        <a href="AdminVideoSmallTypeSort.php"><i class="fas fa-video"></i> 影音小類別排序</a>
+                    </li>
                 </ul>
             </li>
             <li class="dropdown">

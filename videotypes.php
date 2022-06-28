@@ -49,7 +49,7 @@
                             else{
                                 echo "<div class=inside-menu__wrap>";
                                 echo    "<a class=inside-menu__link href=javascript:;>$script[b_typename]</a>" ;
-                                $sql_video_small = "SELECT * FROM video_smalltypes WHERE vbt_id = $script[vbt_id]";
+                                $sql_video_small = "SELECT * FROM video_smalltypes WHERE vbt_id = $script[vbt_id] ORDER BY listorder";
                                 $result_video_small = mysqli_query($db_link, $sql_video_small);
                                 echo    "<div class=inside-menu__link-box>";
                                 while ($script_small = mysqli_fetch_assoc($result_video_small)) {

@@ -12,21 +12,21 @@
     <title>影音大類別排序 | 管理後台</title>
 
     <?php
-        include 'head.php';
+    include 'head.php';
     ?>
 
     <!-- 後台講記排序 CSS -->
     <link href="style.css" rel="stylesheet" type="text/css">
 
     <script
-            src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-            crossorigin="anonymous">
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous">
     </script>
     <script
-            src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-            crossorigin="anonymous">
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        crossorigin="anonymous">
     </script>
     <script type="text/javascript">
         $(document).ready(function (){
@@ -51,7 +51,7 @@
             });
 
             $.ajax({
-                url: 'AdminVideoBigTypeSort.php',
+                url: 'AdminVideoSmallTypeSort.php',
                 method: 'POST',
                 dataType: 'text',
                 data: {
@@ -68,53 +68,55 @@
 
 <body>
 <?php
-    session_start();
-    include 'verification.php';
+session_start();
+include 'verification.php';
 ?>
 <form name="forms" method="post" action="">
     <div id="wrapper">
         <?php
-            include 'nav.php';
-            include '../database.php';
+        include 'nav.php';
+        include '../database.php';
         ?>
 
-<div class="col-lg-12">
-            <h2><b>影音大類別排序(直接拉就可以改變)</b><h1>
+        <div class="col-lg-12">
+            <h2><b>影音小類別排序(直接拉就可以改變)</b><h1>
         </div>
         <!--Body-->
-            <div id="page-wrapper">
-                <div class="container-fluid">
-                    <table class="table table-striped table-hover table-bordered">
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <table class="table table-striped table-hover table-bordered">
                     <thead>
                     </thead>
                     <tbody>
                     <?php
-                        if (isset($_POST['update'])) {
-                            foreach ($_POST['positions'] as $position) {
-                                $index = $position[0];
-                                $newposiotion = $position[1];
-                                $sql = "UPDATE video_bigtypes SET listorder = '$newposiotion' WHERE vbt_id= '$index'";
-                                mysqli_query($db_link, $sql);
-                                echo "<script>alert('排序完成!');location.href='test.php'</script>";
-                            }
-                            exit('success');
+                    if (isset($_POST['update'])) {
+                        foreach ($_POST['positions'] as $position) {
+                            $index = $position[0];
+                            $newposiotion = $position[1];
+                            $sql = "UPDATE video_smalltypes SET listorder = '$newposiotion' WHERE vst_id= '$index'";
+                            mysqli_query($db_link, $sql);
+                            echo "<script>alert('排序完成!');location.href='test.php'</script>";
                         }
+                        exit('success');
+                    }
 
-                        $sql = "select * from video_bigtypes order by listorder";
-                        $result = mysqli_query($db_link, $sql);
-                        echo "<tr align=center width='70%'>";
-                        echo "<td width='20%'><b>順序編號</b></td>";
-                        echo "<td width='80%'><b>影音大類別</b></td>";
+                    $sql = "SELECT s.*, b.b_typename FROM video_smalltypes s left join video_bigtypes b on s.vbt_id = b.vbt_id order by s.listorder";
+                    $result = mysqli_query($db_link, $sql);
+                    echo "<tr align=center width='70%'>";
+                    echo "<td width='20%'><b>順序編號</b></td>";
+                    echo "<td width='40%'><b>所屬大類別</b></td>";
+                    echo "<td width='40%'><b>影音小類別</b></td>";
+                    echo "</tr>";
+                    while ($data = $result->fetch_array()) {
+                        echo "<tr data-index=$data[vst_id] data-position=$data[listorder]>";
+                        echo "<td> $data[listorder] </td>";
+                        echo "<td> $data[b_typename] </td>";
+                        echo "<td> $data[s_typename] </td>";
                         echo "</tr>";
-                        while ($data = $result->fetch_array()) {
-                            echo "<tr data-index=$data[vbt_id] data-position=$data[listorder]>";
-                            echo "<td> $data[listorder] </td>";
-                            echo "<td> $data[b_typename] </td>";
-                            echo "</tr>";
-                        }
+                    }
                     ?>
                     </tbody>
-                  </table>
+                </table>
 
             </div>
             <!-- /#page-wrapper -->

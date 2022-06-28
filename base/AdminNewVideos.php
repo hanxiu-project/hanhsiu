@@ -114,7 +114,7 @@ include 'verification.php';
                                         $_SESSION["delete_vbt_id"] = $row2["vbt_id"];
                                         $sql_vbt_delete = "DELETE FROM video_bigtypes WHERE video_bigtypes.vbt_id = $_SESSION[delete_vbt_id]";
                                         mysqli_query($db_link, $sql_vbt_delete);
-                                        echo "<script>alert('成功刪除影音大類別2!');location.href='AdminNewVideos.php'</script>";
+                                        echo "<script>alert('成功刪除影音大類別!');location.href='AdminNewVideos.php'</script>";
                                     } else {
                                         echo "<script>alert('影音大類別內含有影音連結，無法刪除!');location.href='AdminNewVideos.php'</script>";
                                     }
