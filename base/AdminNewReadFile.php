@@ -80,7 +80,7 @@ include 'verification.php';
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="link">雲端連結:</label>
+                                                <label for="link">讀誦連結:</label>
                                                 <input id="link" name="link" type="text"   style="width:525px; height:30px; color:#000000; background-color:transparent" >
                                             </div>
 
@@ -108,10 +108,13 @@ include 'verification.php';
 
                 <?php
                 if (isset($_POST["post"])) {
+                    $testwatchnetpos = strpos($_POST["link"], "watch"); //找網址內有watch?v=的位置(算w的位置在24)
+                    $testnet = substr($_POST["link"], "$testwatchnetpos"+8); //取的watch?v=之後的網址字串(因為watch?v=所以+8)
+
                     if ($_POST["content"] == null) {
                         echo "<script>alert('請輸入讀誦內容!');location.href='AdminNewReadFile.php'</script>";
                     }elseif ($_POST["link"] == null) {
-                        echo "<script>alert('請輸入雲端連結!');location.href='AdminNewReadFile.php'</script>";
+                        echo "<script>alert('請輸入影音連結!');location.href='AdminNewReadFile.php'</script>";
                     }else {
                         $sql_typename = "SELECT * FROM `repeatafterme_bigtypes` WHERE t_id = $_POST[b_type]";  //利用大類別的id去抓大類別名稱
                         $result_typename = mysqli_query($db_link, $sql_typename);
@@ -123,14 +126,14 @@ include 'verification.php';
                         $row_s_typename = $result_s_typename->fetch_assoc();
                         $s_typename = $row_s_typename["s_typename"];
 
-                        if ($_POST['s_type'] == '0') {
-                            $sql = "INSERT INTO `repeatafterme` (r_id, t_id, typename, content, link, memo, vols) VALUES('NULL', '$_POST[b_type]', '$typename', '$_POST[content]', '$_POST[link]', '$_POST[memo]', '$_POST[vols]')";
+                        if ($_POST["s_type"] == "0") {
+                            $sql = "INSERT INTO `repeatafterme` (r_id, t_id, typename, content, link, memo, vols) VALUES('NULL', '$_POST[b_type]', '$typename', '$_POST[content]', '$testnet', '$_POST[memo]', '$_POST[vols]')";
                             mysqli_query($db_link, $sql);
-                            echo "<script>alert('影音已經上傳2!');location.href='AdminReadManage.php'</script>";
+                            echo "<script>alert('筆錄讀誦已經上傳!');location.href='AdminReadManage.php'</script>";
                         } else {
-                            $sql = "INSERT INTO `repeatafterme` (r_id, t_id, typename, st_id, s_typename, content, link, memo, vols) VALUES('NULL', '$_POST[b_type]', '$typename', '$_POST[s_type]', '$s_typename', '$_POST[content]', '$_POST[link]', '$_POST[memo]', '$_POST[vols]')";
+                            $sql = "INSERT INTO `repeatafterme` (r_id, t_id, typename, st_id, s_typename, content, link, memo, vols) VALUES('NULL', '$_POST[b_type]', '$typename', '$_POST[s_type]', '$s_typename', '$_POST[content]', '$testnet', '$_POST[memo]', '$_POST[vols]')";
                             mysqli_query($db_link, $sql);
-                            echo "<script>alert('影音已經上傳1!');location.href='AdminReadManage.php'</script>";
+                            echo "<script>alert('筆錄讀誦已經上傳!');location.href='AdminReadManage.php'</script>";
                         }
                     }
                 }
