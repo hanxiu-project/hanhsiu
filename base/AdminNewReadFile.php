@@ -37,29 +37,38 @@ include 'verification.php';
                 <meta http-equiv="content-type" content="text/html;charset=UTF-8">
 
                 <?php
-                /*資料庫連結*/
-                $sql_type = "SELECT * FROM `repeataftermetypes`";
+                $sql_type = "SELECT * FROM `repeatafterme_bigtypes`";
                 $result_type = mysqli_query($db_link, $sql_type);
 
+                $sql_s_type = "SELECT * FROM `repeatafterme_smalltypes`";
+                $result_s_type = mysqli_query($db_link, $sql_s_type);
                 ?>
 
                 <div id="con2">
                     <div class="main">
                         <div class="newstitle" >
-
                             <div class="contentlist">
-
                                 <div class="row">
                                     <div class="col-lg-12">
-
                                         <form name="forms" method="POST" action="">
-
                                             <div class="form-group">
-                                                <label for="type">讀誦類別:</label>
-                                                <select id="type" name="type"  style="width:525px; height:30px; color:#000000; background-color:transparent">
+                                                <label for="b_type">讀誦大類別:</label>
+                                                <select id="b_type" name="b_type"  style="width:525px; height:30px; color:#000000; background-color:transparent">
                                                     <?php
                                                     while ($row_type = $result_type->fetch_assoc()) {
                                                         echo "<option name='type' value=$row_type[t_id]>$row_type[repeatype]</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="s_type">讀誦小類別:</label>
+                                                <select id="s_type" name="s_type"  style="width:525px; height:30px; color:#000000; background-color:transparent">
+                                                    <option name="type" value="0">請選擇類別</option>
+                                                    <?php
+                                                    while ($row_s_type = $result_s_type->fetch_assoc()) {
+                                                        echo "<option name='type' value=$row_s_type[st_id]>$row_s_type[s_typename]</option>";
                                                     }
                                                     ?>
                                                 </select>
@@ -86,7 +95,7 @@ include 'verification.php';
                                             </div>
 
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-sm btn-warning" name="vpost" value="發佈" >
+                                                <input type="submit" class="btn btn-sm btn-warning" name="post" value="發佈" >
                                             </div>
 
                                         </form>
@@ -98,23 +107,31 @@ include 'verification.php';
                 </div>
 
                 <?php
-                if (isset($_POST["vpost"])) {
+                if (isset($_POST["post"])) {
                     if ($_POST["content"] == null) {
-                        echo "<script>alert('請輸入讀誦描述!');location.href='AdminNewReadFile.php'</script>";
-                    }
-
-                    else if ( $_POST["link"] == null) {
+                        echo "<script>alert('請輸入讀誦內容!');location.href='AdminNewReadFile.php'</script>";
+                    }elseif ($_POST["link"] == null) {
                         echo "<script>alert('請輸入雲端連結!');location.href='AdminNewReadFile.php'</script>";
-                    }
-                    else {
-                        $sql_typename = "SELECT * FROM `repeataftermetypes` WHERE t_id = $_POST[type]";
+                    }else {
+                        $sql_typename = "SELECT * FROM `repeatafterme_bigtypes` WHERE t_id = $_POST[b_type]";  //利用大類別的id去抓大類別名稱
                         $result_typename = mysqli_query($db_link, $sql_typename);
                         $row_typename = $result_typename->fetch_assoc();
                         $typename = $row_typename["repeatype"];
 
-                        $sql = "INSERT INTO `repeatafterme` (r_id, t_id, typename, content, link, memo, vols) VALUES('NULL', '$_POST[type]', '$typename', '$_POST[content]', '$_POST[link]', '$_POST[memo]', '$_POST[vols]')";
-                        mysqli_query($db_link, $sql);
-                        echo "<script>alert('影音已經上傳!');location.href='AdminReadManage.php'</script>";
+                        $sql_s_typename = "SELECT * FROM `repeatafterme_smalltypes` WHERE st_id = $_POST[s_type]";  //利用小類別的id去抓小類別名稱
+                        $result_s_typename = mysqli_query($db_link, $sql_s_typename);
+                        $row_s_typename = $result_s_typename->fetch_assoc();
+                        $s_typename = $row_s_typename["s_typename"];
+
+                        if ($_POST['s_type'] == '0') {
+                            $sql = "INSERT INTO `repeatafterme` (r_id, t_id, typename, content, link, memo, vols) VALUES('NULL', '$_POST[b_type]', '$typename', '$_POST[content]', '$_POST[link]', '$_POST[memo]', '$_POST[vols]')";
+                            mysqli_query($db_link, $sql);
+                            echo "<script>alert('影音已經上傳2!');location.href='AdminReadManage.php'</script>";
+                        } else {
+                            $sql = "INSERT INTO `repeatafterme` (r_id, t_id, typename, st_id, s_typename, content, link, memo, vols) VALUES('NULL', '$_POST[b_type]', '$typename', '$_POST[s_type]', '$s_typename', '$_POST[content]', '$_POST[link]', '$_POST[memo]', '$_POST[vols]')";
+                            mysqli_query($db_link, $sql);
+                            echo "<script>alert('影音已經上傳1!');location.href='AdminReadManage.php'</script>";
+                        }
                     }
                 }
                 mysqli_close($db_link);

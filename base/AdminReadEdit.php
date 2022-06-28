@@ -44,8 +44,13 @@ include 'verification.php';
                                     <div class="col-lg-12">
                                         <form name="forms" method="POST" action="">
                                             <div class="form-group">
-                                                <label for="type">類別名稱:</label>
+                                                <label for="type">大類別名稱:</label>
                                                 <input id="type" name="type" type="text" disabled="disabled" value="<?php echo $row['typename'] ?>" style="width:525px; height:30px; color:#000000; background-color:transparent" >
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="type">小類別名稱:</label>
+                                                <input id="type" name="type" type="text" disabled="disabled" value="<?php echo $row['s_typename'] ?>" style="width:525px; height:30px; color:#000000; background-color:transparent" >
                                             </div>
 
 
