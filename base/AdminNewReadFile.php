@@ -91,7 +91,7 @@ include 'verification.php';
 
                                             <div class="form-group">
                                                 <label for="vols">集數:</label>
-                                                <input id="vols" name="vols" type="text"   style="width:525px; height:30px; color:#000000; background-color:transparent" >
+                                                <input id="vols" name="vols" type="number"   style="width:525px; height:30px; color:#000000; background-color:transparent" >
                                             </div>
 
                                             <div class="form-group">
