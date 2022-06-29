@@ -86,7 +86,7 @@
                                 $page = intval($_GET["page"]);
                             }
                             $start = ($page - 1) * $per;
-                            $sqlatcnum10 = "SELECT * FROM `repeatafterme` where `t_id` = $_GET[tid]  Limit $start  , $per";
+                            $sqlatcnum10 = "SELECT * FROM `repeatafterme` where `t_id` = $_GET[tid] order by CAST( vols AS UNSIGNED) ASC  Limit $start  , $per";
                             $resultnum10[$start] = mysqli_query($db_link, $sqlatcnum10);
                             $resultnum10[$page] = mysqli_query($db_link, $sqlatcnum10);
                             while ($read = mysqli_fetch_assoc($resultnum10[$start])) {
@@ -190,7 +190,7 @@
                                 $page = intval($_GET["page"]);
                             }
                             $start = ($page - 1) * $per;
-                            $sqlatcnum10 = "SELECT * FROM `repeatafterme` where `st_id` = $_GET[stid]  Limit $start  , $per";
+                            $sqlatcnum10 = "SELECT * FROM `repeatafterme` where `st_id` = $_GET[stid] order by CAST( vols AS UNSIGNED) ASC  Limit $start  , $per";
                             $resultnum10[$start] = mysqli_query($db_link, $sqlatcnum10);
                             $resultnum10[$page] = mysqli_query($db_link, $sqlatcnum10);
                             while ($read = mysqli_fetch_assoc($resultnum10[$start])) {
