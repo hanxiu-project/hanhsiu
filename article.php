@@ -1,10 +1,11 @@
 <?php include_once 'database.php'; ?>
 <?php
 if (isset($_GET["sid"])) {
+    //sql撈編號(number)
     $sql_title = "Select * From `scripture` where `s_id`= $_GET[sid]";
     $result_title = mysqli_query($db_link, $sql_title);
     $type_title = mysqli_fetch_row($result_title);
-    $title = '瑜論講記 ' . $type_title[3];
+    $title = $type_title[3];
 } else {
     $title = '瑜論講記';
 }
