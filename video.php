@@ -1,5 +1,5 @@
 <?php include_once 'database.php'; ?>
-<?php $title = '瑜論講記'; ?>
+<?php $title = '法音流佈'; ?>
 <?php include_once 'include/head.php'; ?>
 <?php include_once 'include/nav-bar.php'; ?>
 

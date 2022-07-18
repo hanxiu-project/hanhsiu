@@ -1,5 +1,5 @@
 <?php include_once 'database.php'; ?>
-<?php $title = '漢修學苑 - 科判'; ?>
+<?php $title = '科判'; ?>
 <?php include_once 'include/head.php'; ?>
 <?php include_once 'include/nav-bar.php'; ?>
 

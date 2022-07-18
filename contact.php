@@ -1,5 +1,5 @@
 <?php include 'database.php'; ?>
-<?php $title = '漢修學苑'; ?>
+<?php $title = '聯絡我們'; ?>
 <?php include 'include/head.php'; ?>
 <?php include 'include/nav-bar.php'; ?>
 

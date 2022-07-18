@@ -1,5 +1,14 @@
 <?php include_once 'database.php'; ?>
-<?php $title = '補充資料'; ?>
+<?php
+if (isset($_GET["spid"])) {
+    $sql_title = "Select * From `supplements` where `sp_id`= $_GET[spid]";
+    $result_title = mysqli_query($db_link, $sql_title);
+    $type_title = mysqli_fetch_row($result_title);
+    $title = '補充資料 - ' . $type_title[3];
+} else {
+    $title = '補充資料';
+}
+?>
 <?php include_once 'include/head.php'; ?>
 <?php include_once 'include/nav-bar.php'; ?>
 
