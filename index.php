@@ -92,27 +92,6 @@
                         }
                         mysqli_close($db_link);
                         ?>
-                        <!--<li>
-                                <p class="date">2021-10-26</p>
-                                <p class="tit"><a href="post.html">對外開放 之 課程總覽</a></p>
-                            </li>
-                            <li>
-                                <p class="date">2021-10-26</p>
-                                <p class="tit"><a href="post.html">對外開放 之 課程總覽</a></p>
-                            </li>
-                            <li>
-                                <p class="date">2021-10-26</p>
-                                <p class="tit"><a href="post.html">對外開放 之 課程總覽</a></p>
-                            </li>
-                            <li>
-                                <p class="date">2021-10-26</p>
-                                <p class="tit"><a href="post.html">對外開放 之 課程總覽</a></p>
-                            </li>
-                            <li>
-                                <p class="date">2021-10-26</p>
-                                <p class="tit"><a href="post.html">對外開放 之 課程總覽</a></p>
-                            </li>-->
-
                 </div>
 
                 <div class="text-center my-5">
@@ -143,7 +122,7 @@
                         <p class="text-style__2">是故，本論為有心於聖道者之所必學！</p>
 
                         <div class="text-center my-5">
-                            <a class="btn-style__1" href="articletype.html">閱讀講記</a>
+                            <a class="btn-style__1" href="articletype.php">閱讀講記</a>
                         </div>
                     </div>
                 </div>
