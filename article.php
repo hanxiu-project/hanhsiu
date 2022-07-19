@@ -5,7 +5,11 @@ if (isset($_GET["sid"])) {
     $sql_title = "Select * From `scripture` where `s_id`= $_GET[sid]";
     $result_title = mysqli_query($db_link, $sql_title);
     $type_title = mysqli_fetch_row($result_title);
-    $title = $type_title[3];
+    if ($type_title[1] == "7") {
+        $title = "連" . $type_title[3];
+    } else {
+        $title = $type_title[3];
+    }
 } else {
     $title = '瑜論講記';
 }
