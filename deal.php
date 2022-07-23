@@ -2,7 +2,7 @@
 <?php
 if (isset($_POST['SelectedArticleType'])) {
     $SelectedId = $_POST['SelectedArticleType'];
-    $sqlatcnum = "SELECT * FROM `scripture` where  `save`='0' && `t_id` = $SelectedId order by `number`";
+    $sqlatcnum = "SELECT * FROM `scripture` where  `save`='0' && `t_id` = $SelectedId order by CONVERT(number , SIGNED)";
     $result_row = mysqli_query($db_link, $sqlatcnum);
     $inner = '';
     while ($script = mysqli_fetch_assoc($result_row)) {
