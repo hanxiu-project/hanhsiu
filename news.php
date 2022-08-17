@@ -61,7 +61,7 @@
 
                                 $start1 = ($page1 - 1) * $per1;
 
-                                $sqlresultnew = "SELECT * FROM posts where save='0' && old='0' && keep='0' order by date DESC Limit $start1 , $per1";
+                                $sqlresultnew = "SELECT * FROM posts where save='0' && old='0' && keep='0' order by top desc , date Limit $start1 , $per1";
                                 $newresult[$start1] = mysqli_query($db_link, $sqlresultnew);
                                 $newresult[$page1] = mysqli_query($db_link, $sqlresultnew);
 
@@ -81,19 +81,17 @@
                                 }
 
                                 echo "<center>";
-                               /* echo '共 ' . $date_nums1 . ' 筆-在 ' . $page1 . ' 頁-共 ' . $pages1 . ' 頁';*/
+                                /* echo '共 ' . $date_nums1 . ' 筆-在 ' . $page1 . ' 頁-共 ' . $pages1 . ' 頁';*/
                                 echo "<nav>";
                                 echo " <ul class='pagination justify-content-center'>";
-                               /* echo "<br/><a href=?news_page=1>首頁</a> ";*/
+                                /* echo "<br/><a href=?news_page=1>首頁</a> ";*/
                                 echo " <li class='page-item'>";
-                                if($page1==1)
-                                {
-                                    $fp=1;
-                                }else
-                                {
+                                if ($page1 == 1) {
+                                    $fp = 1;
+                                } else {
                                     $fp = intval($page1) - 1;
                                 }
-                               
+
                                 echo "<a class='page-link' href='?news_page=$fp' aria-label='Previous'>";
                                 echo "<i class='arrow aleft'></i>";
                                 echo "</a>";
@@ -111,18 +109,16 @@
                                 }
 
                                 echo " <li class='page-item'>";
-                                if($page1==$pages1)
-                                {
-                                    $np=$pages1;
-                                }else
-                                {
+                                if ($page1 == $pages1) {
+                                    $np = $pages1;
+                                } else {
                                     $np = intval($page1) + 1;
                                 }
                                 echo "<a class='page-link' href='?news_page=$np' aria-label='Next'>";
                                 echo "<i class='arrow aright'></i>";
                                 echo "</a>";
                                 echo "</li>";
-                               /* echo "<a href=?news_page=$pages1>末頁</a>";*/
+                                /* echo "<a href=?news_page=$pages1>末頁</a>";*/
                                 echo "</ul>";
                                 echo "</nav>";
                                 ?>
@@ -160,17 +156,15 @@
 
 
                                 echo "<center>";
-                               /* echo '共 ' . $date_nums2 . ' 筆-在 ' . $page2 . ' 頁-共 ' . $pages2 . ' 頁';*/
+                                /* echo '共 ' . $date_nums2 . ' 筆-在 ' . $page2 . ' 頁-共 ' . $pages2 . ' 頁';*/
                                 echo "<nav>";
                                 echo " <ul class='pagination justify-content-center'>";
-                               /* echo "<br/><a href=?news_page=1>首頁</a> ";*/
+                                /* echo "<br/><a href=?news_page=1>首頁</a> ";*/
                                 echo " <li class='page-item'>";
-                               
-                                if($page2==1)
-                                {
-                                    $fp=1;
-                                }else
-                                {
+
+                                if ($page2 == 1) {
+                                    $fp = 1;
+                                } else {
                                     $fp = intval($page2) - 1;
                                 }
                                 echo "<a class='page-link' href='?oldpage=$fp' aria-label='Previous'>";
@@ -190,19 +184,17 @@
                                 }
 
                                 echo " <li class='page-item'>";
-                                if($page2==$pages2)
-                                {
-                                    $np=$pages2;
-                                }else
-                                {
+                                if ($page2 == $pages2) {
+                                    $np = $pages2;
+                                } else {
                                     $np = intval($page2) + 1;
                                 }
-                               
+
                                 echo "<a class='page-link' href='?oldpage=$np' aria-label='Next'>";
                                 echo "<i class='arrow aright'></i>";
                                 echo "</a>";
                                 echo "</li>";
-                               /* echo "<a href=?news_page=$pages1>末頁</a>";*/
+                                /* echo "<a href=?news_page=$pages1>末頁</a>";*/
                                 echo "</ul>";
                                 echo "</nav>";
 

@@ -82,7 +82,7 @@
 
                             echo "<li>";
                             if ($row['top'] == '1') {
-                                echo "<p ><i class='fas fa-thumbtack'></i>&nbsp&nbsp$row[date]</p>";
+                                echo "<p >&emsp; $row[date]</p>";
                             } else {
                                 echo "<p  >&emsp; $row[date]</p>";
                             }
