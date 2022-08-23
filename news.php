@@ -61,7 +61,7 @@
 
                                 $start1 = ($page1 - 1) * $per1;
 
-                                $sqlresultnew = "SELECT * FROM posts where save='0' && old='0' && keep='0' order by top desc , date Limit $start1 , $per1";
+                                $sqlresultnew = "SELECT * FROM posts where save='0' && old='0' && keep='0' order by top desc, date desc Limit $start1 , $per1";
                                 $newresult[$start1] = mysqli_query($db_link, $sqlresultnew);
                                 $newresult[$page1] = mysqli_query($db_link, $sqlresultnew);
 
@@ -74,10 +74,9 @@
                                         $sqlii = "update `posts` set old='1'  where `p_id`='$row[p_id]'";
                                         mysqli_query($db_link, $sqlii);
                                     }
-                                    echo "<a herf ='post.php?id=$row[p_id]'>";
+
                                     echo "<span class='text-style__sm'>$row[date]</span>";
-                                    echo "$row[title]";
-                                    echo "</a>";
+                                    echo "<td ><a href = 'post.php?id=$row[p_id]'>$row[title]</a></td>";
                                 }
 
                                 echo "<center>";
@@ -148,10 +147,10 @@
                                 $oldresult[$page2] = mysqli_query($db_link, $sqlresultold);
 
                                 while ($rowold = mysqli_fetch_assoc($oldresult[$start2])) {
-                                    echo "<a herf ='post.php?id=$rowold[p_id]'>";
+
                                     echo "<span class='text-style__sm'>$rowold[date]</span>";
-                                    echo "$rowold[title]";
-                                    echo "</a>";
+
+                                    echo "<td ><a href = 'post.php?id=$rowold[p_id]'>$rowold[title]</a></td>";
                                 }
 
 
