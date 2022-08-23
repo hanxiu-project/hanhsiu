@@ -68,7 +68,7 @@
                         # 設定時區
                         date_default_timezone_set('Asia/Taipei');
                         $getDate = date("Y-m-d");
-                        $sql = "SELECT * FROM posts where  save = '0' && old = '0' && keep = '0' && top = '0' || save = '0'  && keep = '0' && top = '1'  order by `top` DESC, `date` desc ";
+                        $sql = "SELECT * FROM posts where  save = '0' && old = '0' && keep = '0' && top = '0' || save = '0'  && keep = '0' && top = '1'  order by `top` DESC, `date` desc ,p_id desc";
                         $result = mysqli_query($db_link, $sql);
                         while ($row = $result->fetch_assoc()) {
                             $date1 = strtotime($getDate);

@@ -61,7 +61,7 @@
 
                                 $start1 = ($page1 - 1) * $per1;
 
-                                $sqlresultnew = "SELECT * FROM posts where save='0' && old='0' && keep='0' order by top desc, date desc Limit $start1 , $per1";
+                                $sqlresultnew = "SELECT * FROM posts where save='0' && old='0' && keep='0' order by top desc, date desc, p_id desc Limit $start1 , $per1";
                                 $newresult[$start1] = mysqli_query($db_link, $sqlresultnew);
                                 $newresult[$page1] = mysqli_query($db_link, $sqlresultnew);
 
