@@ -88,7 +88,7 @@
                                     }
                                     $start = ($page - 1) * $per;
                                     $resultnum = mysqli_query($db_link, $sqlatcnum);
-                                    $sqlatcnum10 = "SELECT * FROM `videos` where `vbt_id` = $_GET[v_bid] order by CAST( vols AS UNSIGNED) ASC  Limit $start  , $per";
+                                    $sqlatcnum10 = "SELECT * FROM `videos` where `vbt_id` = $_GET[v_bid] order by content Limit $start  , $per";
                                     $resultnum10[$start] = mysqli_query($db_link, $sqlatcnum10);
                                     $resultnum10[$page] = mysqli_query($db_link, $sqlatcnum10);
                                     while ($video = mysqli_fetch_assoc($resultnum10[$start])) {
