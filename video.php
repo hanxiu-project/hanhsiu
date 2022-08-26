@@ -349,15 +349,8 @@
             for (var i = 0; i < optionLength; i++) {
                 if (document.getElementById("chapter_select").options[i].value == currentlyVId) {
                     document.getElementById("chapter_select").options[i].selected = true;
-                    // var currentlyAId = document.getElementById("chapter_select").options[i].value;
                 }
             }
-
-            // for (var i = 0; i < optionLength; i++) {
-            //     if (document.getElementById("chapter_select").options[i].value == currentlyAId) {
-            //         document.getElementById("chapter_select").options[i].selected = true;
-            //     }
-            // }
         }
     }
 

@@ -370,7 +370,7 @@
 
 
         if (optionLength == 0) {
-            window.open('read.php?t_id=' + currentlyTId, '_self');
+            window.open('read.php?tid=' + currentlyTId, '_self');
         } else {
             for (var i = 0; i < optionLength; i++) {
                 if (document.getElementById("smallreadtype_select").options[i].value == currentlySId) {
