@@ -31,3 +31,14 @@ if (isset($_POST['SelectedVideoType'])) {
     }
     echo $inner;
 }
+
+if (isset($_POST['SelectedReadType'])) {
+    $SelectedId = $_POST['SelectedReadType'];
+    $sqlatcnum = "SELECT * FROM repeatafterme_smalltypes where t_id = $SelectedId";
+    $result_row = mysqli_query($db_link, $sqlatcnum);
+    $inner = '';
+    while ($script = mysqli_fetch_assoc($result_row)) {
+        $inner = $inner . "<option value='$script[st_id]' >$script[s_typename]</option>";
+    }
+    echo $inner;
+}

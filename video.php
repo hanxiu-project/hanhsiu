@@ -331,25 +331,33 @@
             },
             success: function(res) {
                 chapterSelect.innerHTML = res;
+                if (res == "") {
+                    chapterSelect.style.display = 'none';
+                } else {
+                    chapterSelect.style.display = 'block';
+                    chapterSelect.innerHTML = res;
+                }
                 keepAID();
             }
         });
     }
 
     function keepAID() {
+        var currentlyVId = document.getElementsByName("video_smalltype_id")[0].id;
         var optionLength = document.getElementById("chapter_select").options.length;
         if (optionLength != 0) {
             for (var i = 0; i < optionLength; i++) {
-                if (document.getElementById("chapter_select").options[i].selected == true) {
-                    var currentlyAId = document.getElementById("chapter_select").options[i].value;
+                if (document.getElementById("chapter_select").options[i].value == currentlyVId) {
+                    document.getElementById("chapter_select").options[i].selected = true;
+                    // var currentlyAId = document.getElementById("chapter_select").options[i].value;
                 }
             }
 
-            for (var i = 0; i < optionLength; i++) {
-                if (document.getElementById("chapter_select").options[i].value == currentlyAId) {
-                    document.getElementById("chapter_select").options[i].selected = true;
-                }
-            }
+            // for (var i = 0; i < optionLength; i++) {
+            //     if (document.getElementById("chapter_select").options[i].value == currentlyAId) {
+            //         document.getElementById("chapter_select").options[i].selected = true;
+            //     }
+            // }
         }
     }
 
